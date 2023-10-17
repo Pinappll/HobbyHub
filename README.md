@@ -1,1 +1,1 @@
-# HobbyHub
+# EasyCook
