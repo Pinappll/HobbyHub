@@ -4,6 +4,7 @@
   controller: Main
   action: home
 
+
 /contact:
   controller: Main
   action: contact
@@ -17,6 +18,11 @@
   action: singleRecipe
 
 ## Security
+=======
+# /a-propos:
+#   controller: Main
+#   action: aboutUs
+
 
 /login:
   controller: Security
@@ -34,6 +40,9 @@
   controller: Security
   action: passwordForgot
 
+
+
+  
 ## Admin
 
 /admin/create:

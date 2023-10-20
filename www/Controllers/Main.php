@@ -10,8 +10,16 @@ class Main
     }
 
 
-    public function aboutUs(): void
+    // public function aboutUs(): void
+    // {
+    //     $myView = new View("Main/aboutus", "front");
+    // }
+    public function contact(): void
     {
-        $myView = new View("Main/aboutus", "front");
+        $myView = new View("Main/contact", "front");
     }
+
+    
+    
+    
 }
