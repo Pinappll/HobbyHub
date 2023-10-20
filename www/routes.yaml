@@ -17,3 +17,93 @@
 /register:
   controller: Security
   action: register
+
+## Admin
+
+/admin/create:
+  controller: User
+  action: createAdmin
+
+/admin/read:
+  controller: User
+  action: readAdmin
+
+/admin/update:
+  controller: User
+  action: updateAdmin
+
+/admin/delete:
+  controller: User
+  action: deleteAdmin
+
+## Review
+
+/review/create:
+  controller: Review
+  action: createReview
+
+/review/read:
+  controller: Review
+  action: readReview
+
+/review/update:
+  controller: Review
+  action: updateReview
+
+/review/delete:
+  controller: Review
+  action: deleteReview
+
+## Page
+
+/page/create:
+  controller: Page
+  action: createPage
+
+/page/read:
+  controller: Page
+  action: readPage
+
+/page/update:
+  controller: Page
+  action: updatePage
+
+/page/delete:
+  controller: Page
+  action: deletePage
+
+## Recipe
+
+/recipe/create:
+  controller: Recipe
+  action: createRecipe
+
+/recipe/read:
+  controller: Recipe
+  action: readRecipe
+
+/recipe/update:
+  controller: Recipe
+  action: updateRecipe
+
+/recipe/delete:
+  controller: Recipe
+  action: deleteRecipe
+
+## Menu
+
+/menu/create:
+  controller: Menu
+  action: createMenu
+
+/menu/read:
+  controller: Menu
+  action: readMenu
+
+/menu/update:
+  controller: Menu
+  action: updateMenu
+
+/menu/delete:
+  controller: Menu
+  action: deleteMenu
