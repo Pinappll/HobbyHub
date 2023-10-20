@@ -17,12 +17,6 @@
   controller: Main
   action: singleRecipe
 
-## Security
-=======
-# /a-propos:
-#   controller: Main
-#   action: aboutUs
-
 
 /login:
   controller: Security
