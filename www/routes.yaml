@@ -1,10 +1,22 @@
+## Main
+
 /:
   controller: Main
   action: home
 
-/a-propos:
+/contact:
   controller: Main
-  action: aboutUs
+  action: contact
+
+/recipies:
+  controller: Main
+  action: recipies
+
+/single-recipe:
+  controller: Main
+  action: singleRecipe
+
+## Security
 
 /login:
   controller: Security
@@ -17,6 +29,10 @@
 /register:
   controller: Security
   action: register
+
+/password-forgot:
+  controller: Security
+  action: passwordForgot
 
 ## Admin
 
@@ -35,6 +51,38 @@
 /admin/delete:
   controller: User
   action: deleteAdmin
+
+/admin/add-page:
+  controller: User
+  action: addPage
+
+/admin/add-recipe:
+  controller: User
+  action: addRecipe
+
+/admin/dashboard:
+  controller: User
+  action: dashboard
+
+/admin/menus:
+  controller: User
+  action: showMenus
+
+/admin/pages:
+  controller: User
+  action: showPages
+
+/admin/recipies:
+  controller: User
+  action: showRecipies
+
+/admin/themes:
+  controller: User
+  action: showThemes
+
+/admin/users:
+  controller: User
+  action: showUsers
 
 ## Review
 
