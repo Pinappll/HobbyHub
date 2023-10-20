@@ -2,9 +2,9 @@
   controller: Main
   action: home
 
-/a-propos:
-  controller: Main
-  action: aboutUs
+# /a-propos:
+#   controller: Main
+#   action: aboutUs
 
 /login:
   controller: Security
@@ -18,6 +18,22 @@
   controller: Security
   action: register
 
+/contact:
+  controller: Main
+  action: contact
+
+/forgot-password:
+  controller: Security
+  action: passwordForgot
+
+/recipe:
+  controller: Recipe
+  action: recipes
+
+/single-recipe:
+  controller: Recipe
+  action: singleRecipe
+  
 ## Admin
 
 /admin/create:

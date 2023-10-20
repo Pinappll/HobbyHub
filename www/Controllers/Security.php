@@ -1,21 +1,26 @@
 <?php
 
 namespace App\Controllers;
+
+use App\Core\View;
+
 class Security
 {
 
     public function login(): void
     {
-        echo "Ma page de login";
+        $myView = new View("Security/login", "front");
     }
     public function logout(): void
     {
-        echo "Ma page de déconnexion";
+        $myView = new View("Security/logout", "front");
     }
     public function register(): void
     {
-        echo "Ma page d'inscription";
+        $myView = new View("Security/register", "front");
     }
-
-
+    public function passwordForgot()
+    {
+        $myView = new View("Security/password-forgot", "front");
+    }
 }
