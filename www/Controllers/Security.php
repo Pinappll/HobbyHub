@@ -3,24 +3,26 @@
 namespace App\Controllers;
 
 use App\Core\View;
+use App\Core\BuildForm;
+use App\Forms\UserInsert;
+
 
 class Security
 {
 
     public function login(): void
     {
+
         $myView = new View("Security/login", "front");
+        $userForm = new UserInsert();
+        $userForm->render();
     }
     public function logout(): void
     {
-        $myView = new View("Security/logout", "front");
+        echo "Ma page de déconnexion";
     }
     public function register(): void
     {
-        $myView = new View("Security/register", "front");
-    }
-    public function passwordForgot()
-    {
-        $myView = new View("Security/password-forgot", "front");
+        echo "Ma page d'inscription";
     }
 }
