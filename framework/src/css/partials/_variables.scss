@@ -1,0 +1,28 @@
+/* Couleurs */
+$white: #fff;
+$black: #000;
+$grey: #6c757d;
+$blue: #0d6efd;
+$red: #dc3545;
+
+/* Variables css */
+:root {
+	/* Couleurs */
+	--white: #{$white};
+	--black: #{$black};
+	--grey: #{$grey};
+	--grey-darker: #{darken($grey, 10%)};
+	--blue: #{$blue};
+	--blue-darker: #{darken($blue, 10%)};
+	--red: #{$red};
+	--red-darker: #{darken($red, 10%)};
+
+	/* Typos */
+	--main-font: #{$font1};
+
+	/* Transitions */
+	--transition-duration: 0.3s;
+
+	/* Border radius */
+	--main-radius: #{rem(6)};
+}

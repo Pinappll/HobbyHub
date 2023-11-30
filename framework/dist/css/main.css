@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+/* Couleurs */
+/* Variables css */
+:root {
+  /* Couleurs */
+  --white: #fff;
+  --black: #000;
+  --grey: #6c757d;
+  --grey-darker: #545b62;
+  --blue: #0d6efd;
+  --blue-darker: #0257d5;
+  --red: #dc3545;
+  --red-darker: #bd2130;
+  /* Typos */
+  --main-font: Inter, sans-serif;
+  /* Transitions */
+  --transition-duration: 0.3s;
+  /* Border radius */
+  --main-radius: 0.375rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.button {
+  --bg-color: var(--black);
+  --bg-hover-color: var(--grey);
+  display: inline-block;
+  padding: 0.625rem 1rem;
+  border-radius: var(--main-radius);
+  text-decoration: none;
+  cursor: pointer;
+  font-family: var(--main-font);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.125rem;
+  border: none;
+  background-color: var(--bg-color);
+  color: var(--white);
+  transition: all var(--transition-duration);
+  /* Modificateurs de couleur */
+  /* Modificateurs de taille */
+}
+.button:hover {
+  background-color: var(--bg-hover-color);
+}
+.button-primary {
+  --bg-color: var(--blue);
+  --bg-hover-color: var(--blue-darker);
+}
+.button-secondary {
+  --bg-color: var(--grey);
+  --bg-hover-color: var(--grey-darker);
+}
+.button-danger {
+  --bg-color: var(--red);
+  --bg-hover-color: var(--red-darker);
+}
+.button-lg {
+  padding: 1rem 1.5rem;
+}
+.button-sm {
+  font-size: 0.875rem;
+  line-height: 1rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.banner {
+  aspect-ratio: 100/42;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.banner-text {
+  display: flex;
+  position: relative;
+}
+.banner-text::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.banner-text p {
+  color: var(--white);
+  font-weight: 700;
+  font-size: 3rem;
+  max-width: 85%;
+  margin: auto;
+  text-align: center;
+  line-height: 125%;
+  position: relative;
+}
+
+.card {
+  width: 20rem;
+  padding: 12.5rem 1.25rem 1.25rem;
+  border-radius: var(--main-radius);
+  border: solid thin #e6e6e6;
+  position: relative;
+  overflow: hidden;
+}
+.card img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 12.5rem;
+  object-fit: cover;
+  object-position: center;
+}
+.card h1 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1;
+  margin: 1.25rem 0 0.625rem;
+}
+.card p {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0.625rem 0;
+}
+.card-full img {
+  height: 100%;
+}
+.card-full *:not(img) {
+  position: relative;
+  z-index: 1;
+}
+.card-full::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #fff 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.grid .col-1 {
+  width: 8.3333333333%;
+}
+.grid .col-2 {
+  width: 16.6666666667%;
+}
+.grid .col-3 {
+  width: 25%;
+}
+.grid .col-4 {
+  width: 33.3333333333%;
+}
+.grid .col-5 {
+  width: 41.6666666667%;
+}
+.grid .col-6 {
+  width: 50%;
+}
+.grid .col-7 {
+  width: 58.3333333333%;
+}
+.grid .col-8 {
+  width: 66.6666666667%;
+}
+.grid .col-9 {
+  width: 75%;
+}
+.grid .col-10 {
+  width: 83.3333333333%;
+}
+.grid .col-11 {
+  width: 91.6666666667%;
+}
+.grid .col-12 {
+  width: 100%;
+}
+
+/*# sourceMappingURL=main.css.map */

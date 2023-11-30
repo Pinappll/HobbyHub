@@ -1,0 +1,9 @@
+$cols:12;
+
+.grid{
+    @for $i from 1 through $cols{
+        .col-#{$i}{
+            width: calc(100% /12 * $i);
+        }
+    }
+}
