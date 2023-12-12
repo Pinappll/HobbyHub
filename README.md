@@ -14,3 +14,12 @@
    ```bash
    git clone https://github.com/Pinappll/EasyCook.git
    ```
+   Copiez le fichier docker-compose copy.yml :
+   ```bash
+   cp docker-compose\ copy.yml docker-compose.yml
+   ```
+   Lancez les conteneurs avec Docker Compose :
+   ```bash
+   docker-compose up
+   ```
+
