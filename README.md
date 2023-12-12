@@ -14,12 +14,18 @@
    ```bash
    git clone https://github.com/Pinappll/EasyCook.git
    ```
-   Copiez le fichier docker-compose copy.yml :
+2. Copiez le fichier .envCopy :
    ```bash
-   cp docker-compose\ copy.yml docker-compose.yml
+   cp .envCopy .env
    ```
-   Lancez les conteneurs avec Docker Compose :
+3. Lancer les services  sur votre machine locale:
    ```bash
-   docker-compose up
+   docker compose up
    ```
+4. Accéder à postgre :
+   ```bash
+   docker exec -it containerPostgre psql -U nom_utilisateur -d nom_de_bdd
+   ```
+
+   
 
