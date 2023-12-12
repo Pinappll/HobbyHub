@@ -35,6 +35,8 @@ class View
         $this->viewName = "Views/".$viewName.".view.php";
     }
 
+
+
     public function __destruct()
     {
         include $this->templateName;
