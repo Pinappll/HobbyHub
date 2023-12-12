@@ -34,23 +34,35 @@ class BuildForm
     }
 
     private function generateInput($name, $attributes): string
-    {
-        $inputHtml = '<div>';
-        $inputHtml .= '<label for="' . $name . '">' . ucfirst($name) . ':</label>';
+{
+    $inputHtml = '<div>';
+    $inputHtml .= '<label for="' . $name . '">' . ucfirst($name) . ':</label>';
 
-        //Add input attributes
+    // Check if the input type is 'textarea'
+    if (isset($attributes['type']) && $attributes['type'] === 'textarea') {
+        $inputHtml .= '<textarea';
+        foreach ($attributes as $attribute => $value) {
+            if ($attribute !== 'type' && $attribute !== 'confirm') {
+                $inputHtml .= ' ' . $attribute . '="' . $value . '"';
+            }
+        }
+        $inputHtml .= '></textarea>';
+    } else {
+        // Handle other input types
         $inputHtml .= '<input';
         foreach ($attributes as $attribute => $value) {
             if ($attribute !== 'confirm') {
                 $inputHtml .= ' ' . $attribute . '="' . $value . '"';
             }
         }
-
         $inputHtml .= '>';
-        $inputHtml .= '</div>';
-
-        return $inputHtml;
     }
+
+    $inputHtml .= '</div>';
+
+    return $inputHtml;
+}
+
 }
 
 
