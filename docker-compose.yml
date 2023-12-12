@@ -9,3 +9,16 @@ services:
      - ./server/000-default.conf:/etc/apache2/sites-available/000-default.conf
      - ./server/apache2.conf:/etc/apache2/apache2.conf
      - ./server/php.ini:/usr/local/etc/php/php.ini
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: esgi_easyCook
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+      - ./db_data/dump.sql:/docker-entrypoint-initdb.d
+      
+
+volumes:
+  db_data:
