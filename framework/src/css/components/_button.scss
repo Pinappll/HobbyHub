@@ -20,8 +20,8 @@
 
 	/* Modificateurs de couleur */
 	&-primary {
-		--bg-color: var(--blue);
-		--bg-hover-color: var(--blue-darker);
+		--bg-color: var(--yellow);
+		--bg-hover-color: var(--yellow-darker);
 	}
 	&-secondary {
 		--bg-color: var(--grey);
@@ -30,6 +30,14 @@
 	&-danger {
 		--bg-color: var(--red);
 		--bg-hover-color: var(--red-darker);
+	}
+	&-brown {
+		--bg-color: var(--brown);
+		--bg-hover-color: var(--brown-darker);
+	}
+	&-dark-grey {
+		--bg-color: var(--dark-grey);
+		--bg-hover-color: var(--dark-grey-darker);
 	}
 
 	/* Modificateurs de taille */
