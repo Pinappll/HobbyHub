@@ -1,4 +1,5 @@
 @import "partials/functions";
+@import "partials/mixins";
 @import "partials/fonts";
 @import "partials/variables";
 @import "partials/globals";
@@ -8,3 +9,4 @@
 @import "components/banner";
 @import "components/card";
 @import "components/grid";
+@import "components/navbar";
