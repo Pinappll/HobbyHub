@@ -1,2 +1,20 @@
-<h2>Connexion</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam debitis, ducimus, est eveniet, exercitationem iusto labore natus nemo nihil nisi quis voluptas! Et hic illum magni perspiciatis placeat saepe ut.</p>
+<?php
+use App\Core\BuildForm;
+use App\Forms\UserConnexion;
+
+?>
+
+
+    <div class="container">
+        <section>
+        <h2>Connexion</h2>
+        </section>
+        
+        <?php
+
+        $userForm = new UserConnexion();
+        $userForm->render();
+
+        ?>
+        
+    </div>

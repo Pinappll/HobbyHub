@@ -1,9 +1,11 @@
 /* Couleurs */
 $white: #fff;
 $black: #000;
-$grey: #6c757d;
-$blue: #0d6efd;
-$red: #dc3545;
+$grey: #C1B4AE;
+$yellow: #f8c630;
+$red: #92140c;
+$brown: #BE5A38;
+$dark-grey: #353238;
 
 /* Variables css */
 :root {
@@ -12,10 +14,14 @@ $red: #dc3545;
 	--black: #{$black};
 	--grey: #{$grey};
 	--grey-darker: #{darken($grey, 10%)};
-	--blue: #{$blue};
-	--blue-darker: #{darken($blue, 10%)};
+	--yellow: #{$yellow};
+	--yellow-darker: #{darken($yellow, 10%)};
 	--red: #{$red};
 	--red-darker: #{darken($red, 10%)};
+	--brown: #{$brown};
+	--brown-darker: #{darken($brown, 10%)};
+	--dark-grey: #{$dark-grey};
+	--dark-grey-darker: #{darken($dark-grey, 10%)};
 
 	/* Typos */
 	--main-font: #{$font1};

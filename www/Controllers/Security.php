@@ -14,15 +14,18 @@ class Security
     {
 
         $myView = new View("Security/login", "front");
-        $userForm = new UserInsert();
-        $userForm->render();
+        
     }
+    
     public function logout(): void
     {
         echo "Ma page de déconnexion";
     }
+
     public function register(): void
     {
-        echo "Ma page d'inscription";
+        
+        $myView = new View("Security/register", "front");
+       
     }
 }
