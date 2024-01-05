@@ -7,11 +7,11 @@ use App\Core\DB;
 class User extends DB
 {
     private ?int $id = null;
-    protected string $firstname;
-    protected string $lastname;
-    protected string $email;
-    protected string $pwd;
-    protected int $status;
+    protected string $firstname_user;
+    protected string $lastname_user;
+    protected string $email_user;
+    protected string $password_user;
+    protected string $type_user = "customer";
     protected int $isDeleted;
 
 
@@ -22,122 +22,146 @@ class User extends DB
 
     public function __toString()
     {
-        return $this->getFirstname() . " " . $this->getLastname();
+        return $this->getFirstname_user() . " " . $this->getLastname_user();
     }
-
     /**
-     * @return int
+     * Get the value of id
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * Set the value of id
+     *
+     * @return  self
      */
-    public function setId(int $id): void
+    public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
-     * @return string
+     * Get the value of firstname_user
      */
-    public function getFirstname(): string
+    public function getFirstname_user()
     {
-        return $this->firstname;
+        return $this->firstname_user;
     }
 
     /**
-     * @param string $firstname
+     * Set the value of firstname_user
+     *
+     * @return  self
      */
-    public function setFirstname(string $firstname): void
+    public function setFirstname_user($firstname_user)
     {
-        $firstname = ucwords(strtolower(trim($firstname)));
-        $this->firstname = $firstname;
+        $this->firstname_user = $firstname_user;
+
+        return $this;
     }
 
     /**
-     * @return string
+     * Get the value of lastname_user
      */
-    public function getLastname(): string
+    public function getLastname_user()
     {
-        return $this->lastname;
+        return $this->lastname_user;
     }
 
     /**
-     * @param string $lastname
+     * Set the value of lastname_user
+     *
+     * @return  self
      */
-    public function setLastname(string $lastname): void
+    public function setLastname_user($lastname_user)
     {
-        $lastname = strtoupper(trim($lastname));
-        $this->lastname = $lastname;
+        $this->lastname_user = $lastname_user;
+
+        return $this;
     }
 
     /**
-     * @return string
+     * Get the value of email_user
      */
-    public function getEmail(): string
+    public function getEmail_user()
     {
-        return $this->email;
+        return $this->email_user;
     }
 
     /**
-     * @param string $email
+     * Set the value of email_user
+     *
+     * @return  self
      */
-    public function setEmail(string $email): void
+    public function setEmail_user($email_user)
     {
-        $email = strtolower(trim($email));
-        $this->email = $email;
+        $this->email_user = $email_user;
+
+        return $this;
     }
 
     /**
-     * @return string
+     * Get the value of password_user
      */
-    public function getPwd(): string
+    public function getPassword_user()
     {
-        return $this->pwd;
+        return $this->password_user;
     }
 
     /**
-     * @param string $pwd
+     * Set the value of password_user
+     *
+     * @return  self
      */
-    public function setPwd(string $pwd): void
+    public function setPassword_user($password_user)
     {
-        $pwd = password_hash($pwd, PASSWORD_DEFAULT);
-        $this->pwd = $pwd;
+        $password_user = password_hash($password_user, PASSWORD_DEFAULT);
+        $this->password_user = $password_user;
+
+        return $this;
     }
 
     /**
-     * @return int
+     * Get the value of typer_user
      */
-    public function getStatus(): int
+    public function getType_user()
     {
-        return $this->status;
+        return $this->type_user;
     }
 
     /**
-     * @param int $status
+     * Set the value of typer_user
+     *
+     * @return  self
      */
-    public function setStatus(int $status): void
+    public function setType_user($typer_user)
     {
-        $this->status = $status;
+        $this->type_user = $typer_user;
+
+        return $this;
     }
 
     /**
-     * @return bool
+     * Get the value of isDeleted
      */
-    public function isDeleted(): bool
+    public function getIsDeleted()
     {
         return $this->isDeleted;
     }
 
     /**
-     * @param bool $isDeleted
+     * Set the value of isDeleted
+     *
+     * @return  self
      */
-    public function setIsDeleted(bool $isDeleted): void
+    public function setIsDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
+
+        return $this;
     }
 }

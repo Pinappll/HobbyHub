@@ -2,7 +2,7 @@
 namespace App\Forms;
 use App\Core\BuildForm;
 
-class UserConnexion 
+class UserLogin 
 {
 
     public function getConfig(): array

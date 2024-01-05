@@ -9,13 +9,9 @@ class DB
 
     public function __construct()
     {
-        $dbHost = 'postgres';
-        $dbName = 'esgi_easyCook';
-        $dbUser = getenv('DB_USER');
-        $dbPassword = getenv('DB_PASSWORD');
         //connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO("pgsql:host=$dbHost;dbname=$dbName;user=$dbUser;password=$dbPassword");
+            $this->pdo = new \PDO("pgsql:host=172.25.0.3;dbname=easyCook;user=root;password=test1234");
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -23,7 +19,7 @@ class DB
         $table = get_called_class();
         $table = explode("\\", $table);
         $table = array_pop($table);
-        $this->table = "esgi_" . strtolower($table);
+        $this->table = "easycook_" . strtolower($table);
     }
 
     public function getDataObject(): array
@@ -46,7 +42,6 @@ class DB
             $sql = substr($sql, 0, -1);
             $sql .= " WHERE id = " . $this->getId();
         }
-
 
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
