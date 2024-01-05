@@ -43,7 +43,6 @@ class DB
             $sql .= " WHERE id = " . $this->getId();
         }
 
-        // var_dump($sql);
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
     }
