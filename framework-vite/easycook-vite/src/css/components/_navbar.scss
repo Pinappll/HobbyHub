@@ -1,0 +1,32 @@
+.navbar {
+	background-color: var(--lightGrey);
+	padding: rem(10) rem(12);
+	color: var(--text-color);
+	font-size: rem(18);
+	&_title {
+		font-size: rem(22);
+		font-weight: 500;
+		line-height: rem(28);
+	}
+	.container {
+		@include flexbox(row, nowrap, space-between, center, rem(30));
+	}
+	ul {
+		@include resetList;
+		@include flexbox(row, wrap, flex-start, center, rem(18));
+		flex-grow: 1;
+		a {
+			font-weight: 500;
+			line-height: rem(28);
+		}
+	}
+	form {
+		@include flexbox(row, nowrap, flex-end, stretch, rem(10));
+		input[type="text"] {
+			width: rem(220);
+		}
+		.button {
+			font-size: inherit;
+		}
+	}
+}
