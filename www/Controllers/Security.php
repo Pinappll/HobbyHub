@@ -14,15 +14,35 @@ class Security
     public function login(): void
     {
 
-        $formLogin = new UserLogin();
-        $configLogin = $formLogin->getConfig();
-
-        $formRegister = new UserInsert();
-        $configRegister = $formRegister->getConfig();
-
+        $form = new UserLogin();
+        $config = $form->getConfig();
+        $errors = [];
         $myView = new View("Security/login", "front");
-        $myView->assign("configFormLogin", $configLogin);
-        $myView->assign("configFormRegister", $configRegister);
+        $myView->assign("configForm", $config);
+        $myView->assign("errorsForm", $errors);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $email = $_POST['email'] ?? "";
+            $password_from_user = $_POST['password'] ?? "";
+            $user = new User();
+            $row = $user->getOneBy(["email_user" => $email]);
+
+            if ($row) {
+                $password_hash_from_db = $row['password_user'];
+
+                if (password_verify($password_from_user, $password_hash_from_db)) {
+                    session_start();
+                    $_SESSION['user_id'] = $row["id"];
+                    $_SESSION['username'] = $row["lastname_user"] + " " + $row["firstname_user"];
+                } else {
+                    $errors[] = "le login ou le mot de passe est incorrect";
+                }
+            } else {
+                $errors[] = "le login ou le mot de passe est incorrect";
+            }
+            $myView->assign("errorsForm", $errors);
+        }
     }
 
     public function logout(): void

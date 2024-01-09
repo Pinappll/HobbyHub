@@ -11,7 +11,7 @@ class DB
     {
         //connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO("pgsql:host=172.25.0.3;dbname=easyCook;user=root;password=test1234");
+            $this->pdo = new \PDO("pgsql:host=172.25.0.2;dbname=easyCook;user=root;password=test1234");
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -68,7 +68,6 @@ class DB
         if ($return == "object") {
             $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
         }
-
         return $queryPrepared->fetch();
     }
 }
