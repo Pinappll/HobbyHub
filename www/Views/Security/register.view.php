@@ -1,2 +1,2 @@
-Insérer le formulaire d'inscription
+Formulaire d'inscription
 <?php $this->includeComponent("form", $configForm, $errorsForm); ?>
