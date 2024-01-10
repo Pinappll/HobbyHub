@@ -38,6 +38,10 @@
 
   
 ## Admin
+/admin:
+  controller: Dashboard
+  action: dashboard
+
 
 /admin/create:
   controller: User
@@ -64,28 +68,32 @@
   action: addRecipe
 
 /admin/dashboard:
-  controller: User
+  controller: Dashboard
   action: dashboard
 
 /admin/menus:
-  controller: User
+  controller: Menu
   action: showMenus
 
 /admin/pages:
-  controller: User
+  controller: Page
   action: showPages
 
 /admin/recipies:
-  controller: User
+  controller: Recipe
   action: showRecipies
 
 /admin/themes:
-  controller: User
+  controller: Theme
   action: showThemes
 
 /admin/users:
   controller: User
   action: showUsers
+
+/admin/reviews:
+  controller: Review
+  action: showReviews
 
 ## Review
 

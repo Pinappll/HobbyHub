@@ -23,4 +23,8 @@ class Page
     {
         $myView = new View("Page/deletePage", "front");
     }
+    public function showPages(): void
+    {
+        $myView = new View("Admin/pages", "back");
+    }
 }
