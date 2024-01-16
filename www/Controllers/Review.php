@@ -23,4 +23,8 @@ class Review
     {
         $myView = new View("Review/deleteReview", "front");
     }
+    public function showReviews(): void
+    {
+        $myView = new View("Admin/reviews", "back");
+    }
 }

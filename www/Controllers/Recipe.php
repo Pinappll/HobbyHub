@@ -31,4 +31,8 @@ class Recipe
     {
         $myView = new View("Recipe/single-recipe", "front");
     }
+    public function showRecipies(): void
+    {
+        $myView = new View("Admin/recipies", "back");
+    }
 }

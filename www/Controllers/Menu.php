@@ -23,4 +23,8 @@ class Menu
     {
         $myView = new View("Menu/deleteMenu", "front");
     }
+    public function showMenus(): void
+    {
+        $myView = new View("Admin/menus", "back");
+    }
 }
