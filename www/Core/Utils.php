@@ -9,32 +9,21 @@ abstract class Utils
         $errors = [];
         $password = "";
         $passwordConf = "";
-        var_dump($arrayInput);
         foreach ($arrayInput as $key => $input) {
-            switch ($key) {
-                case "firstname":
-                    if (strlen($input) < 2 || strlen($input) > 50) {
-                        $errors[] = $config["inputs"]["firstname"]["error"];
-                    }
+            switch (true) {
+                case in_array($key, ["firstname", "lastname"]) && (strlen($input) < 2 || strlen($input) > 50):
+                    $errors[] = $config["inputs"][$key]["error"];
                     break;
-                case "lastname":
-                    if (strlen($input) < 2 || strlen($input) > 50) {
-                        $errors[] = $config["inputs"]["lastname"]["error"];
-                    }
+                case $key === "email" && !filter_var($input, FILTER_VALIDATE_EMAIL):
+                    $errors[] = $config["inputs"]["email"]["error"];
                     break;
-                case "email":
-                    if (!filter_var($input, FILTER_VALIDATE_EMAIL)) {
-                        $errors[] = $config["inputs"]["email"]["error"];
-                    }
+                case $key === "password" && !preg_match("/^(?=.*[a-z])(?=.*\d).{8,}$/", $input):
+                    $errors[] = $config["inputs"]["password"]["error"];
+
                     break;
-                case "password":
-                    if (!preg_match("/^(?=.*[a-z])(?=.*\d).{8,}$/", $input)) {
-                        $errors[] = $config["inputs"]["password"]["error"];
-                    }
-                    $password = $input;
-                    break;
-                case "passwordConf":
+                case $key === "passwordConf":
                     $passwordConf = $input;
+                    $password = $arrayInput["password"];
                     break;
             }
         }
@@ -42,5 +31,9 @@ abstract class Utils
             $errors[] = $config["inputs"]["passwordConf"]["error"];
         }
         return $errors;
+    }
+    static public function generateToken($length = 32)
+    {
+        return bin2hex(random_bytes($length));
     }
 }

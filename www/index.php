@@ -10,6 +10,8 @@ namespace App;
 
 use App\Controllers\Error;
 
+require 'vendor/autoload.php';
+require __DIR__ . "/config.php";
 
 spl_autoload_register("App\myAutoloader");
 
