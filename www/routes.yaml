@@ -38,9 +38,6 @@
   controller: Security
   action: enableAccount
 
-/testmail:
-  controller: Security
-  action: testEmail
 
 
   

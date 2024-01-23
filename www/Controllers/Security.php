@@ -12,7 +12,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-
+require 'vendor/autoload.php';
 
 class Security
 {
@@ -105,14 +105,13 @@ class Security
                     $user->save();
 
                     try {
-                        $mailtrapUsername = getenv('USERNAMEMAILTRAP');
-                        $mailtrapPassword = getenv('PASSWORDMAILTRAP');
-                        var_dump($mailtrapUsername, $mailtrapPassword);
                         $phpmailer = new PHPMailer();
                         $phpmailer->isSMTP();
-                        $phpmailer->Host = "localhost";
-                        $phpmailer->Port = 1025;
-                        $phpmailer->SMTPAutoTLS = false;
+                        $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
+                        $phpmailer->SMTPAuth = true;
+                        $phpmailer->Port = 2525;
+                        $phpmailer->Username = 'db128c125df09d'; //changer
+                        $phpmailer->Password = 'ab4b6f5ce89761'; //changer
 
                         $phpmailer->CharSet = "utf-8";
                         $phpmailer->addAddress($user->getEmail_user());
@@ -148,28 +147,5 @@ class Security
             $message = "Erreur sur l'activation du compte";
         }
         $myView->assign("message", $message);
-    }
-    public function testEmail()
-    {
-        try {
-            $phpmailer = new PHPMailer();
-            $phpmailer->SMTPDebug = SMTP::DEBUG_SERVER;
-            $phpmailer->isSMTP();
-            $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
-            $phpmailer->SMTPAuth = true;
-            $phpmailer->Port = 2525;
-            $phpmailer->Username = $config["mail"]["USERNAME"];
-            $phpmailer->Password = '';
-            $phpmailer->CharSet = "utf-8";
-            $phpmailer->addAddress("ludovic93mak@gmail.com");
-            $phpmailer->setFrom("no-reply@easyCook.fr");
-            $phpmailer->isHTML(true);
-            $phpmailer->Subject = "Vérification du compte";
-            $phpmailer->Body    = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost/enable-account?token="">Activer</a>';
-            $phpmailer->send();
-            echo 'Un e-mail d\'activation a été envoyé à votre adresse.';
-        } catch (Exception) {
-            echo "L'envoi de l'e-mail a échoué. Erreur : {$phpmailer->ErrorInfo}";
-        }
     }
 }
