@@ -11,7 +11,7 @@ class DB
     {
         //connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO("pgsql:host=172.25.0.2;dbname=easyCook;user=root;password=test1234");
+            $this->pdo = new \PDO("pgsql:host=172.18.0.2;dbname=easyCook;user=ludo;password=test1234");
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -37,11 +37,14 @@ class DB
         } else {
             $sql = "UPDATE " . $this->table . " SET ";
             foreach ($data as $column => $value) {
+                if (substr($column, 0, 2) === 'is') {
+                    $data[$column] = ($value === true) ? "true" : "false";
+                }
                 $sql .= $column . "=:" . $column . ",";
             }
             $sql = substr($sql, 0, -1);
             $sql .= " WHERE id = " . $this->getId();
-        }
+        };
 
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);

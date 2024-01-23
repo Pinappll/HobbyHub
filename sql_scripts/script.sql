@@ -3,9 +3,11 @@ CREATE TABLE easycook_user (
     id SERIAL PRIMARY KEY,
     lastname_user VARCHAR(50) NOT NULL,
     firstname_user VARCHAR(50) NOT NULL,
-    email_user VARCHAR(320) NOT NULL,
+    email_user VARCHAR(320) NOT NULL UNIQUE,
+    isverified_user BOOLEAN NOT NULL DEFAULT FALSE,
     password_user VARCHAR(255) NOT NULL,
-    type_user TEXT NOT NULL CHECK (type_user IN ('customer', 'chef', 'admin', '')),
+    token_user VARCHAR(64) NOT NULL,
+    type_user TEXT NOT NULL CHECK (type_user IN ('customer', 'chef', 'admin')),
     isdeleted BOOLEAN NOT NULL DEFAULT FALSE,
     insertedat TIMESTAMPTZ DEFAULT current_timestamp,
     updatedat TIMESTAMPTZ

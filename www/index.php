@@ -10,7 +10,6 @@ namespace App;
 
 use App\Controllers\Error;
 
-
 spl_autoload_register("App\myAutoloader");
 
 function myAutoloader(String $class): void

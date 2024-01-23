@@ -12,7 +12,9 @@ class User extends DB
     protected string $email_user;
     protected string $password_user;
     protected string $type_user = "customer";
-    protected int $isDeleted;
+    protected string $token_user;
+    protected bool $isDeleted;
+    protected bool $isverified_user;
 
 
     public function __construct()
@@ -161,6 +163,48 @@ class User extends DB
     public function setIsDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of token_user
+     */
+    public function getToken_user()
+    {
+        return $this->token_user;
+    }
+
+    /**
+     * Set the value of token_user
+     *
+     * @return  self
+     */
+    public function setToken_user($token_user)
+    {
+        $this->token_user = $token_user;
+
+        return $this;
+    }
+
+
+
+    /**
+     * Get the value of isverified_user
+     */
+    public function getIsverified_user()
+    {
+        return $this->isverified_user;
+    }
+
+    /**
+     * Set the value of isverified_user
+     *
+     * @return  self
+     */
+    public function setIsverified_user($isverified_user)
+    {
+        $this->isverified_user = $isverified_user;
 
         return $this;
     }

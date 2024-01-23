@@ -34,6 +34,10 @@
   controller: Security
   action: passwordForgot
 
+/enable-account:
+  controller: Security
+  action: enableAccount
+
 
 
   
