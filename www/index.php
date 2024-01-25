@@ -23,6 +23,7 @@ function myAutoloader(String $class): void
         include $class . ".php";
     }
 }
+var_dump($_SESSION['user_id'], $_SESSION['username']);
 
 
 

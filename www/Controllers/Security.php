@@ -37,6 +37,7 @@ class Security
                             session_start();
                             $_SESSION['user_id'] = $row["id"];
                             $_SESSION['username'] = $row["lastname_user"] . " " . $row["firstname_user"];
+                            var_dump($_SESSION['user_id'], $_SESSION['username']);
                         } else {
                             $errors[] = "le login ou le mot de passe est incorrect";
                         }
@@ -55,7 +56,9 @@ class Security
 
     public function logout(): void
     {
-        echo "Ma page de déconnexion";
+        $_SESSION = array();
+        session_destroy();
+        header("Location: index.php");
     }
 
     public function register(): void
