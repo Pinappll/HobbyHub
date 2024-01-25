@@ -6,8 +6,7 @@ use App\Core\View;
 use App\Forms\UserInsert;
 use App\Forms\UserLogin;
 use App\Models\User;
-use App\Core\Utils;
-
+use App\Core\Verificator;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -18,41 +17,40 @@ class Security
 {
     public function login(): void
     {
-
         $form = new UserLogin();
         $config = $form->getConfig();
         $errors = [];
-        $myView = new View("Security/login", "front");
-        $myView->assign("configForm", $config);
-        $myView->assign("errorsForm", $errors);
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $email = $_POST['email'] ?? "";
-            $password_from_user = $_POST['password'] ?? "";
-            $user = new User();
-            $row = $user->getOneBy(["email_user" => $email]);
-            if ($row["isverified_user"]) {
+            $verificator = new Verificator();
+            if ($verificator->checkForm($config, $_REQUEST, $errors)) {
+                $user = new User();
+                $row = $user->getOneBy(["email_user" => $_REQUEST["email"]]);
+                if ($row["isverified_user"]) {
 
-                if ($row) {
-                    $password_hash_from_db = $row['password_user'];
+                    if ($row) {
+                        $password_hash_from_db = $row['password_user'];
 
-                    if (password_verify($password_from_user, $password_hash_from_db)) {
-                        session_start();
-                        $_SESSION['user_id'] = $row["id"];
-                        $_SESSION['username'] = $row["lastname_user"] + " " + $row["firstname_user"];
+                        if (password_verify($_REQUEST["password"], $password_hash_from_db)) {
+                            session_start();
+                            $_SESSION['user_id'] = $row["id"];
+                            $_SESSION['username'] = $row["lastname_user"] . " " . $row["firstname_user"];
+                        } else {
+                            $errors[] = "le login ou le mot de passe est incorrect";
+                        }
                     } else {
                         $errors[] = "le login ou le mot de passe est incorrect";
                     }
                 } else {
-                    $errors[] = "le login ou le mot de passe est incorrect";
+                    $errors[] = "Veuillez vérifier votre compte";
                 }
-            } else {
-                $errors[] = "Veuillez vérifier votre compte";
             }
-
-            $myView->assign("errorsForm", $errors);
         }
+        $myView = new View("Security/login", "front");
+        $myView->assign("configForm", $config);
+        $myView->assign("errorsForm", $errors);
     }
 
     public function logout(): void
@@ -65,42 +63,21 @@ class Security
         $form = new UserInsert();
         $config = $form->getConfig();
         $errors = [];
-        $myView = new View("Security/register", "front");
-        $myView->assign("configForm", $config);
-        $myView->assign("errorsForm", $errors);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $firstname = $_POST['firstname'] ?? "";
-            $lastname = $_POST['lastname'] ?? "";
-            $email = $_POST['email'] ?? "";
-            $password = $_POST['password'] ?? "";
-            $passwordConf = $_POST['passwordConf'] ?? "";
-
-            $errors = Utils::checkValidationRequest(
-                [
-                    "firstname" => $firstname,
-                    "lastname" => $lastname,
-                    "email" => $email,
-                    "password" => $password,
-                    "passwordConf" => $passwordConf,
-                ],
-                $config
-            );
-            $myView->assign("errorsForm", $errors);
-            if (empty($errors)) {
-
-                $activation_token = Utils::generateToken();
+        if ($_SERVER["REQUEST_METHOD"] == $config["config"]["method"]) {
+            // Ensuite est-ce que les données sont OK
+            $verificator = new Verificator();
+            if ($verificator->checkForm($config, $_REQUEST, $errors)) {
+                $activation_token = $verificator->generateToken();
                 $user = new User();
-                $isExistEmail = !empty($user->getOneBy(["email_user" => $email]));
+                $isExistEmail = !empty($user->getOneBy(["email_user" => $_REQUEST["email"]]));
                 if ($isExistEmail) {
-                    $errors = ["Ce mail est déjà utilisé"];
-                    $myView->assign("errorsForm", $errors);
+                    $errors = ["Cette email est déjà utilisé"];
                 } else {
-                    $user->setFirstname_user($firstname);
-                    $user->setLastname_user($lastname);
-                    $user->setEmail_user($email);
-                    $user->setPassword_user($password);
+                    $user->setFirstname_user($_REQUEST["firstname"]);
+                    $user->setLastname_user($_REQUEST["lastname"]);
+                    $user->setEmail_user($_REQUEST["email"]);
+                    $user->setPassword_user($_REQUEST["password"]);
                     $user->setToken_user($activation_token);
                     $user->save();
 
@@ -127,6 +104,9 @@ class Security
                 }
             }
         }
+        $myView = new View("Security/register", "front");
+        $myView->assign("configForm", $config);
+        $myView->assign("errorsForm", $errors);
     }
 
     public function enableAccount()
