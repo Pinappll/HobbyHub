@@ -1,0 +1,48 @@
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom:0;
+    width: rem(240); 
+    background-color: var(--black);
+    z-index: 1000;
+    overflow: auto;
+
+    .sidebar-title {
+            font-size: rem(22);
+            line-height: rem(28);
+            font-weight: 500;
+            padding: rem(16);
+            color: var(--brown);
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+        }
+
+    ul {
+        @include resetList;
+        @include flexbox(column, nowrap, flex-start, center);
+        
+        li {
+            padding: rem(10) rem(16);
+
+            a {
+                font-size: rem(18);
+                color: var(--white);
+                text-decoration: none;
+            }
+        }
+    }
+
+    @media (min-width: $breakpoint-sm) {
+        width: rem(150); // tablettes
+        .sidebar-title {
+            font-size: rem(18); 
+            padding: rem(12); 
+        }
+    }
+
+    @media (min-width: $breakpoint-md) {
+        width: rem(240); // ordi
+    }
+}
