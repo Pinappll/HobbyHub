@@ -34,10 +34,9 @@ class Security
                         $password_hash_from_db = $row['password_user'];
 
                         if (password_verify($_REQUEST["password"], $password_hash_from_db)) {
-                            session_start();
                             $_SESSION['user_id'] = $row["id"];
                             $_SESSION['username'] = $row["lastname_user"] . " " . $row["firstname_user"];
-                            var_dump($_SESSION['user_id'], $_SESSION['username']);
+                            
                         } else {
                             $errors[] = "le login ou le mot de passe est incorrect";
                         }
@@ -58,7 +57,7 @@ class Security
     {
         $_SESSION = array();
         session_destroy();
-        header("Location: index.php");
+        header("Location: /");
     }
 
     public function register(): void
