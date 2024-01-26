@@ -68,7 +68,7 @@ class Security
         $form = new UserInsert();
         $config = $form->getConfig();
         $errors = [];
-
+        $message = "";
         if ($_SERVER["REQUEST_METHOD"] == $config["config"]["method"]) {
             // Ensuite est-ce que les données sont OK
             $verificator = new Verificator();
@@ -102,9 +102,9 @@ class Security
                         $phpmailer->Subject = "Vérification du compte";
                         $phpmailer->Body    = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost/enable-account?token=' . $activation_token . '">Activer</a>';
                         $phpmailer->send();
-                        echo 'Un e-mail d\'activation a été envoyé à votre adresse.';
+                        $message = 'Un e-mail d\'activation a été envoyé à votre adresse.';
                     } catch (Exception) {
-                        echo "L'envoi de l'e-mail a échoué. Erreur : {$phpmailer->ErrorInfo}";
+                        $errors = array("L'envoi de l'e-mail a échoué. Erreur : {$phpmailer->ErrorInfo}");
                     }
                 }
             }
@@ -112,6 +112,7 @@ class Security
         $myView = new View("Security/register", "front");
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
+        $myView->assign("message", $message);
     }
 
     public function enableAccount()
@@ -139,6 +140,7 @@ class Security
         $form = new UserForgetPassword();
         $config = $form->getConfig();
         $errors = array();
+        $message = "";
         if ($_SERVER["REQUEST_METHOD"] == $config["config"]["method"]) {
             $verificator = new Verificator();
             if ($verificator->checkForm($config, $_REQUEST, $errors)) {
@@ -164,9 +166,9 @@ class Security
                             $phpmailer->Subject = "Vérification du compte";
                             $phpmailer->Body    = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost/change-password?token=' . $token . '">Activer</a>';
                             $phpmailer->send();
-                            echo 'Un e-mail d\'activation a été envoyé à votre adresse.';
+                            $message = 'Un e-mail d\'activation a été envoyé à votre adresse.';
                         } catch (Exception) {
-                            echo "L'envoi de l'e-mail a échoué. Erreur : {$phpmailer->ErrorInfo}";
+                            $errors = array("L'envoi de l'e-mail a échoué. Erreur : {$phpmailer->ErrorInfo}");
                         }
                     } else {
                         $errors = array("Email non envoyé");
@@ -179,6 +181,7 @@ class Security
         $myView = new View("Security/password-forgot", "front");
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
+        $myView->assign("message", $message);
     }
 
     public function changePassword()
