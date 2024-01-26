@@ -54,12 +54,18 @@ class View
     {
         extract($this->data);
 
+        
+        
+        include $this->templateName;
         // Charger l'en-tête
         $headerPath = "Views/Components/header.php";
         if (file_exists($headerPath)) {
             include $headerPath;
         }
-
-        include $this->templateName;
+        // Charger le pied de page
+        $footerPath = "Views/Components/footer.php";
+        if (file_exists($footerPath)) {
+            include $footerPath;
+        }
     }
 }

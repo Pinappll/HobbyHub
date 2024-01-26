@@ -1,0 +1,43 @@
+.site-footer {
+	background-color: var(--brown);
+	
+	color: var(--white);
+	font-size: rem(13);
+	
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+
+	.contact{
+		padding: rem(10) rem(12);
+		@include flexbox(row, nowrap, space-between, center, rem(30));
+		ul {
+			@include resetList;
+			@include flexbox(column, wrap, flex-start, flex-start, rem(18));
+			flex-grow: 1;
+			a {
+				font-weight: 500;
+				line-height: rem(28);
+			}
+		}
+	}
+	.container {
+		background-color: var(--dark-grey);
+		padding: rem(10) rem(12);
+		@include flexbox(row, nowrap, space-between, center, rem(30));
+
+		justify-content: space-between
+		
+	}
+	
+	ul {
+		@include resetList;
+		@include flexbox(row, wrap, flex-start, center, rem(18));
+		flex-grow: 1;
+		a {
+			font-weight: 500;
+			line-height: rem(28);
+		}
+	}
+	
+}

@@ -1,7 +1,7 @@
 .navbar {
-	background-color: var(--lightGrey);
+	background-color: var(--brown);
 	padding: rem(10) rem(12);
-	color: var(--text-color);
+	color: var(--white);
 	font-size: rem(18);
 
 	&_title {
@@ -13,6 +13,8 @@
 		@include flexbox(row, nowrap, space-between, center, rem(30));
 
 		.site-logo{
+			    transform: translateY(15%);
+
 			width: 8%;
 		}
 	}
