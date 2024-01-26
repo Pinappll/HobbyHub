@@ -35,10 +35,12 @@ class View
         }
         $this->viewName = "Views/" . $viewName . ".view.php";
     }
+    
     public function assign(string $key, $value): void
     {
         $this->data[$key] = $value;
     }
+
     public function includeComponent(string $component, array $config, array $data = []): void
     {
         if (!file_exists("Views/Components/" . $component . ".php")) {
@@ -51,6 +53,13 @@ class View
     public function __destruct()
     {
         extract($this->data);
+
+        // Charger l'en-tête
+        $headerPath = "Views/Components/header.php";
+        if (file_exists($headerPath)) {
+            include $headerPath;
+        }
+
         include $this->templateName;
     }
 }
