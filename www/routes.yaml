@@ -38,6 +38,10 @@
   controller: Security
   action: enableAccount
 
+/change-password:
+  controller: Security
+  action: changePassword
+
 
 
   

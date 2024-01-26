@@ -10,6 +10,7 @@ class Verificator
 
         //Est-ce qu'on a le bon nb d'inputs
         if (count($config["inputs"]) != count($data)) {
+            var_dump(count($config["inputs"]), count($data));
             die("Tentative de Hack");
         } else {
             //CSRF ???
@@ -60,5 +61,4 @@ class Verificator
     {
         return bin2hex(random_bytes($length));
     }
-
 }
