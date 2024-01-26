@@ -36,7 +36,6 @@ class Security
                         $password_hash_from_db = $row['password_user'];
 
                         if (password_verify($_REQUEST["password"], $password_hash_from_db)) {
-                            session_start();
                             $_SESSION['user_id'] = $row["id"];
                             $_SESSION['username'] = $row["lastname_user"] . " " . $row["firstname_user"];
                             $message = "Connexion réussie";
@@ -59,7 +58,9 @@ class Security
 
     public function logout(): void
     {
-        echo "Ma page de déconnexion";
+        $_SESSION = array();
+        session_destroy();
+        header("Location: /");
     }
 
     public function register(): void

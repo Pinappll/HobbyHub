@@ -11,7 +11,7 @@ namespace App;
 use App\Controllers\Error;
 
 spl_autoload_register("App\myAutoloader");
-
+session_start();
 function myAutoloader(String $class): void
 {
     //$class = App\Core\View
@@ -23,6 +23,7 @@ function myAutoloader(String $class): void
         include $class . ".php";
     }
 }
+
 
 
 
