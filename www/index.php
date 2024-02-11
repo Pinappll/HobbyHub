@@ -12,6 +12,26 @@ use App\Controllers\Error;
 
 spl_autoload_register("App\myAutoloader");
 session_start();
+function loadEnv($filePath)
+{
+    $file = fopen($filePath, 'r');
+    if ($file) {
+        while (($line = fgets($file)) !== false) {
+            $line = trim($line);
+            if ($line !== '' && strpos($line, '=') !== false && substr($line, 0, 1) !== '#') {
+                list($key, $value) = explode('=', $line, 2);
+                $_ENV[$key] = $value;
+                putenv("$key=$value");
+            }
+        }
+        fclose($file);
+    } else {
+        // Gérer l'erreur de lecture du fichier
+        die('Erreur lors de la lecture du fichier .env');
+    }
+}
+$dotenvPath = $_SERVER["DOCUMENT_ROOT"] . "/.env";
+loadEnv($dotenvPath);
 function myAutoloader(String $class): void
 {
     //$class = App\Core\View
