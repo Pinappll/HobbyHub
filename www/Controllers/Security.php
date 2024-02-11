@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Mail;
 use App\Core\View;
 use App\Forms\UserInsert;
 use App\Forms\UserLogin;
@@ -85,27 +86,10 @@ class Security
                     $user->setPassword_user($_REQUEST["password"]);
                     $user->setToken_user($activation_token);
                     $user->save();
-
-                    try {
-                        $phpmailer = new PHPMailer();
-                        $phpmailer->isSMTP();
-                        $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
-                        $phpmailer->SMTPAuth = true;
-                        $phpmailer->Port = 2525;
-                        $phpmailer->Username = 'db128c125df09d'; //changer
-                        $phpmailer->Password = 'ab4b6f5ce89761'; //changer
-
-                        $phpmailer->CharSet = "utf-8";
-                        $phpmailer->addAddress($user->getEmail_user());
-                        $phpmailer->setFrom("no-reply@easyCook.fr");
-                        $phpmailer->isHTML(true);
-                        $phpmailer->Subject = "Vérification du compte";
-                        $phpmailer->Body    = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost/enable-account?token=' . $activation_token . '">Activer</a>';
-                        $phpmailer->send();
-                        $message = 'Un e-mail d\'activation a été envoyé à votre adresse.';
-                    } catch (Exception) {
-                        $errors = array("L'envoi de l'e-mail a échoué. Erreur : {$phpmailer->ErrorInfo}");
-                    }
+                    $mail = new Mail();
+                    $subject = "Vérification du compte";
+                    $content = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost/enable-account?token=' . $activation_token . '">Activer</a>';
+                    $message = $mail->sendMail([$user->getEmail_user()], $subject, $content);
                 }
             }
         }
