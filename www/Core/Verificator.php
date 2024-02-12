@@ -61,4 +61,18 @@ class Verificator
     {
         return bin2hex(random_bytes($length));
     }
+    static public function checkIsAuthenticate()
+    {
+        if (!isset($_SESSION["user"])) {
+            header("Location: /");
+            exit;
+        }
+    }
+    static public function checkIsAdmin()
+    {
+        if (!isset($_SESSION["user"]) || $_SESSION["user"]["role"] !== "admin") {
+            header("Location: /");
+            exit;
+        }
+    }
 }
