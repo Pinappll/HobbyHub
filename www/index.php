@@ -74,37 +74,56 @@ $listOfRoutes = yaml_parse_file("routes.yaml");
         )
  *
  */
+function access(array $roles): bool
+{
+    $access = true;
+    if (!empty($roles)) {
+        if (isset($_SESSION["role"])) {
 
-if (!empty($listOfRoutes[$uri])) {
-    if (!empty($listOfRoutes[$uri]['controller'])) {
-        if (!empty($listOfRoutes[$uri]['action'])) {
-
-            $controller = $listOfRoutes[$uri]['controller'];
-            $action = $listOfRoutes[$uri]['action'];
-
-            if (file_exists("Controllers/" . $controller . ".php")) {
-                include "Controllers/" . $controller . ".php";
-                $controller = "App\\Controllers\\" . $controller;
-
-                if (class_exists($controller)) {
-                    $objectController = new $controller();
-
-                    if (method_exists($objectController, $action)) {
-                        $objectController->$action();
-                    } else {
-                        die("L'action n'existe pas dans le controller");
-                    }
-                } else {
-                    die("La classe du controller n'existe pas");
-                }
-            } else {
-                die("Le fichier controller n'existe pas");
+            if (!in_array($_SESSION['role'], $roles)) {
+                $access = false;
             }
         } else {
-            die("La route ne contient pas d'action");
+            $access = false;
+        }
+    }
+    return $access;
+}
+
+if (!empty($listOfRoutes[$uri])) {
+    if (access($listOfRoutes[$uri]['roles'])) {
+        if (!empty($listOfRoutes[$uri]['controller'])) {
+            if (!empty($listOfRoutes[$uri]['action'])) {
+
+                $controller = $listOfRoutes[$uri]['controller'];
+                $action = $listOfRoutes[$uri]['action'];
+
+                if (file_exists("Controllers/" . $controller . ".php")) {
+                    include "Controllers/" . $controller . ".php";
+                    $controller = "App\\Controllers\\" . $controller;
+
+                    if (class_exists($controller)) {
+                        $objectController = new $controller();
+
+                        if (method_exists($objectController, $action)) {
+                            $objectController->$action();
+                        } else {
+                            die("L'action n'existe pas dans le controller");
+                        }
+                    } else {
+                        die("La classe du controller n'existe pas");
+                    }
+                } else {
+                    die("Le fichier controller n'existe pas");
+                }
+            } else {
+                die("La route ne contient pas d'action");
+            }
+        } else {
+            die("La route ne contient pas de controller");
         }
     } else {
-        die("La route ne contient pas de controller");
+        die("Vous n'avez pas les droits pour accéder à cette page");
     }
 } else {
     require "Controllers/Error.php";
