@@ -1,0 +1,52 @@
+// J'ai laissé le pattrn su rlequel je commençais tu peux modifier comme tu veux
+form {
+    
+  
+    .link{
+      
+    }
+    fieldset {
+      
+      label {
+        
+      }
+  
+      input {
+       
+  
+        &[type="submit"], &[type="button"] {
+          
+        }
+  
+        &[type="reset"] {
+          
+        }
+        &[type="file"] {
+          
+        }
+        &[type="text"], &[type="email"], &[type="password"] {
+          
+        }
+        &[placeholder] {
+        }
+      }
+    }
+    textarea {
+      
+      
+    }
+    select {
+      
+    }
+    option{
+     
+    }
+  }
+  
+  
+  .filter {
+    
+  
+    input[type="submit"] {
+    }
+  }

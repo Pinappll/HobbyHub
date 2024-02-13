@@ -1,0 +1,23 @@
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.9); // En dur :(
+	display: flex;
+	z-index: 999;
+	display: none;
+	section {
+		margin: auto;
+		max-width: rem(600);
+		background-color: var(--white);
+		padding: var(--main-padding);
+		border-radius: var(--main-radius);
+	}
+	footer {
+		padding-top: var(--main-padding);
+		display: flex;
+		justify-content: flex-end;
+	}
+}
