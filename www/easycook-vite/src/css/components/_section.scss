@@ -1,0 +1,11 @@
+.section{
+    padding: rem(30) rem(12);
+    &-presentation{
+        text-align: center;
+        background-color: var(--brown);
+    }
+    &-menu{
+        background-color: var(--grey);
+        text-align: center;
+    }
+}
