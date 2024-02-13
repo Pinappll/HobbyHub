@@ -7,7 +7,7 @@ CREATE TABLE easycook_user (
     isverified_user BOOLEAN NOT NULL DEFAULT FALSE,
     password_user VARCHAR(255) NOT NULL,
     token_user VARCHAR(64) NOT NULL,
-    type_user TEXT NOT NULL CHECK (type_user IN ('customer', 'chef', 'admin')),
+    type_user TEXT NOT NULL CHECK (type_user IN ('viewer', 'chef', 'admin')),
     isdeleted BOOLEAN NOT NULL DEFAULT FALSE,
     insertedat TIMESTAMPTZ DEFAULT current_timestamp,
     updatedat TIMESTAMPTZ

@@ -30,15 +30,15 @@ class Security
             $verificator = new Verificator();
             if ($verificator->checkForm($config, $_REQUEST, $errors)) {
                 $user = new User();
-                $row = $user->getOneBy(["email_user" => $_REQUEST["email"]]);
-                if ($row["isverified_user"]) {
-
-                    if ($row) {
-                        $password_hash_from_db = $row['password_user'];
+                $user = $user->getOneBy(["email_user" => $_REQUEST["email"]], "object");
+                if ($user->getIsverified_user()) {
+                    if ($user) {
+                        $password_hash_from_db = $user->getPassword_user();
 
                         if (password_verify($_REQUEST["password"], $password_hash_from_db)) {
-                            $_SESSION['user_id'] = $row["id"];
-                            $_SESSION['username'] = $row["lastname_user"] . " " . $row["firstname_user"];
+                            $_SESSION['user_id'] = $user->getId();
+                            $_SESSION['username'] = $user->__toString();
+                            $_SESSION["role"] = $user->getType_user();
                             $message = "Connexion réussie";
                         } else {
                             $errors[] = "le login ou le mot de passe est incorrect";

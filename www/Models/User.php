@@ -11,7 +11,7 @@ class User extends DB
     protected string $lastname_user;
     protected string $email_user;
     protected string $password_user;
-    protected string $type_user = "customer";
+    protected string $type_user = "viewer";
     protected string $token_user;
     protected bool $isDeleted;
     protected bool $isverified_user;

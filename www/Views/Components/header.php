@@ -35,7 +35,7 @@
         </div>
     </nav>
     <section class="section_header">
-        <h1><?php echo $data["title"] ?></h1>
-        <p><?php echo $data["description"] ?></p>
+        <h1><?php if (isset($data["title"])) echo $data["title"] ?></h1>
+        <p><?php if (isset($data["description"])) echo $data["description"] ?></p>
     </section>
 </header>
