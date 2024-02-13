@@ -73,4 +73,21 @@ class DB
         }
         return $queryPrepared->fetch();
     }
+    public function getList(array $filters = [],int $limit,int $offset): array
+    {
+        $sql = "SELECT * FROM " . $this->table;
+        if (!empty($filters)) {
+            $sql .= " WHERE ";
+            foreach ($filters as $column => $value) {
+                $sql .= " " . $column . "=:" . $column . " AND";
+            }
+            $sql = substr($sql, 0, -3);
+        }
+        $sql .= " LIMIT :limit OFFSET :offset";
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->bindParam(":limit", $limit, \PDO::PARAM_INT);
+        $queryPrepared->bindParam(":offset", $offset, \PDO::PARAM_INT);
+        $queryPrepared->execute($filters);
+        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
+    }
 }
