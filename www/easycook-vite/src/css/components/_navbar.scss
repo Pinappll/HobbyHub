@@ -1,13 +1,17 @@
 .navbar {
 	position: relative;
 	
-	background-color: #BE5A38;
+	background-color: var(--brown);
 	.container {
 		padding: 1rem;
 		@include flexbox(row, wrap, space-between, center, 0);
 		.navbar-desktop{
 			display: none;
 		}
+	}
+
+	&-admin{
+		background-color: var(--dark-grey);
 	}
 
 	img{

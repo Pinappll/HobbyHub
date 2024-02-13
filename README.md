@@ -27,5 +27,10 @@
    docker exec -it containerPostgre psql -U nom_utilisateur -d nom_de_bdd
    ```
 
-   
+### CSS
+
+ ```bash
+cd .\www\easycook-vite\
+npm i
+```
 
