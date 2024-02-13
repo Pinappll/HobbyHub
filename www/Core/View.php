@@ -53,7 +53,6 @@ class View
     public function __destruct()
     {
         extract($this->data);
-        var_dump($this->data);
         $this->includeComponent("header", [], $this->data);
         include $this->templateName;
         $this->includeComponent("footer", [], []);
