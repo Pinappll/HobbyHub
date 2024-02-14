@@ -35,15 +35,15 @@ CREATE TABLE easycook_setting (
 --Recipe
 CREATE TABLE easycook_recipe (
     id SERIAL PRIMARY KEY,
-    id_user_recipie INT NOT NULL,
-    title_recipie VARCHAR(50) NOT NULL,
-    ingredient_recipie TEXT NOT NULL,
-    instruction_recipie TEXT NOT NULL,
+    id_user_recipe INT NOT NULL,
+    title_recipe VARCHAR(50) NOT NULL,
+    ingredient_recipe TEXT NOT NULL,
+    instruction_recipe TEXT NOT NULL,
     image_url_recipe TEXT NOT NULL,
     isdeleted BOOLEAN DEFAULT FALSE,
     insertedat TIMESTAMPTZ DEFAULT current_timestamp,
     updatedat TIMESTAMPTZ DEFAULT NULL,
-	CONSTRAINT fk_user_recipie FOREIGN KEY (id_user_recipie) REFERENCES easycook_user(id)
+	CONSTRAINT fk_user_recipe FOREIGN KEY (id_user_recipe) REFERENCES easycook_user(id)
 );
 CREATE TRIGGER update_updatedat_easycook_recipe
 BEFORE UPDATE ON easycook_recipe

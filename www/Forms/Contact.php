@@ -24,10 +24,5 @@ class Contact
             ]
         ];
     }
-    public function render()
-    {
-        $formGenerator = new BuildForm($this->getConfig());
-        echo $formGenerator->generateForm();
-    }
 
 }
