@@ -4,6 +4,7 @@
 		<meta charset="utf-8" />
 		<title>design guide</title>
 		<link rel="stylesheet" type="text/css" href="./dist/css/style.css" />
+		<script src="dist/js/main.js"></script>
 	</head>
 	<body>
 		<style>
@@ -12,6 +13,8 @@
 				height: 2rem;
 			}
 		</style>
+		<h1 style="text-align: center;">Design guide</h1>
+		<button class="dark-mode"></button>
 		<section>
 			<h1>.button</h1>
 			<hr />
@@ -41,12 +44,30 @@
 				<a href="#" class="button button-dark-grey button-sm">Button</a>
 			</p>
 		</section>
+
+		<section>
+			<h1>.section</h1>
+			<hr />
+			<br>
+			<section class="section section-presentation"> 
+				<h1>Section-presentation</h1>
+				<p>C'est la section presentation du design guide</p>
+				<p>C'est la section presentation du design guide</p>
+			</section>	
+			<section class="section section-menu"> 
+			<h1>Section-menu</h1>
+			<h2>Menu du jour</h2>
+			<p>Une balise, avec un peu de php</p>
+
+			</section>	
+		</section>
+
 		<section>
 			<h1>.banner</h1>
 			<hr />
-			<div class="banner" style="background-image: url('assets/images/fond.png');"></div>
+			<div class="banner" style="background-image: url('assets/images/fond.jpg');"></div>
 			<br>
-			<div class="banner banner-text" style="background-image: url('assets/images/fond.png');">
+			<div class="banner banner-text" style="background-image: url('assets/images/fond.jpg');">
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 			 Cras ullamcorper nulla a ipsum imperdiet, ac porttitor dui sagittis.</p>
 			</div>
@@ -55,7 +76,7 @@
 			<h1>.card</h1>
 			<hr />
 			<article class="card">
-				<img src="assets/images/Tororo.png">
+				<img src="assets/images/fond.jpg">
 				<h1>Cart title</h1>
 				<p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 				<a href="#" class="button button-primary button-sm"> Button </a>
@@ -67,7 +88,7 @@
 			<h1>.card</h1>
 			<hr />
 			<article class="card card-full">
-				<img src="assets/images/Tororo.png">
+				<img src="assets/images/fond.jpg">
 				<h1>Cart title</h1>
 				<p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 				<a href="#" class="button button-primary button-sm"> Button </a>
@@ -106,6 +127,52 @@
 			</div>
 			<button type="submit" class="button button-primary">Submit</button>
 		</form>
+		</section>
+		<section>
+			<h1>.modal</h1>
+			<hr />
+			<button class="button" data-modal-open="modal1">Open modal 1</button>
+			<div class="modal" id="modal1">
+				<section>
+					<header>
+						<h1>Titre de la modale</h1>
+					</header>
+					<div class="modal_content">
+						<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
+							magni dolores totam accusantium atque illo repellat sint
+							distinctio quis! Aliquid atque dolorem ipsam temporibus, sed et
+							voluptatibus cumque aperiam velit.
+						</p>
+					</div>
+					<footer>
+						<button class="button button-primary" data-modal-close>
+							Close
+						</button>
+					</footer>
+				</section>
+			</div>
+			<button class="button" data-modal-open="modal2">Open modal 2</button>
+			<div class="modal" id="modal2">
+				<section>
+					<header>
+						<h1>Titre de la modale 2</h1>
+					</header>
+					<div class="modal_content">
+						<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
+							magni dolores totam accusantium atque illo repellat sint
+							distinctio quis! Aliquid atque dolorem ipsam temporibus, sed et
+							voluptatibus cumque aperiam velit.
+						</p>
+					</div>
+					<footer>
+						<button class="button button-primary" data-modal-close>
+							Close
+						</button>
+					</footer>
+				</section>
+			</div>
 		</section>
 	</body>
 </html>
