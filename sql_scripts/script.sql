@@ -4,27 +4,27 @@ CREATE TABLE easycook_user (
     lastname_user VARCHAR(50) NOT NULL,
     firstname_user VARCHAR(50) NOT NULL,
     email_user VARCHAR(320) NOT NULL UNIQUE,
-    isverified_user BOOLEAN NOT NULL DEFAULT FALSE,
+    is_verified_user BOOLEAN NOT NULL DEFAULT FALSE,
     password_user VARCHAR(255) NOT NULL,
     token_user VARCHAR(64) NOT NULL,
     type_user TEXT NOT NULL CHECK (type_user IN ('viewer', 'chef', 'admin')),
-    isdeleted BOOLEAN NOT NULL DEFAULT FALSE,
-    insertedat TIMESTAMPTZ DEFAULT current_timestamp,
-    updatedat TIMESTAMPTZ
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
+    updated_at TIMESTAMPTZ
 );
 
-CREATE OR REPLACE FUNCTION update_updatedat_column()
+CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.updatedat = current_timestamp;
+    NEW.updated_at = current_timestamp;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER update_updatedat_easycook_user
+CREATE TRIGGER update_updated_at_easycook_user
 BEFORE UPDATE ON easycook_user
 FOR EACH ROW
-EXECUTE FUNCTION update_updatedat_column();
+EXECUTE FUNCTION update_updated_at_column();
 --Settings
 CREATE TABLE easycook_setting (
     name_setting VARCHAR(50) NOT NULL,
@@ -40,15 +40,15 @@ CREATE TABLE easycook_recipe (
     ingredient_recipe TEXT NOT NULL,
     instruction_recipe TEXT NOT NULL,
     image_url_recipe TEXT NOT NULL,
-    isdeleted BOOLEAN DEFAULT FALSE,
-    insertedat TIMESTAMPTZ DEFAULT current_timestamp,
-    updatedat TIMESTAMPTZ DEFAULT NULL,
+    is_deleted BOOLEAN DEFAULT FALSE,
+    inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
+    updated_at TIMESTAMPTZ DEFAULT NULL,
 	CONSTRAINT fk_user_recipe FOREIGN KEY (id_user_recipe) REFERENCES easycook_user(id)
 );
 CREATE TRIGGER update_updatedat_easycook_recipe
 BEFORE UPDATE ON easycook_recipe
 FOR EACH ROW
-EXECUTE FUNCTION update_updatedat_column();
+EXECUTE FUNCTION update_updated_at_column();
 --Page
 CREATE TABLE easycook_page (
     id SERIAL PRIMARY KEY,
@@ -66,16 +66,16 @@ CREATE TABLE easycook_review (
     title_review VARCHAR(50) NOT NULL,
     content_review TEXT NOT NULL,
     status_review TEXT NOT NULL CHECK (status_review IN ('accept', 'process', 'cancel', '')),
-    isdeleted BOOLEAN NOT NULL DEFAULT FALSE,
-    insertedat TIMESTAMPTZ DEFAULT current_timestamp,
-    updatedat TIMESTAMPTZ DEFAULT NULL,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
+    updated_at TIMESTAMPTZ DEFAULT NULL,
     CONSTRAINT fk_user_review FOREIGN KEY (id_user_review) REFERENCES easycook_user(id),
     CONSTRAINT fk_recipe_review FOREIGN KEY (id_recipe_review) REFERENCES easycook_recipe(id)
 );
-CREATE TRIGGER update_updatedat_easycook_reviw
+CREATE TRIGGER update_updated_at_easycook_review
 BEFORE UPDATE ON easycook_review
 FOR EACH ROW
-EXECUTE FUNCTION update_updatedat_column();
+EXECUTE FUNCTION update_updated_at_column();
 --Menu
 CREATE TABLE easycook_menu (
     id SERIAL PRIMARY KEY,

@@ -11,7 +11,7 @@ class DB
     {
         //connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO('pgsql:host=172.24.0.2;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+            $this->pdo = new \PDO('pgsql:host=172.26.0.2;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -30,7 +30,7 @@ class DB
     public function save()
     {
         $data = $this->getDataObject();
-        var_dump($data);
+
         if (empty($this->getId())) {
             $sql = "INSERT INTO " . $this->table . "(" . implode(",", array_keys($data)) . ") 
             VALUES (:" . implode(",:", array_keys($data)) . ")";

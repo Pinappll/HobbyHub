@@ -57,7 +57,12 @@ class Recipe
     }
     public function deleteRecipe(): void
     {
-        $myView = new View("Recipe/deleteRecipe", "front");
+        $id = $_GET["id"];
+        $recipe = new RecipeModel();
+        $recipe = $recipe->getOneBy(["id" => $id], "object");
+        $recipe->setDeleted(true);
+        $recipe->save();
+        header("Location: /admin/recipes");
     }
     public function recipes(): void
     {
