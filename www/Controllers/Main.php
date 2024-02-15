@@ -22,4 +22,9 @@ class Main
     {
         $myView = new View("Main/contact", "front");
     }
+    
+    public function designGuide(): void
+    {
+        $myView = new View("Main/design-guide", "front");
+    }
 }
