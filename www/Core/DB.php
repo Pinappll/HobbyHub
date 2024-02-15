@@ -73,21 +73,37 @@ class DB
         }
         return $queryPrepared->fetch();
     }
-    public function getList(array $filters = [], int $limit, int $offset): array
+    public function getList(array $filters = [], int $limit = 10, int $offset = 0): array
     {
         $sql = "SELECT * FROM " . $this->table;
+        $params = [];
+
         if (!empty($filters)) {
             $sql .= " WHERE ";
             foreach ($filters as $column => $value) {
-                $sql .= " " . $column . "=:" . $column . " AND";
+                $sql .= " $column = :$column AND";
+                $params[":$column"] = $value;
             }
-            $sql = substr($sql, 0, -3);
+            $sql = rtrim($sql, 'AND');
         }
+
         $sql .= " LIMIT :limit OFFSET :offset";
+        $params[':limit'] = $limit;
+        $params[':offset'] = $offset;
+
         $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->bindParam(":limit", $limit, \PDO::PARAM_INT);
-        $queryPrepared->bindParam(":offset", $offset, \PDO::PARAM_INT);
-        $queryPrepared->execute($filters);
-        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
+        foreach ($params as $param => &$val) {
+            if (is_int($val)) {
+                $paramType = \PDO::PARAM_INT;
+            } elseif (is_bool($val)) {
+                $paramType = \PDO::PARAM_BOOL;
+            } else {
+                $paramType = \PDO::PARAM_STR;
+            }
+            $queryPrepared->bindParam($param, $val, $paramType);
+        }
+
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
     }
 }

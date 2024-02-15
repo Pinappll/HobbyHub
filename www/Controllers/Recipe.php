@@ -6,6 +6,7 @@ use App\Core\Verificator;
 use App\Core\View;
 use App\Forms\RecipeInsert;
 use App\Models\Recipe as RecipeModel;
+use App\Tables\RecipeTable;
 
 class Recipe
 {
@@ -19,10 +20,9 @@ class Recipe
         $message = "";
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $verificator = new Verificator();
-            var_dump($_FILES);
             if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
 
-                $uploadDir = "uploads/";
+                $uploadDir = "dist/assets/uploads/";
                 if (!file_exists($uploadDir)) {
                     mkdir($uploadDir, 0777, true);
                 }
@@ -74,6 +74,11 @@ class Recipe
     }
     public function showRecipes(): void
     {
+        $table = new RecipeTable();
+        $configTable = $table->getConfig();
+        $recipe = new RecipeModel();
         $myView = new View("Admin/recipes", "back");
+        $myView->assign("configTable", $configTable);
+        $myView->assign("data", $recipe->getList());
     }
 }
