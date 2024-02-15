@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<title>design guide</title>
-		<link rel="stylesheet" type="text/css" href="../../easycook-vite/dist/css/style.css" />
-	</head>
-	<body>
-		<style>
-			.content{
-				background-color: blue;
-				height: 2rem;
-			}
-		</style>
-		<section>
+<section class="section">
 			<h1>.button</h1>
 			<hr />
 			<p>
@@ -107,5 +93,3 @@
 			<button type="submit" class="button button-primary">Submit</button>
 		</form>
 		</section>
-	</body>
-</html>
