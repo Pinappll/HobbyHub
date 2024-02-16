@@ -12,6 +12,11 @@
   action: home
   roles: []
 
+/contact:
+  controller: Main
+  action: contact
+  roles: []
+
 /login:
   controller: Security
   action: login

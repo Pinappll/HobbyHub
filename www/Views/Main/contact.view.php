@@ -1,20 +1,8 @@
-<?php
-use App\Core\BuildForm;
-use App\Forms\Contact;
+<section class="section">
 
+<?php $this->includeComponent("form", $configForm, $errorsForm);
+if (isset($this->data["message"])) {
+    echo "<h3>" . $this->data["message"] . "</h3>";
+}
 ?>
-
-
-    <div class="container">
-        <section>
-        <h2>Remplissez le formulaire ci-dessous pour nous contacter</h2>
-        </section>
-        
-        <?php
-
-        $userForm = new Contact();
-        $userForm->render();
-
-        ?>
-        
-    </div>
+</section>
