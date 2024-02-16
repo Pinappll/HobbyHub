@@ -3,8 +3,10 @@
 namespace App\Controllers;
 
 use App\Core\View;
+use App\Models\Page;
 
-class Page
+
+class PageController
 {
 
     public function createPage(): void
@@ -26,5 +28,17 @@ class Page
     public function showPages(): void
     {
         $myView = new View("Admin/pages", "back");
+
+        $myView->assign("title", "Liste des pages");
+        $myView->assign("description", "Liste des pages du site");
+
+        
+        $page = new Page();
+        $pages = $page->findAll();
+       
+
+        $myView->assign("pages", $pages);
+
+
     }
 }

@@ -77,3 +77,13 @@
   controller: Review
   action: showReviews
   roles: [admin]
+
+/admin/pages:
+  controller: PageController
+  action: showPages
+  roles: [admin]
+
+/admin/pages/edit-page/{id}:
+  controller: Page
+  action: editPage
+  roles: [admin]
