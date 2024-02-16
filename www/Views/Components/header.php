@@ -14,7 +14,7 @@
             <ul class="navbar-desktop">
                 <li><a href="/">Accueil</a></li>
                 <li><a href="#">Recettes</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/contact">Contact</a></li>
                 <li><a href="#">Blog</a></li>
                 <li><a href="/login">Connexion</a></li>
                 <li><a href="/register">Inscription</a></li>
@@ -23,9 +23,9 @@
 
         <div class="navbar_toggle_content" id="content">
             <ul>
-                <li><a href="#">Accueil</a></li>
+                <li><a href="/">Accueil</a></li>
                 <li><a href="#">Recettes</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/contact">Contact</a></li>
                 <li><a href="#">Blog</a></li>
             </ul>
             <ul>
