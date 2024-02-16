@@ -55,6 +55,8 @@ class Security
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
         $myView->assign("message", $message);
+        $myView->assign("title", "Connexion");
+        $myView->assign("description", "Veuillez-vous connectez pour accéder à votre compte");
     }
 
     public function logout(): void
@@ -97,6 +99,8 @@ class Security
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
         $myView->assign("message", $message);
+        $myView->assign("title", "Inscription");
+        $myView->assign("description", "Veuillez-vous inscrire pour porfiter de nos services");
     }
 
     public function enableAccount()

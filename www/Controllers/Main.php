@@ -21,6 +21,8 @@ class Main
     public function contact(): void
     {
         $myView = new View("Main/contact", "front");
+        $myView->assign("title", "Contact");
+        $myView->assign("description", "Remplissez le formulaire ci-dessous pour nous contacter");
     }
     
     public function designGuide(): void
