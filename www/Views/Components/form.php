@@ -15,6 +15,14 @@
         <input name="<?= $name ?>" type="<?= $configInput["type"] ?? "text" ?>" id="<?= $configInput["id"] ?? "" ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" value="<?= $configInput["value"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>><br>
         </div>
     <?php endforeach; ?>
+
+    <?php if (isset($config["textarea"])) : ?>
+        <?php foreach ($config["textarea"] as $name => $configTextarea) : ?>
+            <div class="form-group">
+            <textarea name="<?= $name ?>" class="<?= $configTextarea["class"] ?? "" ?>" placeholder="<?= $configTextarea["placeholder"] ?? "" ?>" <?= (!empty($configTextarea["required"])) ? "required" : "" ?>></textarea><br>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
         
     <input type="submit"class="button button-primary" value="<?= $config["config"]["submit"] ?? "Envoyer" ?>">
     </div>
