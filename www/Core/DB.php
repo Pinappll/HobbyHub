@@ -50,6 +50,13 @@ class DB
         return $queryPrepared->execute($data);
     }
 
+    public function findAll(): array
+    {
+        $sql = "SELECT * FROM " . $this->table;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
+    }
 
     public static function populate(int $id): object
     {
@@ -76,14 +83,7 @@ class DB
         return $queryPrepared->fetch();
     }
 
-    //$data = ["id"=>1] ou ["email"=>" "] ou [] pour tout les éléments de la table
-    public function getAll(): array
-    {
-        $sql = "SELECT * FROM " . $this->table;
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute();
-        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
-    }
+    
 
     
     public function delete()
@@ -92,13 +92,6 @@ class DB
         $queryPrepared = $this->pdo->prepare($sql);
         return $queryPrepared->execute();
     }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-
 
     public function getList(array $filters = [],int $limit,int $offset): array
     {
