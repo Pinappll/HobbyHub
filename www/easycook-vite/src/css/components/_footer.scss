@@ -62,8 +62,18 @@
 	}
 	
 	@media screen and (min-width: $md-size){
-		.site-footer{
-			@include flexbox(row, wrap, flex-start, center, rem(18));
+		.contact{
+			@include flexbox(row, nowrap, flex-start, center, rem(18));
+			.adresse{
+				width: 40%;
+			}
+			.map{
+				iframe{
+					width: 200%;
+					height: 300px;
+					border: none;
+				}
+			}
 		}
 
 	}
