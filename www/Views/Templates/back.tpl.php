@@ -17,7 +17,7 @@
   <main>
     <?php  include $this->viewName; ?>
   </main>
-  <?php  $this->includeComponent("footer", [], []); ?>
+  
 </body>
 
 </html>
