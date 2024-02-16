@@ -27,6 +27,6 @@ class Main
     {
         $myView = new View("Main/design-guide", "front");
         $myView->assign("title", "Design Guide");
-        $myView->assign("description", "Bienvenue sur le design guide de notre site");
+        $myView->assign("description", "Bienvenue sur le design guide de notre site.");
     }
 }
