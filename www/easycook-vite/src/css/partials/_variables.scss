@@ -1,4 +1,4 @@
-/* Couleurs */
+/* Couleurs de base */
 $white: #fff;
 $black: #000;
 $grey: #C1B4AE;
@@ -7,7 +7,16 @@ $red: #92140c;
 $brown: #BE5A38;
 $dark-grey: #353238;
 
-/* Variables css */
+/* Couleurs dark */
+$white-dark: #111;
+$black-dark: #fff;
+$grey-dark: #C1B4AE;
+$yellow-dark: #f8c630;
+$red-dark: #92140c;
+$brown-dark: #BE5A38;
+$dark-grey-dark: #353238;
+
+
 :root {
 	/* Couleurs */
 	--white: #{$white};
@@ -22,6 +31,35 @@ $dark-grey: #353238;
 	--brown-darker: #{darken($brown, 10%)};
 	--dark-grey: #{$dark-grey};
 	--dark-grey-darker: #{darken($dark-grey, 10%)};
+	--background-color: #{$white}; 
+	--text-color: #{$black};
+
+	/* Typos */
+	--main-font: #{$font1};
+
+	/* Transitions */
+	--transition-duration: 0.3s;
+
+	/* Border radius */
+	--main-radius: #{rem(6)};
+}
+
+:root.data-dark-mode {
+	/* Couleurs */
+	--white: #{$white-dark};
+	--black: #{$black-dark};
+	--grey: #{$grey-dark};
+	--grey-darker: #{darken($grey-dark, 10%)};
+	--yellow: #{$yellow-dark};
+	--yellow-darker: #{darken($yellow-dark, 10%)};
+	--red: #{$red-dark};
+	--red-darker: #{darken($red-dark, 10%)};
+	--brown: #{$brown-dark};
+	--brown-darker: #{darken($brown-dark, 10%)};
+	--dark-grey: #{$dark-grey-dark};
+	--dark-grey-darker: #{darken($dark-grey-dark, 10%)};
+	--background-color: #{$white-dark}; 
+    --text-color: #{$black-dark};
 
 	/* Typos */
 	--main-font: #{$font1};
