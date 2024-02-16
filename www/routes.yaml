@@ -1,3 +1,10 @@
+## Design-guide
+
+/design-guide:
+  controller: Main
+  action: designGuide
+  roles: []
+
 ## Main
 
 /:
