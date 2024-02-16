@@ -19,4 +19,5 @@
   </main>
   <?php  $this->includeComponent("footer", [], []); ?>
 </body>
+
 </html>
