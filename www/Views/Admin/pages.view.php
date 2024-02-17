@@ -2,7 +2,7 @@
 
     <h1>Pages</h1>
     <br>
-    <a href="/admin/pages/add" class="button button-primary">Ajouter une page</a>
+    <a href="/admin/pages/add-page" class="button button-primary">Ajouter une page</a>
     <br>
     <br>
 
