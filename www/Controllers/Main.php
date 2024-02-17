@@ -51,6 +51,7 @@ class Main
         $myView->assign("description", "Remplissez le formulaire ci-dessous pour nous contacter");
     }
     
+    
     public function designGuide(): void
     {
         $myView = new View("Main/design-guide", "front");
