@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Verificator;
 use App\Core\View;
 use App\Forms\RecipeInsert;
+use App\Forms\RecipeUpdate;
 use App\Models\Recipe as RecipeModel;
 use App\Tables\RecipeTable;
 
@@ -51,9 +52,60 @@ class Recipe
     {
         $myView = new View("Recipe/readRecipe", "front");
     }
-    public function updateRecipe(): void
+    public function editRecipe(): void
     {
-        $myView = new View("Recipe/updateRecipe", "front");
+        if (!isset($_GET["id_recipe"]) || empty($_GET["id_recipe"])) {
+            header("Location: /admin/recipes");
+            exit;
+        }
+        $id = $_GET["id_recipe"];
+        if (isset($id) && !empty($id)) {
+
+            $myView = new View("Admin/edit-recipe", "back");
+            $form = new RecipeUpdate();
+            $config = $form->getConfig(["id_recipe" => $id]);
+            $errors = [];
+            $message = "";
+
+            $recipe = new RecipeModel();
+            $recipe = $recipe->getOneBy(["id" => $id], "object");
+            if ($recipe) {
+                $config["inputs"]["title"]["value"] = $recipe->getTitle_recipe();
+                $config["inputs"]["ingredients_recipe"]["value"] = $recipe->getIngredient_recipe();
+                $config["inputs"]["instruction_recipe"]["value"] = $recipe->getInstruction_recipe();
+                $config["inputs"]["id_user"]["value"] = $recipe->getId_user_recipe();
+            }
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $verificator = new Verificator();
+                if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
+                    if ($_FILES["inputFileImage"]["error"] != 4) {
+                        $uploadDir = "dist/assets/uploads/";
+                        if (!file_exists($uploadDir)) {
+                            mkdir($uploadDir, 0777, true);
+                        }
+                        $to = $uploadDir . uniqid() . "-" . $_FILES["inputFileImage"]["name"];
+                        if (move_uploaded_file($_FILES["inputFileImage"]["tmp_name"], $to)) {
+                            $recipe->setImage_url_recipe($to);
+                        } else {
+                            $errors[] = "Erreur lors de l'upload de l'image";
+                        }
+                    }
+
+                    $recipe->setId_user_recipe($_REQUEST["id_user"]);
+                    $recipe->setTitle_recipe($_REQUEST["title"]);
+                    $recipe->setIngredient_recipe($_REQUEST["ingredients_recipe"]);
+                    $recipe->setInstruction_recipe($_REQUEST["instruction_recipe"]);
+                    if ($recipe->save()) {
+                        header("Location: /admin/recipes");
+                    }
+                    $message = "Recette modifer avec succès";
+                }
+            }
+            $myView->assign("configForm", $config);
+            $myView->assign("errorsForm", $errors);
+            $myView->assign("message", $message);
+        }
     }
     public function deleteRecipe(): void
     {

@@ -32,10 +32,10 @@ class Verificator
                 if ($name === "passwordConf" && !$this->checkPasswordConfirmation($data["password"] ?? "", $data[$name])) {
                     $errors[] = $config["inputs"]["passwordConf"]["error"];
                 }
-                if ($name === "inputFileImage" && !self::checkInputFileImageType()) {
+                if ($name === "inputFileImage" && !self::checkInputFileImageType() && $input["required"] === true) {
                     $errors[] = $config["inputs"]["inputFileImage"]["error"]["type"];
                 }
-                if ($name === "inputFileImage" && !self::checkInputFileSize()) {
+                if ($name === "inputFileImage" && !self::checkInputFileSize() && $input["required"] === true) {
                     $errors[] = $config["inputs"]["inputFileImage"]["error"]["size"];
                 }
             }

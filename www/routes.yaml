@@ -65,6 +65,11 @@
   controller: Recipe
   action: deleteRecipe
   roles: [admin]
+  
+/admin/recipes/edit:
+  controller: Recipe
+  action: editRecipe
+  roles: [admin]
 
 /admin/users:
   controller: User
