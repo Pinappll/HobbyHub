@@ -12,7 +12,7 @@ class RecipeInsert
                 "method" => "POST",
                 "action" => "/admin/recipes/add",
                 "enctype" => "multipart/form-data",
-                "submit" => "test",
+                "submit" => "ajouter",
                 "class" => "form",
                 "id" => "form-recipe-insert",
 
