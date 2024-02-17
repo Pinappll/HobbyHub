@@ -63,9 +63,24 @@
   action: showMenus
   roles: [admin]
 
-/admin/recipies:
+/admin/recipes:
   controller: Recipe
-  action: showRecipies
+  action: showRecipes
+  roles: [admin]
+
+/admin/recipes/add:
+  controller: Recipe
+  action: addRecipe
+  roles: [admin]
+  
+/admin/recipes/delete:
+  controller: Recipe
+  action: deleteRecipe
+  roles: [admin]
+  
+/admin/recipes/edit:
+  controller: Recipe
+  action: editRecipe
   roles: [admin]
 
 /admin/users:
