@@ -63,6 +63,11 @@
   action: showMenus
   roles: [admin]
 
+/admin/menus/add:
+  controller: Menu
+  action: addMenu
+  roles: [admin]
+
 /admin/recipes:
   controller: Recipe
   action: showRecipes
