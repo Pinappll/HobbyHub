@@ -99,6 +99,11 @@
   roles: [admin]
 
 /admin/pages/edit-page/{id}:
-  controller: Page
+  controller: PageController
   action: editPage
+  roles: [admin]
+
+/admin/pages/add-page:
+  controller: PageController
+  action: addPage
   roles: [admin]
