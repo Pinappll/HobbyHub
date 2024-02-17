@@ -102,3 +102,23 @@
   controller: Page
   action: editPage
   roles: [admin]
+
+/admin/category/add:
+  controller: Category
+  action: addCategorie
+  roles: [admin]
+
+/admin/category:
+  controller: Category
+  action: showCategories
+  roles: [admin]
+
+/admin/category/delete:
+  controller: Category
+  action: deleteCategory
+  roles: [admin]
+
+/admin/category/edit:
+  controller: Category
+  action: editCategory
+  roles: [admin]

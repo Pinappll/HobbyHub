@@ -11,7 +11,7 @@ class DB
     {
         //connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO('pgsql:host=172.26.0.2;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+            $this->pdo = new \PDO('pgsql:host=172.20.0.2;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -89,7 +89,7 @@ class DB
         return $queryPrepared->execute();
     }
 
-    public function getList(array $filters = [], int $limit, int $offset): array
+    public function getList(array $filters = [], int $limit = 10, int $offset = 0): array
     {
         $sql = "SELECT * FROM " . $this->table;
         $params = [];
