@@ -50,6 +50,13 @@ class DB
         return $queryPrepared->execute($data);
     }
 
+    public function findAll(): array
+    {
+        $sql = "SELECT * FROM " . $this->table;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
+    }
 
     public static function populate(int $id): object
     {
@@ -57,6 +64,8 @@ class DB
         $object = new $class();
         return $object->getOneBy(["id" => $id], "object");
     }
+
+
 
     //$data = ["id"=>1] ou ["email"=>"y.skrzypczyk@gmail.com"]
     public function getOneBy(array $data, string $return = "array")
@@ -73,7 +82,14 @@ class DB
         }
         return $queryPrepared->fetch();
     }
-    public function getList(array $filters = [], int $limit = 10, int $offset = 0): array
+    public function delete()
+    {
+        $sql = "DELETE FROM " . $this->table . " WHERE id = " . $this->getId();
+        $queryPrepared = $this->pdo->prepare($sql);
+        return $queryPrepared->execute();
+    }
+
+    public function getList(array $filters = [], int $limit, int $offset): array
     {
         $sql = "SELECT * FROM " . $this->table;
         $params = [];

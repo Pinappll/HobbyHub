@@ -3,7 +3,7 @@
     <div class="contact">
         <div class="adresse">
             <ul>
-                <li>EasyCook</li>
+                <li><img src="../../dist/assets/images/logoEasyCook.png" alt=""></li>
                 <li>242 Rue du Faubourg Saint-Antoine,</li>
                 <li>75012 Paris</li>
                 <li>0156069041</li>

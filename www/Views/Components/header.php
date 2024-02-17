@@ -12,25 +12,25 @@
                 <circle cx="12" cy="12" r="10" />
             </svg>
             <ul class="navbar-desktop">
-                <li><a href="#">Accueil</a></li>
+                <li><a href="/">Accueil</a></li>
                 <li><a href="#">Recettes</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/contact">Contact</a></li>
                 <li><a href="#">Blog</a></li>
-                <li><a href="#">Connexion</a></li>
-                <li><a href="#">Inscription</a></li>
+                <li><a href="/login">Connexion</a></li>
+                <li><a href="/register">Inscription</a></li>
             </ul>
         </div>
 
         <div class="navbar_toggle_content" id="content">
             <ul>
-                <li><a href="#">Accueil</a></li>
+                <li><a href="/">Accueil</a></li>
                 <li><a href="#">Recettes</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/contact">Contact</a></li>
                 <li><a href="#">Blog</a></li>
             </ul>
             <ul>
-                <li class="button-connexion"><a href="#">Connexion</a></li>
-                <li class="button-connexion"><a href="#">Inscription</a></li>
+                <li class="button-connexion"><a href="/login">Connexion</a></li>
+                <li class="button-connexion"><a href="/register">Inscription</a></li>
             </ul>
         </div>
     </nav>

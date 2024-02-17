@@ -1,8 +1,20 @@
+## Design-guide
+
+/design-guide:
+  controller: Main
+  action: designGuide
+  roles: []
+
 ## Main
 
 /:
   controller: Main
   action: home
+  roles: []
+
+/contact:
+  controller: Main
+  action: contact
   roles: []
 
 /login:
@@ -79,4 +91,14 @@
 /admin/reviews:
   controller: Review
   action: showReviews
+  roles: [admin]
+
+/admin/pages:
+  controller: PageController
+  action: showPages
+  roles: [admin]
+
+/admin/pages/edit-page/{id}:
+  controller: Page
+  action: editPage
   roles: [admin]

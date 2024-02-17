@@ -1,3 +1,39 @@
 table {
-    
+    width: 100%;
+    thead {
+        background-color: #f5f5f5;
+        color: #000;
+    }
+
+    tbody {
+        background-color: #FEC;
+        color: #000;
+    }
+
+    tr {
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    .table-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .table-actions button {
+        margin: 0 5px;
+    }
+
 }
