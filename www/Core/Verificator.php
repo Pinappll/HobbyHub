@@ -10,7 +10,6 @@ class Verificator
 
         //Est-ce qu'on a le bon nb d'inputs
         if (count($config["inputs"]) != count($data)) {
-            var_dump(count($config["inputs"]), count($data));
             die("Tentative de Hack");
         } else {
             //CSRF ???
@@ -32,6 +31,12 @@ class Verificator
                 }
                 if ($name === "passwordConf" && !$this->checkPasswordConfirmation($data["password"] ?? "", $data[$name])) {
                     $errors[] = $config["inputs"]["passwordConf"]["error"];
+                }
+                if ($name === "inputFileImage" && !self::checkInputFileImageType() && $input["required"] === true) {
+                    $errors[] = $config["inputs"]["inputFileImage"]["error"]["type"];
+                }
+                if ($name === "inputFileImage" && !self::checkInputFileSize() && $input["required"] === true) {
+                    $errors[] = $config["inputs"]["inputFileImage"]["error"]["size"];
                 }
             }
         }
@@ -60,5 +65,17 @@ class Verificator
     static public function generateToken($length = 32)
     {
         return bin2hex(random_bytes($length));
+    }
+    private function checkInputFileImageType()
+    {
+
+        $targetDirectory = "uploads/";
+        $targetFile = $targetDirectory . basename($_FILES["inputFileImage"]["name"]);
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+        return in_array($imageFileType, array('jpg', 'jpeg', 'png', 'gif'));
+    }
+    private function checkInputFileSize()
+    {
+        return $_FILES["inputFileImage"]["size"] < 20971520 && $_FILES["inputFileImage"]["size"] >= 0; //20Mo
     }
 }

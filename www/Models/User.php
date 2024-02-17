@@ -13,8 +13,8 @@ class User extends DB
     protected string $password_user;
     protected string $type_user = "admin";
     protected string $token_user;
-    protected bool $isDeleted;
-    protected bool $isverified_user;
+    protected bool $is_deleted;
+    protected bool $is_verified_user;
 
 
     public function __construct()
@@ -152,7 +152,7 @@ class User extends DB
      */
     public function getIsDeleted()
     {
-        return $this->isDeleted;
+        return $this->is_deleted;
     }
 
     /**
@@ -162,7 +162,7 @@ class User extends DB
      */
     public function setIsDeleted($isDeleted)
     {
-        $this->isDeleted = $isDeleted;
+        $this->is_deleted = $isDeleted;
 
         return $this;
     }
@@ -194,7 +194,7 @@ class User extends DB
      */
     public function getIsverified_user()
     {
-        return $this->isverified_user;
+        return $this->is_verified_user;
     }
 
     /**
@@ -204,7 +204,7 @@ class User extends DB
      */
     public function setIsverified_user($isverified_user)
     {
-        $this->isverified_user = $isverified_user;
+        $this->is_verified_user = $isverified_user;
 
         return $this;
     }
