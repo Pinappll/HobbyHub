@@ -5,12 +5,12 @@ namespace App\Forms;
 class NavigationInsert
 {
 
-    public function getConfig(array $data = []): array
+    public function getConfig(): array
     {
         return [
             "config" => [
                 "method" => "POST",
-                "action" => "/admin/navigation/add",
+                "action" => "",
                 "submit" => "ajouter",
                 "class" => "form",
                 "id" => "form-navigation-insert",

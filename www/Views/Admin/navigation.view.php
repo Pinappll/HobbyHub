@@ -1,6 +1,6 @@
 <section class="section">
 
-    <h1>Recettes</h1>
+    <h1>Navigation</h1>
     <br>
     <?php $this->includeComponent("table", $configTable, $data);
     if (isset($this->data["message"])) {

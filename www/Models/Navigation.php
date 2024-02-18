@@ -12,7 +12,7 @@ class Navigation extends DB{
     protected string $name;
     protected string $link;
     protected int $position;
-    protected int $parent_id;
+    protected ?int $parent_id = null;
     protected int $level;
 
     public function __construct()

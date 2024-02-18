@@ -5,6 +5,8 @@ use App\Core\View;
 use App\Core\Verificator;
 use App\Models\Navigation as NavigationModel;
 use App\Forms\NavigationInsert;
+use App\Forms\NavigationUpdate;
+use App\Tables\NavigationTable;
 
 class Navigation
 {
@@ -71,6 +73,16 @@ class Navigation
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
         $myView->assign("message", $message);
+    }
+
+    public function showNavigation(): void
+    {
+        $table = new NavigationTable();
+        $configTable = $table->getConfig();
+        $navigation = new NavigationModel();
+        $myView = new View("Admin/navigation", "back");
+        $myView->assign("configTable", $configTable);
+        $myView->assign("data", $navigation->getList());
     }
 
     public function deleteNavigation(): void
