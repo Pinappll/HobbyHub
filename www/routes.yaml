@@ -130,3 +130,13 @@
   controller: PageController
   action: addPage
   roles: [admin]
+
+/admin/navigation:
+  controller: Navigation
+  action: showNavigation
+  roles: [admin]
+
+/admin/navigation/add:
+  controller: Navigation
+  action: addNavigation
+  roles: [admin]

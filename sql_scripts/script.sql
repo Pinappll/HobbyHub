@@ -110,9 +110,15 @@ CREATE TABLE easycook_recipe_menu (
     CONSTRAINT fk_recipe_menu_recipe FOREIGN KEY (id_recipe) REFERENCES easycook_recipe(id),
     CONSTRAINT fk_recipe_menu_menu FOREIGN KEY (id_menu) REFERENCES easycook_menu(id)
 );
-
-
-
+--Navigation
+CREATE TABLE easycook_navigation (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    link VARCHAR(255),
+    position INT,
+    parent_id INT,
+    level INT
+);
 
 
 
