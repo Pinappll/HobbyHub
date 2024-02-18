@@ -4,7 +4,7 @@ namespace App\Core;
 
 class DB
 {
-    private ?object $pdo = null;
+    protected ?object $pdo = null;
     private string $table;
 
     public function __construct()

@@ -24,7 +24,7 @@ class MenuInsert
                 "description" => ["class" => "input-form", "placeholder" => "Contenu", "required" => true, "error" => "Votre description doit faire plus de 2 caractères"],
             ],
             "select" => [
-                "recipe" => ["type" => "select", "class" => "input-form", "placeholder" => "Catégorie", "required" => true, "error" => "Une recette doit être sélectionnée"],
+                "recipe" => ["type" => "select", "class" => "select-category", "placeholder" => "Catégorie", "required" => true, "error" => "Une recette doit être sélectionnée"],
             ],
             "options" => [
                 "recipe" => ["Entrée", "Plat", "Dessert", "Boisson"],
