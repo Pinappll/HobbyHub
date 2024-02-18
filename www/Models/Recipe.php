@@ -148,4 +148,9 @@ class Recipe extends DB
     {
         $this->is_deleted = $isDeleted;
     }
+
+    public function countRecipes(): int
+    {
+        return $this->countRows();
+    }
 }

@@ -119,5 +119,10 @@ class Page extends DB
         return $this;
     }
 
+    public function countPages(): int
+    {
+        return $this->countRows();
+    }
+
     
 }
