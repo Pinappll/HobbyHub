@@ -44,6 +44,15 @@
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
+        <?php if (isset($config["div"])) : ?>
+            <?php foreach ($config["div"] as $name => $div) : ?>
+                <div class="form-group">
+                    <div class="<?= $div?>">
+
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
 
         <input type="submit" class="button button-primary" value="<?= $config["config"]["submit"] ?? "Envoyer" ?>">
     </div>

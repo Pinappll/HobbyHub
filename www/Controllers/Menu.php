@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Verificator;
 use App\Core\View;
 use App\Forms\Menu\MenuInsert;
 use App\Models\Category;
@@ -17,7 +18,6 @@ class Menu
             $recipe = new Recipe();
             $recipes = $recipe->getRecipeByIdCategory($_POST["category"]);
             $myView = new View("Partiel/listeRecipe", null);
-            var_dump($recipes);
             $myView->assign("recipes", $recipes);
         } else {
             $form = new MenuInsert();
@@ -32,21 +32,17 @@ class Menu
             $config["options"]["recipe"] = $formatCategories;
 
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                // $title = $_POST["title"];
-                // $description = $_POST["description"];
-                // if (strlen($title) < 2) {
-                //     $error["title"] = "Votre titre doit faire plus de 2 caractères";
-                // }
-                // if (strlen($description) < 2) {
-                //     $error["description"] = "Votre description doit faire plus de 2 caractères";
-                // }
-                // if (empty($error)) {
-                //     $menuModel = new MenuModel();
-                //     $menuModel->setTitle($title);
-                //     $menuModel->setDescription($description);
-                //     $menuModel->insert();
-                //     $message = "Votre menu a bien été ajouté";
-                // }
+                if (isset($_POST["recipe"])) {
+                    $recipes = $_POST["recipe"];
+                }
+                var_dump($_REQUEST);
+                $verificator = new Verificator();
+                if ($verificator->checkForm($config, $_REQUEST, $error)) {
+                    $menu = new MenuModel();
+                    $menu->setTitle_menu($_POST["title"]);
+                    $menu->setDescription_menu($_POST["description"]);
+                    $menu->save();
+                }
             }
             $myView = new View("admin/menu/add-menu", "back");
             $myView->assign("configForm", $config);

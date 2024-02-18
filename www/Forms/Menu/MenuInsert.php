@@ -10,7 +10,7 @@ class MenuInsert
         return [
             "config" => [
                 "method" => "POST",
-                "action" => "/admin/recipes/add",
+                "action" => "/admin/menus/add",
                 "submit" => "ajouter",
                 "class" => "form",
                 "id" => "form-menu-insert",
@@ -28,6 +28,9 @@ class MenuInsert
             ],
             "options" => [
                 "recipe" => ["Entrée", "Plat", "Dessert", "Boisson"],
+            ],
+            "div" => [
+                "class" => "content-recipe",
             ],
         ];
     }

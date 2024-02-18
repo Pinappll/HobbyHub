@@ -1,12 +1,17 @@
-<? var_dump($data["recipes"]);
-foreach ($data["recipes"] as $recipe) : ?>
-    <div class="card">
-        <img src="<?= $recipe->getImage_url_recipe() ?>" alt="<?= $recipe->getTitle_recipe() ?>">
-        <div class="container">
-            <h4><b><?= $recipe->getTitle_recipe() ?></b></h4>
-            <p><?= $recipe->getIngredient_recipe() ?></p>
-            <p><?= $recipe->getInstruction_recipe() ?></p>
-        </div>
-    </div>
-<? endforeach; ?>
-<h1>test</h1>
+<table>
+    <tr>
+        <th>Titre</th>
+        <th>Ingredient</th>
+        <th>Instruction</th>
+        <th>Image</th>
+    </tr>
+    <?php foreach ($recipes as $recipe) : ?>
+        <tr>
+            <td><input type="checkbox" name="recipe[]" id="" value="<?= $recipe->getId() ?>">
+            <td><?= $recipe->getTitle_recipe() ?></td>
+            <td><?= $recipe->getIngredient_recipe() ?></td>
+            <td><?= $recipe->getInstruction_recipe() ?></td>
+            <td><img src="/<?= $recipe->getImage_url_recipe() ?>"></img></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
