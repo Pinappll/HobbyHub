@@ -9,22 +9,7 @@ use App\Models\Page;
 class PageController
 {
 
-    public function createPage(): void
-    {
-        $myView = new View("Page/createPage", "front");
-    }
-    public function readPage(): void
-    {
-        $myView = new View("Page/readPage", "front");
-    }
-    public function updatePage(): void
-    {
-        $myView = new View("Page/updatePage", "front");
-    }
-    public function deletePage(): void
-    {
-        $myView = new View("Page/deletePage", "front");
-    }
+    
     public function showPages(): void
     {
         $myView = new View("Admin/pages", "back");
@@ -39,6 +24,14 @@ class PageController
 
         $myView->assign("pages", $pages);
 
-
     }
+
+    public function addPage(): void
+    {
+        $myView = new View("Admin/page-add", "back");
+        $myView->assign("title", "Ajouter une page");
+        $myView->assign("description", "Ajouter une page au site");
+    }
+
+    
 }

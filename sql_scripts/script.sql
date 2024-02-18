@@ -49,6 +49,26 @@ CREATE TRIGGER update_updatedat_easycook_recipe
 BEFORE UPDATE ON easycook_recipe
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
+--Category
+CREATE TABLE easycook_category (
+    id SERIAL PRIMARY KEY,
+    name_category VARCHAR(50) NOT NULL,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    updated_at TIMESTAMPTZ DEFAULT NULL
+);
+CREATE TRIGGER update_updated_at_easycook_category
+BEFORE UPDATE ON easycook_category
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
+
+--Recipe category
+CREATE TABLE easycook_recipe_category (
+    id SERIAL PRIMARY KEY,
+    id_recipe_category INT NOT NULL,
+    id_category INT NOT NULL,
+    CONSTRAINT fk_recipe_category_recipe FOREIGN KEY (id_recipe_category) REFERENCES easycook_recipe(id),
+    CONSTRAINT fk_recipe_category_category FOREIGN KEY (id_category) REFERENCES easycook_category(id)
+);
 --Page
 CREATE TABLE easycook_page (
     id SERIAL PRIMARY KEY,
@@ -90,6 +110,7 @@ CREATE TABLE easycook_recipe_menu (
     CONSTRAINT fk_recipe_menu_recipe FOREIGN KEY (id_recipe) REFERENCES easycook_recipe(id),
     CONSTRAINT fk_recipe_menu_menu FOREIGN KEY (id_menu) REFERENCES easycook_menu(id)
 );
+
 
 
 

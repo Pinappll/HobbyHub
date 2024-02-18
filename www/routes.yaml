@@ -104,6 +104,29 @@
   roles: [admin]
 
 /admin/pages/edit-page/{id}:
-  controller: Page
+  controller: PageController
   action: editPage
+  roles: [admin]
+
+/admin/category/add:
+  controller: Category
+  action: addCategorie
+  roles: [admin]
+
+/admin/category:
+  controller: Category
+  action: showCategories
+  roles: [admin]
+
+/admin/category/delete:
+  controller: Category
+  action: deleteCategory
+  roles: [admin]
+
+/admin/category/edit:
+  controller: Category
+  action: editCategory
+/admin/pages/add-page:
+  controller: PageController
+  action: addPage
   roles: [admin]

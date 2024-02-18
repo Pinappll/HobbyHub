@@ -13,9 +13,17 @@
 
         <?php foreach ($config["inputs"] as $name => $configInput) : ?>
             <div class="form-group">
-                <input name="<?= $name ?>" type="<?= $configInput["type"] ?? "text" ?>" id="<?= $configInput["id"] ?? "" ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" value="<?= $configInput["value"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>><br>
+                <?php if ($configInput["type"] === "checkbox") : ?>
+                    <?php foreach ($configInput["value"] as $value) : ?>
+                        <input name="<?= $name ?>[]" type="<?= $configInput["type"] ?>" id="<?= $value["id"] ?>" value="<?= $value["id"] ?>" <?= ($value["checked"]) ? "checked" : "" ?> <?= (!empty($configInput["required"])) ? "required" : "" ?>>
+                        <label for="<?= $value["id"] ?>"><?= $value["name"] ?></label>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <input name="<?= $name ?><?= ($configInput["type"] === "text" && !empty($configInput["multiple"])) ? "[]" : "" ?>" type="<?= $configInput["type"] ?? "text" ?>" id="<?= $configInput["id"] ?? "" ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" value="<?= $configInput["value"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>><br>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
+
 
         <?php if (isset($config["textarea"])) : ?>
             <?php foreach ($config["textarea"] as $name => $configTextarea) : ?>
