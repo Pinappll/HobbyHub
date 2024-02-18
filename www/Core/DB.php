@@ -47,7 +47,15 @@ class DB
         };
 
         $queryPrepared = $this->pdo->prepare($sql);
-        return $queryPrepared->execute($data);
+        $success = $queryPrepared->execute($data);
+
+
+        if (empty($this->getId())) {
+            $lastInsertId = $this->pdo->lastInsertId();
+            $this->setId($lastInsertId);
+        }
+
+        return $success;
     }
 
     public function findAll(): array
@@ -106,6 +114,35 @@ class DB
         $sql .= " LIMIT :limit OFFSET :offset";
         $params[':limit'] = $limit;
         $params[':offset'] = $offset;
+
+        $queryPrepared = $this->pdo->prepare($sql);
+        foreach ($params as $param => &$val) {
+            if (is_int($val)) {
+                $paramType = \PDO::PARAM_INT;
+            } elseif (is_bool($val)) {
+                $paramType = \PDO::PARAM_BOOL;
+            } else {
+                $paramType = \PDO::PARAM_STR;
+            }
+            $queryPrepared->bindParam($param, $val, $paramType);
+        }
+
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
+    }
+    public function findAllBy(array $filters = [])
+    {
+        $sql = "SELECT * FROM " . $this->table;
+        $params = [];
+
+        if (!empty($filters)) {
+            $sql .= " WHERE ";
+            foreach ($filters as $column => $value) {
+                $sql .= " $column = :$column AND";
+                $params[":$column"] = $value;
+            }
+            $sql = rtrim($sql, 'AND');
+        }
 
         $queryPrepared = $this->pdo->prepare($sql);
         foreach ($params as $param => &$val) {
