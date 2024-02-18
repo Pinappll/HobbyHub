@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <select name="<?= $name ?>" class="<?= $configSelect["class"] ?? "" ?>" placeholder="<?= $configSelect["placeholder"] ?? "" ?>" <?= (!empty($configSelect["required"])) ? "required" : "" ?>>
                         <?php foreach ($config["options"][$name] as $option) : ?>
-                            <option value="<?= $option ?>"><?= $option ?></option>
+                            <option value="<?= $option["id"] ?>"><?= $option["name"] ?></option>
                         <?php endforeach; ?>
                     </select><br>
                 </div>

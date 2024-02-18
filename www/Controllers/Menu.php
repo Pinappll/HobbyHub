@@ -3,7 +3,8 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Forms\MenuInsert;
+use App\Forms\Menu\MenuInsert;
+use App\Models\Category;
 use App\Models\Menu as MenuModel;
 
 class Menu
@@ -15,6 +16,13 @@ class Menu
         $config = $form->getConfig();
         $error = [];
         $message = "";
+        $categories = new Category();
+        $categories = $categories->findAll();
+        foreach ($categories as $category) {
+            $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category()];
+        }
+        $config["options"]["recipe"] = $formatCategories;
+        
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // $title = $_POST["title"];
             // $description = $_POST["description"];
