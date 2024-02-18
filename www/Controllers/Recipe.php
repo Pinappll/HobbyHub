@@ -24,7 +24,7 @@ class Recipe
         $categories = new Category();
         $categories = $categories->findAll();
         foreach ($categories as $category) {
-            $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category()];
+            $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category(), "checked" => ""];
         }
         $config["inputs"]["categories"]["value"] = $formatCategories;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
