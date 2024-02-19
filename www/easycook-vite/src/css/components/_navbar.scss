@@ -152,8 +152,34 @@
 				margin: rem(0);
 				li{
 					color: var(--text-color);
-	
 					
+					ul{
+						display: none;
+
+						li a {
+							display: block;
+							padding: 10px;
+							text-decoration: none;
+							color: black;
+							white-space: nowrap;	
+						}
+
+					}
+					
+					
+				}
+
+				li:hover ul{
+					display: block;
+					position: absolute;
+					background-color: var(--brown);
+					border-radius: 5px;
+					padding: 0;
+					margin: 0;
+					li a{
+						color: white;
+					}
+
 				}
 
 				
