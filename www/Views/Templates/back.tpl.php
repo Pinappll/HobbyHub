@@ -9,6 +9,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/easycook-vite/dist/css/style.css">
   <script src="/easycook-vite/dist/js/main.js"></script>
+  <link rel="stylesheet" type="text/css" href="../../easycook-vite/dist/css/style.css">
+  <script src="https://kit.fontawesome.com/ebcd47c5e0.js" crossorigin="anonymous"></script>
+  <script src="../easycook-vite/dist/js/main.js"></script>
   <title>Template Back</title>
 
 </head>

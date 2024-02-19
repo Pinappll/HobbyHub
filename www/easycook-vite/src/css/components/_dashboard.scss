@@ -1,0 +1,18 @@
+.dashboard {
+  @include flexbox(column, wrap, start, center, 20px); 
+
+  .dashboard-title {
+    padding:rem(20);
+  }
+
+  .dashboard-items {
+    @include flexbox(row, wrap, start, center, 20px);
+    padding-left: rem(180); 
+
+    .dashboard-item {
+      flex: 1 1 calc(30% - rem(20)); 
+      max-width: calc(30% - rem(20)); 
+      
+    }
+  }
+}

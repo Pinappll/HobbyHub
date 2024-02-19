@@ -1,6 +1,7 @@
 /* Couleurs de base */
 $white: #fff;
 $black: #000;
+$black-text: #1A1A1A;
 $grey: #C1B4AE;
 $yellow: #f8c630;
 $red: #92140c;
@@ -8,8 +9,9 @@ $brown: #BE5A38;
 $dark-grey: #353238;
 
 /* Couleurs dark */
-$white-dark: #111;
+$white-dark: #1A1A1A;
 $black-dark: #fff;
+$white-text:#D6D6D6;
 $grey-dark: #C1B4AE;
 $yellow-dark: #f8c630;
 $red-dark: #92140c;
@@ -32,7 +34,7 @@ $dark-grey-dark: #353238;
 	--dark-grey: #{$dark-grey};
 	--dark-grey-darker: #{darken($dark-grey, 10%)};
 	--background-color: #{$white}; 
-	--text-color: #{$black};
+	--text-color: #{$black-text};
 
 	/* Typos */
 	--main-font: #{$font1};
@@ -48,18 +50,18 @@ $dark-grey-dark: #353238;
 	/* Couleurs */
 	--white: #{$white-dark};
 	--black: #{$black-dark};
-	--grey: #{$grey-dark};
-	--grey-darker: #{darken($grey-dark, 10%)};
-	--yellow: #{$yellow-dark};
-	--yellow-darker: #{darken($yellow-dark, 10%)};
-	--red: #{$red-dark};
-	--red-darker: #{darken($red-dark, 10%)};
-	--brown: #{$brown-dark};
-	--brown-darker: #{darken($brown-dark, 10%)};
-	--dark-grey: #{$dark-grey-dark};
-	--dark-grey-darker: #{darken($dark-grey-dark, 10%)};
+	--grey: #{darken($grey-dark, 20%)};
+	--grey-darker: #{darken($grey-dark, 15%)};
+	--yellow: #{darken($yellow-dark, 20%)};
+	--yellow-darker: #{darken($yellow-dark, 15%)};
+	--red: #{darken($red-dark, 20%)};
+	--red-darker: #{darken($red-dark, 15%)};
+	--brown: #{darken($brown-dark, 20%)};
+	--brown-darker: #{darken($brown-dark, 15%)};
+	--dark-grey: #{darken($dark-grey-dark, 20%)};
+	--dark-grey-darker: #{darken($dark-grey-dark, 15%)};
 	--background-color: #{$white-dark}; 
-    --text-color: #{$black-dark};
+    --text-color: #{$white-text};
 
 	/* Typos */
 	--main-font: #{$font1};
