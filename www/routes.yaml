@@ -73,6 +73,16 @@
   action: addMenu
   roles: [admin]
 
+/admin/menus/delete:
+  controller: Menu
+  action: deleteMenu
+  roles: [admin]
+
+/admin/menus/edit:
+  controller: Menu
+  action: updateMenu
+  roles: [admin]
+
 /admin/recipes:
   controller: Recipe
   action: showRecipes

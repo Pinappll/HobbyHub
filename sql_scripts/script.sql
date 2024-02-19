@@ -100,8 +100,16 @@ EXECUTE FUNCTION update_updated_at_column();
 CREATE TABLE easycook_menu (
     id SERIAL PRIMARY KEY,
     title_menu VARCHAR(50) NOT NULL,
-    description_menu TEXT NOT NULL
+    description_menu TEXT NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NULL,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    inserted_at TIMESTAMPTZ DEFAULT current_timestamp
 );
+CREATE TRIGGER update_updated_at_easycook_menu
+BEFORE UPDATE ON easycook_menu
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
+
 --Pivot recipe et mmenu
 CREATE TABLE easycook_recipe_menu (
     id SERIAL PRIMARY KEY,
