@@ -12,7 +12,7 @@ class DB
         //connexion à la bdd via pdo
         try {
 
-            $this->pdo = new \PDO('pgsql:host=172.24.0.3;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+            $this->pdo = new \PDO('pgsql:host=172.18.0.2;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -106,6 +106,21 @@ class DB
         return $queryPrepared->fetchColumn();
     }
 
+    public function getColumns(string $column): array
+    {
+        $sql = "SELECT " . $column . " FROM " . $this->table;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll(\PDO::FETCH_COLUMN);
+    }
+
+    public function getIdFromTable(string $column, string $value): int
+    {
+        $sql = "SELECT id FROM " . $this->table . " WHERE " . $column . " = :" . $column;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute([$column => $value]);
+        return $queryPrepared->fetchColumn();
+    }
 
     public function getList(array $filters = [], int $limit = 10, int $offset = 0): array
     {
@@ -140,6 +155,9 @@ class DB
         $queryPrepared->execute();
         return $queryPrepared->fetchAll();
     }
+
+    
+
     public function findAllBy(array $filters = [])
     {
         $sql = "SELECT * FROM " . $this->table;
@@ -169,4 +187,5 @@ class DB
         $queryPrepared->execute();
         return $queryPrepared->fetchAll();
     }
+
 }

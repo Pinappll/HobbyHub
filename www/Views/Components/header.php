@@ -13,10 +13,7 @@
                 <circle cx="12" cy="12" r="10" />
             </svg>
             <ul class="navbar-desktop">
-                <li><a href="/">Accueil</a></li>
-                <li><a href="#">Recettes</a></li>
-                <li><a href="/contact">Contact</a></li>
-                <li><a href="#">Blog</a></li>
+                <?php include "navbar.php" ?>
                 <li><a href="/login">Connexion</a></li>
                 <li><a href="/register">Inscription</a></li>
                 <li><a href="#" class="dark-mode" id="moon-icon"><i class="fas fa-moon"></i></a></li>

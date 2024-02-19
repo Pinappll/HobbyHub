@@ -14,10 +14,17 @@ class Navigation
     {
         $myView = new View("Admin/add-navigation", "back");
         $form = new NavigationInsert();
-        $config = $form->getConfig();
+        $config = $form->getConfig($data =  [
+            "navigations_id" => (new NavigationModel())->getColumns("id"),
+            "navigations" => (new NavigationModel())->getColumns("name")
+        ]);
+        
+        
         $errors = [];
         $message = "";
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            
             $verificator = new Verificator();
             if ($verificator->checkForm($config, $_REQUEST, $errors)) {
                 $navigation = new NavigationModel();
@@ -49,7 +56,8 @@ class Navigation
            
             $myView = new View("Admin/edit-navigation", "back");
             $form = new NavigationUpdate();
-            $config = $form->getConfig(["id_navigation" => $id]);
+            $config = $form->getConfig(["id_navigation" => $id,"navigations_id" => (new NavigationModel())->getColumns("id"),
+            "navigations" => (new NavigationModel())->getColumns("name")]);
             $errors = [];
             $message = "";
 
@@ -60,7 +68,7 @@ class Navigation
                 $config["inputs"]["name"]["value"] = $navigation->getName();
                 $config["inputs"]["link"]["value"] = $navigation->getLink();
                 $config["inputs"]["position"]["value"] = $navigation->getPosition();
-                $config["inputs"]["parent_id"]["value"] = $navigation->getParent_id();
+                $config["inputs"]["parent_id"]["value"] = $navigation->getParent_id() ?? null;
                 $config["inputs"]["level"]["value"] = $navigation->getLevel();
             }
 
@@ -107,4 +115,6 @@ class Navigation
         header("Location: /admin/navigation");
         exit;
     }
+
+    
 }
