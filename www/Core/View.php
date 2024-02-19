@@ -8,10 +8,12 @@ class View
     private String $viewName;
     private array $data = [];
 
-    public function __construct(string $viewName, string $templateName = "back")
+    public function __construct(string $viewName, string|null $templateName = "back")
     {
         $this->setViewName($viewName);
-        $this->setTemplateName($templateName);
+        if ($templateName !== null) {
+            $this->setTemplateName($templateName);
+        }
     }
 
     /**
@@ -53,11 +55,12 @@ class View
     public function __destruct()
     {
         extract($this->data);
-        
-        
 
-        include $this->templateName;
 
-        
+        if (isset($this->templateName)) {
+            include $this->templateName;
+        } else {
+            include $this->viewName;
+        }
     }
 }

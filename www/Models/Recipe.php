@@ -148,7 +148,24 @@ class Recipe extends DB
     {
         $this->is_deleted = $isDeleted;
     }
+    // private function getRecipeByIdCategory(int $id_category)
+    // {
 
+    //     // $sql = "SELECT * FROM easycook_recipe inner join easycook_recipe_category on easycook_recipe.id = easycook_recipe_category.id where easycook_recipe_category.id = :id_category";
+    //     // $queryPrepared = $this->pdo->prepare($sql);
+
+    //     // $this->id = $this->pdo->lastInsertId();
+    // }
+    public function getRecipeByIdCategory(int $id_category)
+    {
+        $sql = "select * from easycook_recipe_category inner join easycook_recipe on easycook_recipe.id = easycook_recipe_category.id_recipe_category
+        where easycook_recipe_category.id_category=:id_category and easycook_recipe.is_deleted = false;";
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->bindValue(":id_category", $id_category, \PDO::PARAM_INT);
+        $queryPrepared->execute();
+    
+        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
+    }
     public function countRecipes(): int
     {
         return $this->countRows();

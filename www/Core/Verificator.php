@@ -7,8 +7,8 @@ class Verificator
 
     public function checkForm($config, $data, &$errors): bool
     {
-        
-        
+
+
         //Est-ce qu'on a le bon nb d'inputs
         if (count($config["inputs"]) != count($data)) {
             die("Tentative de Hack");
@@ -38,6 +38,18 @@ class Verificator
                 }
                 if ($name === "inputFileImage" && !self::checkInputFileSize() && $input["required"] === true) {
                     $errors[] = $config["inputs"]["inputFileImage"]["error"]["size"];
+                }
+                if ($name === "title" && (strlen($data[$name]) < 2 || strlen($data[$name]) > 50)) {
+                    $errors[] = $config["inputs"]["title"]["error"];
+                }
+                if ($name === "description" && (strlen($data[$name]) < 2 || strlen($data[$name]) > 50)) {
+                    $errors[] = $config["inputs"]["description"]["error"];
+                }
+                if ($name === "select_recipe" && empty($data[$name])) {
+                    $errors[] = $config["inputs"]["select_recipe"]["error"];
+                }
+                if ($name === "recipe" && empty($data[$name])) {
+                    $errors[] = $config["inputs"]["recipe"]["error"];
                 }
             }
         }

@@ -4,14 +4,14 @@ namespace App\Core;
 
 class DB
 {
-    private ?object $pdo = null;
+    protected ?object $pdo = null;
     private string $table;
 
     public function __construct()
     {
         //connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO('pgsql:host=172.21.0.3;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+            $this->pdo = new \PDO('pgsql:host=172.18.0.2;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -44,8 +44,7 @@ class DB
             }
             $sql = substr($sql, 0, -1);
             $sql .= " WHERE id = " . $this->getId();
-        }
-        ;
+        };
 
         $queryPrepared = $this->pdo->prepare($sql);
         $success = $queryPrepared->execute($data);
