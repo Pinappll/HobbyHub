@@ -11,7 +11,7 @@ class DB
     {
         //connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO('pgsql:host=172.23.0.2;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+            $this->pdo = new \PDO('pgsql:host=172.21.0.3;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -44,7 +44,8 @@ class DB
             }
             $sql = substr($sql, 0, -1);
             $sql .= " WHERE id = " . $this->getId();
-        };
+        }
+        ;
 
         $queryPrepared = $this->pdo->prepare($sql);
         $success = $queryPrepared->execute($data);
@@ -96,6 +97,15 @@ class DB
         $queryPrepared = $this->pdo->prepare($sql);
         return $queryPrepared->execute();
     }
+
+    public function countRows(): int
+    {
+        $sql = "SELECT COUNT(*) FROM " . $this->table;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchColumn();
+    }
+
 
     public function getList(array $filters = [], int $limit = 10, int $offset = 0): array
     {
