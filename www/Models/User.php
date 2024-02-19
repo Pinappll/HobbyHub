@@ -208,4 +208,12 @@ class User extends DB
 
         return $this;
     }
+
+    public function countUsers(): int
+    {
+        return $this->countRows();
+    }
+
 }
+
+

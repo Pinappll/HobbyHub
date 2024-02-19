@@ -15,7 +15,7 @@ form {
       
       }
       input::placeholder{
-        color: var(--white);
+        color: var(--text-color);
       
       }
       select{
@@ -25,10 +25,10 @@ form {
         font-size: inherit;
         width: 100%;
         background-color: var(--grey-darker);
-        color: var(--white);
+        color: var(--text-color);
 
         option{
-          color: var(--white);
+          color: var(--text-color);
           
           width: 120px !important;
         }
@@ -40,10 +40,10 @@ form {
         font-size: rem(16);
         width: 100%;
         background-color: var(--grey-darker);
-        color: var(--white);
+        color: var(--text-color);
       }
       textarea::placeholder{
-        color: var(--white);
+        color: var(--text-color);
       }
 
       

@@ -58,9 +58,19 @@
   action: dashboard
   roles: [admin]
 
+/admin/settings:
+  controller: Setting
+  action: setting
+  roles: [admin]
+
 /admin/menus:
   controller: Menu
   action: showMenus
+  roles: [admin]
+
+/admin/menus/add:
+  controller: Menu
+  action: addMenu
   roles: [admin]
 
 /admin/recipes:

@@ -22,6 +22,6 @@
                 <li><a href="#">À propos des pubs</a></li>
             </ul>
         </nav>
-        <small class="vertically-centered">© 2023 EasyCook</small>
+        <small class="vertically-centered">© 2024 EasyCook</small>
     </div>
 </footer>

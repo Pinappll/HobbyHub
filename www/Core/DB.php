@@ -4,13 +4,14 @@ namespace App\Core;
 
 class DB
 {
-    private ?object $pdo = null;
+    protected ?object $pdo = null;
     private string $table;
 
     public function __construct()
     {
         //connexion à la bdd via pdo
         try {
+
             $this->pdo = new \PDO('pgsql:host=172.24.0.3;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
@@ -47,7 +48,15 @@ class DB
         };
 
         $queryPrepared = $this->pdo->prepare($sql);
-        return $queryPrepared->execute($data);
+        $success = $queryPrepared->execute($data);
+
+
+        if (empty($this->getId())) {
+            $lastInsertId = $this->pdo->lastInsertId();
+            $this->setId($lastInsertId);
+        }
+
+        return $success;
     }
 
     public function findAll(): array
@@ -89,6 +98,15 @@ class DB
         return $queryPrepared->execute();
     }
 
+    public function countRows(): int
+    {
+        $sql = "SELECT COUNT(*) FROM " . $this->table;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchColumn();
+    }
+
+
     public function getList(array $filters = [], int $limit = 10, int $offset = 0): array
     {
         $sql = "SELECT * FROM " . $this->table;
@@ -106,6 +124,35 @@ class DB
         $sql .= " LIMIT :limit OFFSET :offset";
         $params[':limit'] = $limit;
         $params[':offset'] = $offset;
+
+        $queryPrepared = $this->pdo->prepare($sql);
+        foreach ($params as $param => &$val) {
+            if (is_int($val)) {
+                $paramType = \PDO::PARAM_INT;
+            } elseif (is_bool($val)) {
+                $paramType = \PDO::PARAM_BOOL;
+            } else {
+                $paramType = \PDO::PARAM_STR;
+            }
+            $queryPrepared->bindParam($param, $val, $paramType);
+        }
+
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
+    }
+    public function findAllBy(array $filters = [])
+    {
+        $sql = "SELECT * FROM " . $this->table;
+        $params = [];
+
+        if (!empty($filters)) {
+            $sql .= " WHERE ";
+            foreach ($filters as $column => $value) {
+                $sql .= " $column = :$column AND";
+                $params[":$column"] = $value;
+            }
+            $sql = rtrim($sql, 'AND');
+        }
 
         $queryPrepared = $this->pdo->prepare($sql);
         foreach ($params as $param => &$val) {
