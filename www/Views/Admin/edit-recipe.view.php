@@ -2,7 +2,7 @@
 
     <h1>Recettes édition</h1>
     <br>
-    <a href="/admin/recipes/add" class="button button-primary">Ajouter</a>
+    <a href="/admin/recipes" class="button button-primary">Retour</a>
     <br>
     <br>
     <?php $this->includeComponent("form", $configForm, $errorsForm); ?>

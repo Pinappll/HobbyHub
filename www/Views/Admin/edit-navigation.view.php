@@ -2,7 +2,7 @@
 
     <h1>Navigation</h1>
     <br>
-    <a href="/admin/navigation/add" class="button button-primary">Ajouter</a>
+    <a href="/admin/navigation" class="button button-primary">Retour</a>
     <br>
     <br><?php $this->includeComponent("form", $configForm, $errorsForm); ?>
     <?php

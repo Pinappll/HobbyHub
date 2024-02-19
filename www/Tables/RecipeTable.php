@@ -13,7 +13,7 @@ class RecipeTable
             ["name" => "instruction_recipe", "title" => "Instructions"],
             ["name" => "image_url_recipe", "title" => "Image"],
             ["name" => "edit", "title" => "Editer", "type" => "edit", "route" => "/admin/recipes/edit?id_recipe="],
-            ["name" => "delete", "title" => "Supprimer", "type" => "delete", "route" => "/admin/recipes/delete?id_recipe="]
+            ["name" => "delete", "title" => "Supprimer", "type" => "delete", "route" => "/admin/recipes/delete?id="]
         ];
     }
 }
