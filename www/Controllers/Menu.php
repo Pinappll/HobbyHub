@@ -29,19 +29,23 @@ class Menu
             foreach ($categories as $category) {
                 $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category()];
             }
-            $config["options"]["recipe"] = $formatCategories;
-
+            $config["inputs"]["select_recipe"]["option"] = $formatCategories;
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                if (isset($_POST["recipe"])) {
-                    $recipes = $_POST["recipe"];
+                if (!isset($_REQUEST["recipe"])) {
+                    $_REQUEST["recipe"] = [];
                 }
-                var_dump($_REQUEST);
+                if (!isset($_REQUEST["select_recipe"])) {
+                    $_REQUEST["select_recipe"] = [];
+                }
                 $verificator = new Verificator();
                 if ($verificator->checkForm($config, $_REQUEST, $error)) {
                     $menu = new MenuModel();
                     $menu->setTitle_menu($_POST["title"]);
                     $menu->setDescription_menu($_POST["description"]);
-                    $menu->save();
+                    if($menu->save()){
+                        $message = "Votre menu a bien été ajouté";
+                        
+                    }
                 }
             }
             $myView = new View("admin/menu/add-menu", "back");
