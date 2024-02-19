@@ -172,7 +172,7 @@ class Recipe
         $myView = new View("Admin/recipes", "back");
         $myView->assign("configTable", $configTable);
 
-        $myView->assign("data", $recipe->getList(["is_deleted" => false], $limit = 100)));
+        $myView->assign("data", $recipe->getList(["is_deleted" => false], $limit = 100));
 
     }
 }

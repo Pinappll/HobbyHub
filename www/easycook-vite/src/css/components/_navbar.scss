@@ -146,19 +146,20 @@
 			.navbar-desktop{
 				display: flex;
 				justify-content: flex-end;
+				flex-direction: row;
+				align-items: center;
+				flex-grow: 1;
+				margin: rem(0);
+				li{
+					color: var(--text-color);
+	
+					
+				}
 
 				
 			}
 		}
-		ul {
-			flex-direction: row;
-			align-items: center;
-			flex-grow: 1;
-			margin: rem(0);
-			li{
-				color: var(--text-color);
-			}
-		}
+		
 		svg{
 			display: none;
 		}
