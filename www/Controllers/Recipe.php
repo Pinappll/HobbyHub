@@ -108,7 +108,6 @@ class Recipe
                 if (!isset($_REQUEST["categories"])) {
                     $_REQUEST["categories"] = [];
                 }
-
                 if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
                     if ($_FILES["inputFileImage"]["error"] != 4) {
                         $uploadDir = "dist/assets/uploads/";
@@ -173,6 +172,5 @@ class Recipe
         $myView->assign("configTable", $configTable);
 
         $myView->assign("data", $recipe->getList(["is_deleted" => false], $limit = 100));
-
     }
 }

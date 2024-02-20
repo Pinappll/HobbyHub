@@ -5,15 +5,17 @@ namespace App\Models;
 use App\Core\DB;
 
 
-class Navigation extends DB{
+class Navigation extends DB
+{
 
-    
+
     private ?int $id = null;
     protected string $name;
     protected string $link;
     protected int $position;
     protected ?int $parent_id = null;
     protected int $level;
+    protected int $id_page;
 
     public function __construct()
     {
@@ -92,7 +94,28 @@ class Navigation extends DB{
         return $this;
     }
 
+    /**
+     * Get the value of id_page
+     */
+    public function getId_page()
+    {
+        return $this->id_page;
+    }
 
-    
+    /**
+     * Set the value of id_page
+     *
+     * @return  self
+     */
+    public function setId_page($id_page)
+    {
+        $this->id_page = $id_page;
+
+        return $this;
+    }
+    // public function getUrlNavigationWhereIsNullOrPageId()
+    // {
+    //     $db = new DB();
+    //     $data = $db->select()->fro
+    // }
 }
-?>

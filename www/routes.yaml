@@ -1,3 +1,9 @@
+##Instaler
+/installer:
+  controller: InstallerController
+  action: install
+  roles: []
+
 ## Design-guide
 
 /design-guide:
