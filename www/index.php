@@ -10,6 +10,11 @@ namespace App;
 
 use App\Controllers\Error;
 
+if (file_exists('installer.php')) {
+    header('Location: installer.php');
+    exit();
+}
+
 spl_autoload_register("App\myAutoloader");
 session_start();
 function loadEnv($filePath)

@@ -12,7 +12,10 @@ class DB
         //connexion à la bdd via pdo
         try {
 
-            $this->pdo = new \PDO('pgsql:host=172.26.0.2;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+            
+
+            $this->pdo = new \PDO('pgsql:host='. $_ENV["DB_HOST"].';dbname=' . $_ENV["DB_NAME"].';user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -20,7 +23,8 @@ class DB
         $table = get_called_class();
         $table = explode("\\", $table);
         $table = array_pop($table);
-        $this->table = "easycook_" . strtolower($table);
+        $dbName = strtolower($_ENV["DB_NAME"]);
+        $this->table = $dbName."_" . strtolower($table);
     }
 
     public function getDataObject(): array
@@ -189,4 +193,5 @@ class DB
         $queryPrepared->execute();
         return $queryPrepared->fetchAll();
     }
+
 }

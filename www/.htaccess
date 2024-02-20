@@ -1,4 +1,10 @@
-RewriteEngine on
+RewriteEngine On
+
+# Si installer.php existe, redirige toutes les requêtes vers ce fichier
+RewriteCond %{DOCUMENT_ROOT}/installer.php -f
+RewriteRule ^ installer.php [L]
+
+# Vos règles existantes pour rediriger vers index.php si le fichier/dossier demandé n'existe pas
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [L,QSA]
