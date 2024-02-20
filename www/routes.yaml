@@ -119,9 +119,14 @@
   action: addPage
   roles: [admin]
 
-/admin/pages/edit-page/{id}:
+/admin/pages/edit-page:
   controller: PageController
   action: editPage
+  roles: [admin]
+
+/admin/pages/delete-page:
+  controller: PageController
+  action: deletePage
   roles: [admin]
 
 /admin/category/add:

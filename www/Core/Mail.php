@@ -2,8 +2,7 @@
 
 namespace App\Core;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
+use App\Core\PHPMailer\PHPMailer;
 
 class Mail
 {
