@@ -58,11 +58,11 @@
 <script src="https://unpkg.com/grapesjs-blocks-basic"></script>
 <header id="header">
   <div class="title">Page Builder</div>
-  <form id="pageForm" action="/admin/pages/add-page" method="post">
-    <input type="text" name="title_page" id="title-input" placeholder="Titre de la page" style="margin-right: 10px;" />
-    <input type="hidden" name="content_page" id="contentInput" />
-    <button type="submit" id="submitForm">Enregistrer</button>
-  </form>
+  <?php $this->includeComponent("form", $configForm, $errorsForm);
+  if (isset($this->data["message"])) {
+    echo "<h3>" . $this->data["message"] . "</h3>";
+  }
+  ?>
 </header>
 <div id="wrapper">
   <div id="sidebar">
@@ -85,8 +85,7 @@
     },
     blockManager: {
       appendTo: "#blocks",
-      blocks: [
-        {
+      blocks: [{
           id: "text",
           label: "Text",
           content: '<div data-gjs-type="text">Insert your text here</div>',
@@ -177,7 +176,7 @@
     editor.Canvas.getDocument().head.appendChild(cssLink);
   });
 
-  document.getElementById('pageForm').addEventListener('submit', function (e) {
+  document.getElementById('pageForm').addEventListener('submit', function(e) {
     const titlePage = document.getElementById('title-input').value;
     const componentsJson = editor.getComponents();
     const styleJson = editor.getStyle();

@@ -19,7 +19,7 @@
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-namespace PHPMailer\PHPMailer;
+namespace App\Core\PHPMailer;
 
 use League\OAuth2\Client\Grant\RefreshToken;
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -33,7 +33,7 @@ use League\OAuth2\Client\Token\AccessToken;
  *
  * @author  Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
  */
-class OAuth implements OAuthTokenProvider
+class OAuth
 {
     /**
      * An instance of the League OAuth Client Provider.
