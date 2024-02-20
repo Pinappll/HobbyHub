@@ -51,6 +51,15 @@ class Verificator
                 if ($name === "recipe" && empty($data[$name])) {
                     $errors[] = $config["inputs"]["recipe"]["error"];
                 }
+                if ($name === "select-url" && empty($data[$name])) {
+                    $errors[] = $config["inputs"]["select-url"]["error"];
+                }
+                if ($name === "content_page" && empty($data[$name])) {
+                    $errors[] = $config["inputs"]["content_page"]["error"];
+                }
+                if ($name === "title_page" && empty($data[$name])) {
+                    $errors[] = $config["inputs"]["title_page"]["error"];
+                }
             }
         }
 

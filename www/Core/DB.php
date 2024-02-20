@@ -6,16 +6,14 @@ class DB
 {
     protected ?object $pdo = null;
     private string $table;
+    protected string $query;
 
     public function __construct()
     {
         //connexion à la bdd via pdo
         try {
 
-            
-
-            $this->pdo = new \PDO('pgsql:host='. $_ENV["DB_HOST"].';dbname=' . $_ENV["DB_NAME"].';user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
-
+            $this->pdo = new \PDO('pgsql:host=172.19.0.3;dbname=easyCook;user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -193,5 +191,52 @@ class DB
         $queryPrepared->execute();
         return $queryPrepared->fetchAll();
     }
+    public function select($columns = '*')
+    {
+        $this->query = "SELECT $columns FROM $this->table";
+        return $this;
+    }
 
+    public function join($table, $on)
+    {
+        $this->query .= " JOIN $table ON $on";
+        return $this;
+    }
+
+    public function where($conditions)
+    {
+        $this->query .= " WHERE $conditions";
+        return $this;
+    }
+
+    public function orderBy($column, $direction = 'ASC')
+    {
+        $this->query .= " ORDER BY $column $direction";
+        return $this;
+    }
+
+    public function limit($limit)
+    {
+        $this->query .= " LIMIT $limit";
+        return $this;
+    }
+
+    public function getQuery()
+    {
+        return $this->query;
+    }
+    public function execute(string $return = "array")
+    {
+        $queryPrepared = $this->pdo->prepare($this->query);
+        if ($return == "object") {
+            $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+        }
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
+    }
+    public function from()
+    {
+        $this->table;
+        return $this;
+    }
 }

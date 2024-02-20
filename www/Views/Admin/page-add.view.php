@@ -177,14 +177,16 @@
   });
 
   document.getElementById('pageForm').addEventListener('submit', function(e) {
-    const titlePage = document.getElementById('title-input').value;
+    debugger;
+    const htmlContent = editor.getHtml();
     const componentsJson = editor.getComponents();
     const styleJson = editor.getStyle();
     const jsonData = JSON.stringify({
       components: componentsJson,
-      styles: styleJson
+      styles: styleJson,
+      html: htmlContent
     });
 
-    document.getElementById('contentInput').value = jsonData;
+    document.querySelector('.contentInput').value = jsonData;
   });
 </script>

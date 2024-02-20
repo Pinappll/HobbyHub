@@ -96,7 +96,7 @@ class Navigation extends DB
 
     /**
      * Get the value of id_page
-     */ 
+     */
     public function getId_page()
     {
         return $this->id_page;
@@ -106,11 +106,16 @@ class Navigation extends DB
      * Set the value of id_page
      *
      * @return  self
-     */ 
+     */
     public function setId_page($id_page)
     {
         $this->id_page = $id_page;
 
         return $this;
     }
+    // public function getUrlNavigationWhereIsNullOrPageId()
+    // {
+    //     $db = new DB();
+    //     $data = $db->select()->fro
+    // }
 }
