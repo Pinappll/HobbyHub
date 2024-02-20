@@ -170,11 +170,11 @@ class Recipe extends DB
     {
         return $this->countRows();
     }
-    public function getRecipeByIdMenu()
+    public function getRecipeByIdMenu(int $id_menu)
     {
         $sql = "select * from easycook_recipe_menu inner join easycook_recipe on easycook_recipe.id = easycook_recipe_menu.id_recipe where easycook_recipe_menu.id_menu = :id_menu and easycook_recipe.is_deleted = false;";
         $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->bindValue(":id_menu", $this->id, \PDO::PARAM_INT);
+        $queryPrepared->bindValue(":id_menu", $id_menu, \PDO::PARAM_INT);
         $queryPrepared->execute();
 
         return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());

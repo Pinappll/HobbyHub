@@ -36,8 +36,11 @@
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
-
-
+        <? if (!empty($config["div"])) : ?>
+            <div class="<?= $config["div"]["class"] ?>">
+                <h2><?= $config["div"]["titre"] ?></h2>
+            </div>
+        <? endif; ?>
         <input type="submit" class="button button-primary" value="<?= $config["config"]["submit"] ?? "Envoyer" ?>">
     </div>
 </form>

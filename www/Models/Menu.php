@@ -7,11 +7,9 @@ use App\Core\DB;
 class Menu extends DB
 {
     private ?int $id = null;
-    protected int $id_restaurant_menu;
-    protected int $id_recipie_menu;
     protected string $title_menu;
     protected string $description_menu;
-    protected bool $is_deleted = false;
+    protected bool $is_deleted;
 
     public function __construct()
     {
@@ -121,7 +119,7 @@ class Menu extends DB
 
     /**
      * Get the value of is_deleted
-     */ 
+     */
     public function getIs_deleted()
     {
         return $this->is_deleted;
@@ -131,7 +129,7 @@ class Menu extends DB
      * Set the value of is_deleted
      *
      * @return  self
-     */ 
+     */
     public function setIs_deleted($is_deleted)
     {
         $this->is_deleted = $is_deleted;

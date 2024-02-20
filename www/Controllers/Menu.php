@@ -21,7 +21,7 @@ class Menu
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $recipe = new Recipe();
             $recipes = $recipe->getRecipeByIdCategory($_POST["category"]);
-            $myView = new View("Partiel/listeRecipe", null);
+            $myView = new View("Partiel/listeRecipeSearch", null);
             $myView->assign("recipes", $recipes);
         } else {
             $form = new MenuInsert();
@@ -46,6 +46,7 @@ class Menu
                     $menu = new MenuModel();
                     $menu->setTitle_menu($_POST["title"]);
                     $menu->setDescription_menu($_POST["description"]);
+
                     if ($menu->save()) {
                         $message = "Votre menu a bien été ajouté";
                         $recipe_menu = new Recipe_menu();
@@ -67,10 +68,17 @@ class Menu
     public function updateMenu(): void
     {
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $recipe = new Recipe();
-            $recipes = $recipe->getRecipeByIdCategory($_POST["category"]);
-            $myView = new View("Partiel/listeRecipe", null);
-            $myView->assign("recipes", $recipes);
+            if (!isset($_POST["category"])) {
+                $recipe = new Recipe();
+                $recipe = $recipe->getRecipeByIdMenu($_GET["id"]);
+                $myView = new View("Partiel/listeRecipMenu", null);
+                $myView->assign("recipes", $recipe);
+            } else {
+                $recipe = new Recipe();
+                $recipes = $recipe->getRecipeByIdCategory($_POST["category"]);
+                $myView = new View("Partiel/listeRecipeSearch", null);
+                $myView->assign("recipes", $recipes);
+            }
         } else {
             if (!isset($_GET["id"])) {
                 header("Location: /admin/menus");
@@ -78,7 +86,7 @@ class Menu
                 $id = $_GET["id"];
                 $menu = new MenuModel();
                 $menu = $menu->getOneBy(["id" => $id], "object");
-                var_dump($menu);
+
                 if (!$menu) {
                     $customError = new Error();
                     $customError->page404();

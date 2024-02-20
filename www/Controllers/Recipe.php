@@ -108,7 +108,7 @@ class Recipe
                 if (!isset($_REQUEST["categories"])) {
                     $_REQUEST["categories"] = [];
                 }
-                var_dump($_REQUEST);
+
                 if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
                     if ($_FILES["inputFileImage"]["error"] != 4) {
                         $uploadDir = "dist/assets/uploads/";
