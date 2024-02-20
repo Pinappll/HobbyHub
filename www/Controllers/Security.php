@@ -31,23 +31,27 @@ class Security
             if ($verificator->checkForm($config, $_REQUEST, $errors)) {
                 $user = new User();
                 $user = $user->getOneBy(["email_user" => $_REQUEST["email"]], "object");
-                if ($user->getIsverified_user()) {
-                    if ($user) {
-                        $password_hash_from_db = $user->getPassword_user();
+                if (empty($user)) {
+                    $errors[] = "le login ou le mot de passe est incorrect";
+                } else {
+                    if ($user->getIsverified_user()) {
+                        if ($user) {
+                            $password_hash_from_db = $user->getPassword_user();
 
-                        if (password_verify($_REQUEST["password"], $password_hash_from_db)) {
-                            $_SESSION['user_id'] = $user->getId();
-                            $_SESSION['username'] = $user->__toString();
-                            $_SESSION["role"] = $user->getType_user();
-                            $message = "Connexion réussie";
+                            if (password_verify($_REQUEST["password"], $password_hash_from_db)) {
+                                $_SESSION['user_id'] = $user->getId();
+                                $_SESSION['username'] = $user->__toString();
+                                $_SESSION["role"] = $user->getType_user();
+                                $message = "Connexion réussie";
+                            } else {
+                                $errors[] = "le login ou le mot de passe est incorrect";
+                            }
                         } else {
                             $errors[] = "le login ou le mot de passe est incorrect";
                         }
                     } else {
-                        $errors[] = "le login ou le mot de passe est incorrect";
+                        $errors[] = "Veuillez vérifier votre compte";
                     }
-                } else {
-                    $errors[] = "Veuillez vérifier votre compte";
                 }
             }
         }

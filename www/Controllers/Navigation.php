@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Core\View;
@@ -18,24 +19,30 @@ class Navigation
             "navigations_id" => (new NavigationModel())->getColumns("id"),
             "navigations" => (new NavigationModel())->getColumns("name")
         ]);
-        
-        
+
+
         $errors = [];
         $message = "";
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            
+
             $verificator = new Verificator();
             if ($verificator->checkForm($config, $_REQUEST, $errors)) {
                 $navigation = new NavigationModel();
-                $navigation->setName($_REQUEST["name"]);
-                $navigation->setLink($_REQUEST["link"]);
-                $navigation->setPosition($_REQUEST["position"]);
-                $navigation->setParent_id($_REQUEST["parent_id"]);
-                $navigation->setLevel($_REQUEST["level"]);
-                
-                $navigation->save();
-                $message = "Navigation ajoutée";
+                $navigation->getOneBy(["link" => $_REQUEST["link"]], "object");
+                if ($navigation) {
+                    $errors[] = "Ce lien existe déjà";
+                } else {
+                    $navigation = new NavigationModel();
+                    $navigation->setName($_REQUEST["name"]);
+                    $navigation->setLink($_REQUEST["link"]);
+                    $navigation->setPosition($_REQUEST["position"]);
+                    $navigation->setParent_id($_REQUEST["parent_id"]);
+                    $navigation->setLevel($_REQUEST["level"]);
+
+                    $navigation->save();
+                    $message = "Navigation ajoutée";
+                }
             }
         }
         $myView->assign("configForm", $config);
@@ -43,7 +50,7 @@ class Navigation
         $myView->assign("message", $message);
     }
 
-    
+
     public function editNavigation(): void
     {
         if (!isset($_GET["id_navigation"]) || empty($_GET["id_navigation"])) {
@@ -52,19 +59,21 @@ class Navigation
         }
 
         $id = $_GET["id_navigation"];
-        if (isset($id) && !empty($id)){
-           
+        if (isset($id) && !empty($id)) {
+
             $myView = new View("Admin/edit-navigation", "back");
             $form = new NavigationUpdate();
-            $config = $form->getConfig(["id_navigation" => $id,"navigations_id" => (new NavigationModel())->getColumns("id"),
-            "navigations" => (new NavigationModel())->getColumns("name")]);
+            $config = $form->getConfig([
+                "id_navigation" => $id, "navigations_id" => (new NavigationModel())->getColumns("id"),
+                "navigations" => (new NavigationModel())->getColumns("name")
+            ]);
             $errors = [];
             $message = "";
 
             $navigation = new NavigationModel();
             $navigation = $navigation->getOneBy(["id" => $id], "object");
-        
-            if($navigation){
+
+            if ($navigation) {
                 $config["inputs"]["name"]["value"] = $navigation->getName();
                 $config["inputs"]["link"]["value"] = $navigation->getLink();
                 $config["inputs"]["position"]["value"] = $navigation->getPosition();
@@ -80,7 +89,7 @@ class Navigation
                     $navigation->setPosition($_REQUEST["position"]);
                     $navigation->setParent_id($_REQUEST["parent_id"]);
                     $navigation->setLevel($_REQUEST["level"]);
-                    if($navigation->save()){
+                    if ($navigation->save()) {
                         header("Location: /admin/navigation");
                     }
                     $message = "Navigation modifiée";
@@ -90,7 +99,6 @@ class Navigation
             $myView->assign("errorsForm", $errors);
             $myView->assign("message", $message);
         }
-        
     }
 
     public function showNavigation(): void
@@ -115,6 +123,4 @@ class Navigation
         header("Location: /admin/navigation");
         exit;
     }
-
-    
 }

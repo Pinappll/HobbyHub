@@ -110,7 +110,7 @@ CREATE TABLE easycook_recipe_menu (
 --Navigation
 CREATE TABLE easycook_navigation (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) UNIQUE NOT NULL,
     link VARCHAR(255),
     position INT,
     parent_id INT,

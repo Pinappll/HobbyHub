@@ -23,12 +23,13 @@
                 <?php elseif ($configInput["type"] === "select") : ?>
                     <select name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>>
                         <option value="" disabled selected><?= $configInput["placeholder"] ?></option>
-                        <?php if($name === "parent_id") : ?>
+                        <?php foreach ($configInput["option"] as $option) : ?>
+                            <option value="<?= $option["id"] ?>"><?= $option["name"] ?></option>
+                        <?php endforeach; ?>
+                        <?php if ($name === "parent_id") : ?>
                             <option value="0">Aucun parent</option>
                         <?php endif; ?>
-                        <?php foreach ($configInput["options"] as $optionValue => $optionName) : ?>
-                            <option value="<?= $configInput["value"][$optionValue] ?>"><?= $optionName ?></option>
-                        <?php endforeach; ?>
+
                     </select><br>
                 <?php elseif ($configInput["type"] === "partiel") : ?>
                     <div class="<?= $configInput["class"] ?>">

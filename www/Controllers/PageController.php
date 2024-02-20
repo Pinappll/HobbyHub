@@ -27,7 +27,6 @@ class PageController
 
     public function addPage(): void
     {
-        // Initialisez $pageId avec null ou une valeur par défaut
         $form = new formPage();
         $configForm = $form->getConfig();
         $error = [];
@@ -36,33 +35,24 @@ class PageController
         $navigation = $navigation->findAllBy(["id_page" => "0"], "object");
         $formatNav = [];
         foreach ($navigation as $nav) {
-            $formatNav[] = ["id" => $nav->getId(), "name" => $nav->getName()];
+            $formatNav[] = ["id" => $nav->getId(), "name" => $nav->getLink()];
         }
         $configForm["inputs"]["select-url"]["option"] = $formatNav;
-        echo "<pre>";
-        var_dump($configForm["inputs"]);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Utilisez isset() pour vérifier si 'id' existe dans $_POST
-            if (isset($_POST['id']) && !empty($_POST['id'])) {
-                $pageId = $_POST['id'];
-                $page = (new PageModel())->getOneBy(['id' => $pageId], "object");
-                if (!$page) {
-                    // Gérez le cas où la page n'est pas trouvée
-                    error_log('Page non trouvée');
-                    return;
-                }
-            } else {
+            var_dump($_REQUEST);
+            $verificator = new Verificator();
+            if ($verificator->checkForm($configForm, $_REQUEST, $error)) {
                 $page = new PageModel();
-            }
-
-            $page->setTitle_page($_POST['title_page'] ?? '');
-            $page->setContent_page($_POST['content_page'] ?? '');
-
-            if ($page->save()) {
-                header('Location: /admin/pages');
-                exit;
-            } else {
-                error_log('Erreur lors de la sauvegarde de la page');
+                $page->setTitle_page($_POST['title_page']);
+                $page->setContent_page($_POST['content_page']);
+                if ($page->save()) {
+                    $navigation = new Navigation();
+                    $navigation = $navigation->getOneBy(["id" => $_POST['select-url']], "object");
+                    $navigation = $navigation->setId_page($page->getId());
+                    $navigation->save();
+                    header('Location: /admin/pages');
+                    exit;
+                }
             }
         }
 
@@ -75,10 +65,20 @@ class PageController
 
     public function editPage(): void
     {
-        $id = (int)$_GET['id'];
+        $id = $_GET['id'];
 
         $page = (new PageModel())->getOneBy(['id' => $id], "object");
-
+        $form = new formPage();
+        $configForm = $form->getConfig();
+        $error = [];
+        $message = "";
+        $navigation = new Navigation();
+        $navigation = $navigation->findAllBy(["id_page" => "0"], "object");
+        $formatNav = [];
+        foreach ($navigation as $nav) {
+            $formatNav[] = ["id" => $nav->getId(), "name" => $nav->getLink()];
+        }
+        $configForm["inputs"]["select-url"]["option"] = $formatNav;
 
         if ($page) {
             $myView = new View("Admin/page-edit", "back");

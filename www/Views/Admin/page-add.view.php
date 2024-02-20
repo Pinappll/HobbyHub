@@ -177,7 +177,6 @@
   });
 
   document.getElementById('pageForm').addEventListener('submit', function(e) {
-    const titlePage = document.getElementById('title-input').value;
     const componentsJson = editor.getComponents();
     const styleJson = editor.getStyle();
     const jsonData = JSON.stringify({
@@ -185,6 +184,6 @@
       styles: styleJson
     });
 
-    document.getElementById('contentInput').value = jsonData;
+    document.querySelector('.contentInput').value = jsonData;
   });
 </script>
