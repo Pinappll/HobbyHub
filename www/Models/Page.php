@@ -7,10 +7,8 @@ use App\Core\DB;
 class Page extends DB
 {
     private ?int $id = null;
-    protected int $id_restaurant_page;
     protected string $title_page;
     protected string $content_page;
-    protected string $markup_meta_pages;
 
     
     public function __construct()
