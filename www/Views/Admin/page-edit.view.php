@@ -58,14 +58,11 @@
 
 <header id="header">
   <div class="title">Éditeur de Page</div>
-  <form id="pageForm" action="/admin/pages/add-page" method="post">
-    <input type="hidden" name="id" value="<?php echo $page->getId(); ?>" />
-    <input type="text" name="title_page" id="title-input"
-      value="<?php echo htmlspecialchars($page->getTitle_page()); ?>" placeholder="Titre de la page"
-      style="margin-right: 10px;" />
-    <input type="hidden" name="content_page" id="contentInput" />
-    <button type="submit" id="submitForm">Enregistrer</button>
-  </form>
+  <?php $this->includeComponent("form", $configForm, $errorsForm);
+  if (isset($this->data["message"])) {
+    echo "<h3>" . $this->data["message"] . "</h3>";
+  }
+  ?>
 </header>
 
 <div id="wrapper">
@@ -76,7 +73,7 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     const editor = grapesjs.init({
       container: '#editor',
       plugins: ['gjs-blocks-basic'],
@@ -91,46 +88,45 @@
         embedAsBase64: true
       },
       blockManager: {
-      appendTo: "#blocks",
-      blocks: [
-        {
-          id: "text",
-          label: "Text",
-          content: '<div data-gjs-type="text">Insert your text here</div>',
-          category: "Basic",
-        },
-        {
-          id: "image",
-          label: "Image",
-          content: '<input type="file" id="image-upload" accept="image/*" data-gjs-type="image" data-gjs-draggable="true" />',
-          category: "Basic",
-        },
-        {
-          id: "title",
-          label: "Title",
-          content: '<h1 data-gjs-type="text">Your Title Here</h1>',
-          category: "Basic",
-        },
-        {
-          id: "my-section",
-          label: "Section",
-          content: {
-            tagName: 'div',
-            classes: ['section', 'section-presentation'],
-            components: `<section class="section section-presentation">
+        appendTo: "#blocks",
+        blocks: [{
+            id: "text",
+            label: "Text",
+            content: '<div data-gjs-type="text">Insert your text here</div>',
+            category: "Basic",
+          },
+          {
+            id: "image",
+            label: "Image",
+            content: '<input type="file" id="image-upload" accept="image/*" data-gjs-type="image" data-gjs-draggable="true" />',
+            category: "Basic",
+          },
+          {
+            id: "title",
+            label: "Title",
+            content: '<h1 data-gjs-type="text">Your Title Here</h1>',
+            category: "Basic",
+          },
+          {
+            id: "my-section",
+            label: "Section",
+            content: {
+              tagName: 'div',
+              classes: ['section', 'section-presentation'],
+              components: `<section class="section section-presentation">
         <h1>Titre de la section</h1>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum id accusamus soluta quod error rem labore optio tenetur, fuga atque nam recusandae, magni et molestiae quae incidunt beatae odio corrupti.</p>
     </section>`,
+            },
+            category: "Basic",
           },
-          category: "Basic",
-        },
-        {
-          id: "my-section2",
-          label: "Section 2",
-          content: {
-            tagName: 'div',
-            classes: ['section', 'section-menu'],
-            components: `<section class="section section-menu">
+          {
+            id: "my-section2",
+            label: "Section 2",
+            content: {
+              tagName: 'div',
+              classes: ['section', 'section-menu'],
+              components: `<section class="section section-menu">
     <h1>Menu</h1>
     <div class="menu">
         <h2>Titre du Menu 1</h2>
@@ -138,29 +134,29 @@
     </div>
 </section>
 `,
+            },
+            category: "Basic",
           },
-          category: "Basic",
-        },
-        {
-          id: "my-map",
-          label: "Map",
-          content: {
-            tagName: 'div',
-            classes: ['map'],
-            components: `<div class="map">
+          {
+            id: "my-map",
+            label: "Map",
+            content: {
+              tagName: 'div',
+              classes: ['map'],
+              components: `<div class="map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.474052163265!2d2.38715937612803!3d48.849170101355796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6720d9c7af387%3A0x5891d8d62e8535c7!2sESGI%2C%20%C3%89cole%20Sup%C3%A9rieure%20de%20G%C3%A9nie%20Informatique!5e0!3m2!1sfr!2sfr!4v1706276679727!5m2!1sfr!2sfr" width="600" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 `,
+            },
+            category: "Basic",
           },
-          category: "Basic",
-        },
-        {
-          id: "my-card",
-          label: "Card",
-          content: {
-            tagName: 'div',
-            classes: ['card'],
-            components: `
+          {
+            id: "my-card",
+            label: "Card",
+            content: {
+              tagName: 'div',
+              classes: ['card'],
+              components: `
 			<article class="card">
 				<img src="../../dist/assets/images/recettes/cake.jpg">
 				<h1>Card title</h1>
@@ -169,20 +165,20 @@
 
 			</article>
 `,
+            },
+            category: "Basic",
           },
-          category: "Basic",
-        },
-      ],
-    },
-  });
+        ],
+      },
+    });
 
     editor.on('load', () => {
-    const cssLink = editor.Canvas.getDocument().createElement('link');
-    cssLink.href = '/easycook-vite/dist/css/style.css';
-    cssLink.rel = 'stylesheet';
-    cssLink.type = 'text/css';
-    editor.Canvas.getDocument().head.appendChild(cssLink);
-  });
+      const cssLink = editor.Canvas.getDocument().createElement('link');
+      cssLink.href = '/easycook-vite/dist/css/style.css';
+      cssLink.rel = 'stylesheet';
+      cssLink.type = 'text/css';
+      editor.Canvas.getDocument().head.appendChild(cssLink);
+    });
 
     // Chargez le contenu existant
     const existingContent = <?php echo json_encode($page->getContent_page()); ?>;
@@ -193,7 +189,7 @@
     }
 
     // Préparez les données à sauvegarder lors de la soumission du formulaire
-    document.getElementById('pageForm').addEventListener('submit', function (e) {
+    document.getElementById('pageForm').addEventListener('submit', function(e) {
       const componentsJson = editor.getComponents();
       const styleJson = editor.getStyle();
       const jsonData = JSON.stringify({
@@ -201,7 +197,7 @@
         styles: styleJson
       });
 
-      document.getElementById('contentInput').value = jsonData;
+      document.querySelector('.contentInput').value = jsonData;
     });
   });
 </script>

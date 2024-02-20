@@ -29,7 +29,7 @@ class Navigation
             $verificator = new Verificator();
             if ($verificator->checkForm($config, $_REQUEST, $errors)) {
                 $navigation = new NavigationModel();
-                $navigation->getOneBy(["link" => $_REQUEST["link"]], "object");
+                $navigation = $navigation->getOneBy(["link" => $_REQUEST["link"]]);
                 if ($navigation) {
                     $errors[] = "Ce lien existe déjà";
                 } else {

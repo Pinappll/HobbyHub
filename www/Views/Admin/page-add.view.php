@@ -177,11 +177,14 @@
   });
 
   document.getElementById('pageForm').addEventListener('submit', function(e) {
+    debugger;
+    const htmlContent = editor.getHtml();
     const componentsJson = editor.getComponents();
     const styleJson = editor.getStyle();
     const jsonData = JSON.stringify({
       components: componentsJson,
-      styles: styleJson
+      styles: styleJson,
+      html: htmlContent
     });
 
     document.querySelector('.contentInput').value = jsonData;
