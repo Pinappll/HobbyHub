@@ -38,7 +38,7 @@ class PageController
         foreach ($navigation as $nav) {
             $formatNav[] = ["id" => $nav->getId(), "name" => $nav->getName()];
         }
-        $configForm["inputs"]["select-url"]["value"] = $formatNav;
+        $configForm["inputs"]["select-url"]["option"] = $formatNav;
         echo "<pre>";
         var_dump($configForm["inputs"]);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
