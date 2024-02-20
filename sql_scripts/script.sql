@@ -73,10 +73,10 @@ CREATE TABLE easycook_recipe_category (
 CREATE TABLE easycook_page (
     id SERIAL PRIMARY KEY,
     title_page TEXT NOT NULL,
-    content_page TEXT NOT NULL,
-    markup_meta_pages TEXT NOT NULL,
-    id_user INT NOT NULL,
-    CONSTRAINT fk_user_page FOREIGN KEY (id_user) REFERENCES easycook_user(id)
+    content_page jsonb NOT NULL,
+    -- markup_meta_pages TEXT NOT NULL,
+    -- id_user INT NOT NULL,
+    -- CONSTRAINT fk_user_page FOREIGN KEY (id_user) REFERENCES easycook_user(id)
 );
 --Review
 CREATE TABLE easycook_review (

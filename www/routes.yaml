@@ -118,9 +118,19 @@
   action: showPages
   roles: [admin]
 
-/admin/pages/edit-page/{id}:
+/admin/pages/add-page:
+  controller: PageController
+  action: addPage
+  roles: [admin]
+
+/admin/pages/edit-page:
   controller: PageController
   action: editPage
+  roles: [admin]
+
+/admin/pages/delete-page:
+  controller: PageController
+  action: deletePage
   roles: [admin]
 
 /admin/category/add:
@@ -141,10 +151,9 @@
 /admin/category/edit:
   controller: Category
   action: editCategory
-/admin/pages/add-page:
-  controller: PageController
-  action: addPage
   roles: [admin]
+
+
 
 /admin/navigation:
   controller: Navigation
@@ -154,4 +163,14 @@
 /admin/navigation/add:
   controller: Navigation
   action: addNavigation
+  roles: [admin]
+
+/admin/navigation/delete:
+  controller: Navigation
+  action: deleteNavigation
+  roles: [admin]
+
+/admin/navigation/edit:
+  controller: Navigation
+  action: editNavigation
   roles: [admin]
