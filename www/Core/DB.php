@@ -21,7 +21,8 @@ class DB
         $table = get_called_class();
         $table = explode("\\", $table);
         $table = array_pop($table);
-        $this->table = "easycook_" . strtolower($table);
+        $dbName = strtolower($_ENV["DB_NAME"]);
+        $this->table = $dbName."_" . strtolower($table);
     }
 
     public function getDataObject(): array
