@@ -15,7 +15,6 @@ class ReviewTable
             ["name" => "content_review", "title" => "Contenu"],
             ["name" => "status_review", "title" => "Status"],
             ["name" => "edit", "title" => "Editer", "type" => "edit", "route" => "/admin/reviews/edit?id_review="],
-            ["name" => "delete", "title" => "Supprimer", "type" => "delete", "route" => "/admin/reviews/delete?id_review="]
         ];
     }
 }
