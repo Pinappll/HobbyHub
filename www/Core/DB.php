@@ -198,7 +198,8 @@ class DB
 
     public function join($table, $on)
     {
-        $this->query .= " JOIN $table ON $on";
+        $dbName = strtolower($_ENV["DB_NAME"]);
+        $this->query .= " JOIN " . $dbName . "_" . strtolower($table) . " ON $on";
         return $this;
     }
 

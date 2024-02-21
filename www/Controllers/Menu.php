@@ -20,12 +20,12 @@ class Menu
     {
 
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $recipe = new Recipe_category();
-            $recipes = $recipe->select("recipe.id, recipe.title_recipe, recipe.image_url_recipe,recipe.instruction_recipe")
-                ->join("recipe", "recipe.id = recipe_category.id_recipe_category")
-                ->where("recipe_category.id_category=" . $_POST["category"])
+            $recipe = new Recipe();
+            $dbName = strtolower($_ENV["DB_NAME"]);
+            $recipes = $recipe->select($dbName . "_recipe.*")
+                ->join("recipe_category", $dbName . "_recipe.id =" . $dbName . "_recipe_category.id_recipe_category")
+                ->where($dbName . "_recipe_category.id_category=" . $_POST["category"])
                 ->execute("object");
-            var_dump($recipes);
             $myView = new View("Partiel/listeRecipeSearch", null);
             $myView->assign("recipes", $recipes);
         } else {
@@ -74,14 +74,18 @@ class Menu
     public function updateMenu(): void
     {
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $dbName = strtolower($_ENV["DB_NAME"]);
             if (!isset($_POST["category"])) {
                 $recipe = new Recipe();
-                $recipe = $recipe->getRecipeByIdMenu($_GET["id"]);
+                $recipes = $recipe->select()->join("recipe_menu", $dbName . "_recipe.id =" . $dbName . "_recipe_menu.id_recipe")->where($dbName . "_recipe_menu.id_menu=" . $_GET["id"])->execute();
                 $myView = new View("Partiel/listeRecipMenu", null);
-                $myView->assign("recipes", $recipe);
+                $myView->assign("recipes", $recipes);
             } else {
                 $recipe = new Recipe();
-                $recipes = $recipe->getRecipeByIdCategory($_POST["category"]);
+                $recipes = $recipe->select($dbName . "_recipe.*")
+                    ->join("recipe_category", $dbName . "_recipe.id =" . $dbName . "_recipe_category.id_recipe_category")
+                    ->where($dbName . "_recipe_category.id_category=" . $_POST["category"])
+                    ->execute("object");
                 $myView = new View("Partiel/listeRecipeSearch", null);
                 $myView->assign("recipes", $recipes);
             }
@@ -121,13 +125,32 @@ class Menu
                             if ($menu->save()) {
                                 $message = "Votre menu a bien été modifié";
                                 $recipe_menu = new Recipe_menu();
-                                $recipe_menu->setId_menu($menu->getId());
-                                $recipe_menu->deleteBy(["id_menu" => $menu->getId()]);
-                                foreach ($_POST["recipe"] as $recipe) {
-                                    $recipe_menu->setId(null);
-                                    $recipe_menu->setId_recipe($recipe);
-                                    $recipe_menu->save();
+                                $recipe_menu = $recipe_menu->findAllBy(["id_menu" => $menu->getId()], "object");
+                                $id_recipe_menu = [];
+                                foreach ($recipe_menu as $recipe) {
+                                    $id_recipe_menu[] = $recipe->getId_recipe();
                                 }
+                                $recipesFromFront = array_map('intval', $_REQUEST["recipe"]);
+
+                                $different = array_merge(array_diff($id_recipe_menu, $recipesFromFront), array_diff($recipesFromFront, $id_recipe_menu));
+                                foreach ($different as $diff) {
+                                    $recipe_menu = new Recipe_menu();
+                                    $recipe_menu = $recipe_menu->getOneBy(["id_menu" => $menu->getId(), "id_recipe" => $diff], "object");
+                                    if ($recipe_menu) {
+                                        $recipe_menu->delete();
+                                    }
+                                }
+                                foreach ($_POST["recipe"] as $recipe) {
+                                    $recipe_menu = new Recipe_menu();
+                                    $recipe_menu = $recipe_menu->getOneBy(["id_menu" => $menu->getId(), "id_recipe" => $recipe], "object");
+                                    if (!$recipe_menu) {
+                                        $recipe_menu = new Recipe_menu();
+                                        $recipe_menu->setId_menu($menu->getId());
+                                        $recipe_menu->setId_recipe($recipe);
+                                        $recipe_menu->save();
+                                    }
+                                }
+                                header("Location: /admin/menus");
                             }
                         }
                     }
