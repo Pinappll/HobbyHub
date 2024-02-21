@@ -240,7 +240,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (file_exists(__FILE__)) {
             unlink(__FILE__); // Supprime le fichier installer.php
-            header('Location: /');
+            header('Location: /admin');
         }
         
 
