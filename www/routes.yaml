@@ -170,3 +170,13 @@
   controller: Navigation
   action: editNavigation
   roles: [admin]
+
+/admin/reviews:
+  controller: Review
+  action: showReviews
+  roles: [admin]
+
+/admin/reviews/add:
+  controller: Review
+  action: addReview
+  roles: [admin]
