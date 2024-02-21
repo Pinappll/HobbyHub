@@ -1,5 +1,5 @@
 <?php
-$dbHost = '192.168.240.2';
-$dbName = 'mabase';
-$dbUser = 'postgres';
-$dbPassword = 'postgres';
+$dbHost = '172.25.0.2';
+$dbName = 'pop';
+$dbUser = 'ludo';
+$dbPassword = 'test1234';

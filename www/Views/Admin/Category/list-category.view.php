@@ -2,7 +2,7 @@
 
     <h1>Catégories</h1>
     <br>
-    <a href="/admin/category" class="button button-primary">Retour</a>
+    <a href="/admin/category/add" class="button button-primary">Ajouter</a>
     <br>
     <br>
     <?php $this->includeComponent("table", $configTable, $data);

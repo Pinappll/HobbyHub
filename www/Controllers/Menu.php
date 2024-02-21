@@ -9,6 +9,7 @@ use App\Forms\Menu\MenuEdit;
 use App\Models\Category;
 use App\Models\Menu as MenuModel;
 use App\Models\Recipe;
+use App\Models\Recipe_category;
 use App\Models\Recipe_menu;
 use App\Tables\MenuTable;
 
@@ -19,8 +20,12 @@ class Menu
     {
 
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $recipe = new Recipe();
-            $recipes = $recipe->getRecipeByIdCategory($_POST["category"]);
+            $recipe = new Recipe_category();
+            $recipes = $recipe->select("recipe.id, recipe.title_recipe, recipe.image_url_recipe,recipe.instruction_recipe")
+                ->join("recipe", "recipe.id = recipe_category.id_recipe_category")
+                ->where("recipe_category.id_category=" . $_POST["category"])
+                ->execute("object");
+            var_dump($recipes);
             $myView = new View("Partiel/listeRecipeSearch", null);
             $myView->assign("recipes", $recipes);
         } else {
@@ -30,6 +35,7 @@ class Menu
             $message = "";
             $categories = new Category();
             $categories = $categories->findAll();
+            $formatCategories = [];
             foreach ($categories as $category) {
                 $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category()];
             }
