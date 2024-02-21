@@ -27,7 +27,11 @@ class Recipe
             $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category(), "checked" => ""];
         }
         $config["inputs"]["categories"]["value"] = $formatCategories;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!isset($_REQUEST["categories"])) {
+                $_REQUEST["categories"] = [];
+            }
             $verificator = new Verificator();
             if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
 

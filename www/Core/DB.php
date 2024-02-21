@@ -13,7 +13,8 @@ class DB
         //connexion à la bdd via pdo
         try {
 
-            $this->pdo = new \PDO('pgsql:host='. $_ENV["DB_HOST"].';dbname=' . $_ENV["DB_NAME"].';user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);        } catch (\PDOException $e) {
+            $this->pdo = new \PDO('pgsql:host=' . $_ENV["DB_HOST"] . ';dbname=' . $_ENV["DB_NAME"] . ';user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+        } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
 
@@ -21,7 +22,7 @@ class DB
         $table = explode("\\", $table);
         $table = array_pop($table);
         $dbName = strtolower($_ENV["DB_NAME"]);
-        $this->table = $dbName."_" . strtolower($table);
+        $this->table = $dbName . "_" . strtolower($table);
     }
 
     public function getDataObject(): array
@@ -198,7 +199,8 @@ class DB
 
     public function join($table, $on)
     {
-        $this->query .= " JOIN $table ON $on";
+        $dbName = strtolower($_ENV["DB_NAME"]);
+        $this->query .= " JOIN " . $dbName . "_" . strtolower($table) . " ON $on";
         return $this;
     }
 

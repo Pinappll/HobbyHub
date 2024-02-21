@@ -1,4 +1,8 @@
 table {
+    img{
+        width: rem(200);
+        height: rem(200);
+    }
     width: 100%;
     thead {
         background-color: #f5f5f5;
@@ -33,7 +37,8 @@ table {
     }
 
     .table-actions button {
-        margin: 0 5px;
+        margin: 0 rem(5);
     }
+    
 
 }

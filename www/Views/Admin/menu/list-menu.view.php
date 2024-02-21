@@ -1,8 +1,8 @@
 <section class="section">
 
-    <h1>Catégories</h1>
+    <h1>Menu</h1>
     <br>
-    <a href="/admin/category/add" class="button button-primary">Ajouter</a>
+    <a href="/admin/menus/add" class="button button-primary">Ajouter</a>
     <br>
     <br>
     <?php $this->includeComponent("table", $configTable, $data);

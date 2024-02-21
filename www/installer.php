@@ -13,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mot_de_passe = $_POST['mot_de_passe'];
     $siteName = $_POST['siteName'];
     $slogan = $_POST['slogan'];
-    
-    
+
+
     // $userAdmin = new User();
     // $userAdmin->setLastname_user($nom);
     // $userAdmin->setFirstname_user($prenom);
@@ -24,11 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $userAdmin->setToken_user('token');
     // $userAdmin->setIs_verified_user(true);
     // $userAdmin->setIsDeleted(false);
-    
+
 
 
     // Stocker l'image du logo dans le dossier dist/assets/images avec comme nom logo
-    
+
     $targetDir = "dist/assets/images"; // Spécifiez le dossier où stocker les images
     $targetFile = $targetDir . basename($_FILES["imageToUpload"]["name"]);
     $uploadOk = 1;
@@ -53,24 +53,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Limitez les formats de fichier
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-    && $imageFileType != "gif" ) {
+    if (
+        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif"
+    ) {
         echo "Désolé, seuls les fichiers JPG, JPEG, PNG & GIF sont autorisés.";
         $uploadOk = 0;
     }
 
-    
+
     $logoPath = "dist/assets/images/" . htmlspecialchars(basename($_FILES["imageToUpload"]["name"]));
 
     $mot_de_passe = password_hash($mot_de_passe, PASSWORD_DEFAULT);
-    
+
     $envContent = "DB_HOST=$dbHost\n";
     $envContent .= "DB_NAME=$dbName\n";
     $envContent .= "DB_USER=$dbUser\n";
     $envContent .= "DB_PASSWORD=$dbPassword\n";
 
     file_put_contents('.env', $envContent, FILE_APPEND);
-   
+
     try {
         // Connexion initiale à PostgreSQL sans spécifier de base de données
         $pdo = new PDO("pgsql:host=$dbHost;dbname=postgres", $dbUser, $dbPassword);
@@ -84,19 +86,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Vérifiez si $uploadOk est défini sur 0 par une erreur
         if ($uploadOk == 0) {
             echo "Désolé, votre fichier n'a pas été téléchargé.";
-        // Si tout est ok, essayez de télécharger le fichier
+            // Si tout est ok, essayez de télécharger le fichier
         } else {
-        if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $targetFile)) {
-            echo "Le fichier ". htmlspecialchars(basename($_FILES["imageToUpload"]["name"])). " a été téléchargé.";
-        } else {
-            echo "Désolé, il y a eu une erreur lors du téléchargement de votre fichier.";
+            if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $targetFile)) {
+                echo "Le fichier " . htmlspecialchars(basename($_FILES["imageToUpload"]["name"])) . " a été téléchargé.";
+            } else {
+                echo "Désolé, il y a eu une erreur lors du téléchargement de votre fichier.";
+            }
         }
-    }
 
 
         // Tableaux contenant les requêtes SQL pour créer les tables
         $queries = [
-            
+
             "CREATE TABLE {$dbName}_user (
                 id SERIAL PRIMARY KEY,
                 lastname_user VARCHAR(50) NOT NULL,
@@ -110,23 +112,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
                 updated_at TIMESTAMPTZ
             )",
-           "CREATE OR REPLACE FUNCTION update_updated_at_column()
+            "CREATE OR REPLACE FUNCTION update_updated_at_column()
            RETURNS TRIGGER AS $$
            BEGIN
                NEW.updated_at = current_timestamp;
                RETURN NEW;
            END;
            $$ LANGUAGE plpgsql",
-            
-           "CREATE TRIGGER update_updated_at_{$dbName}_user
+
+            "CREATE TRIGGER update_updated_at_{$dbName}_user
            BEFORE UPDATE ON {$dbName}_user
            FOR EACH ROW
            EXECUTE FUNCTION update_updated_at_column()",
 
-           "INSERT INTO {$dbName}_user (lastname_user, firstname_user, email_user, password_user, type_user, token_user, is_verified_user, is_deleted) 
+            "INSERT INTO {$dbName}_user (lastname_user, firstname_user, email_user, password_user, type_user, token_user, is_verified_user, is_deleted) 
            VALUES ('$nom', '$prenom', '$mail', '$mot_de_passe', 'admin', 'token' , TRUE, FALSE)",
-       
-           "CREATE TABLE {$dbName}_setting (
+
+            "CREATE TABLE {$dbName}_setting (
                name_setting VARCHAR(50) NOT NULL,
                slogan_setting VARCHAR(255) NOT NULL,
                logo_url_setting TEXT NOT NULL,
@@ -135,8 +137,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             "INSERT INTO {$dbName}_setting (name_setting, slogan_setting, logo_url_setting, color_setting)
             VALUES ('$siteName', '$slogan', '$logoPath', 'blue')",
-       
-           "CREATE TABLE {$dbName}_recipe (
+
+            "CREATE TABLE {$dbName}_recipe (
                id SERIAL PRIMARY KEY,
                id_user_recipe INT NOT NULL,
                title_recipe VARCHAR(50) NOT NULL,
@@ -148,13 +150,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                updated_at TIMESTAMPTZ DEFAULT NULL,
                CONSTRAINT fk_user_recipe FOREIGN KEY (id_user_recipe) REFERENCES {$dbName}_user(id)
            )",
-       
-           "CREATE TRIGGER update_updatedat_{$dbName}_recipe
+
+            "CREATE TRIGGER update_updatedat_{$dbName}_recipe
            BEFORE UPDATE ON {$dbName}_recipe
            FOR EACH ROW
            EXECUTE FUNCTION update_updated_at_column()",
 
-           "CREATE TABLE {$dbName}_category (
+            "CREATE TABLE {$dbName}_category (
             id SERIAL PRIMARY KEY,
             name_category VARCHAR(50) NOT NULL,
             is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
@@ -205,8 +207,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "CREATE TABLE {$dbName}_menu (
                 id SERIAL PRIMARY KEY,
                 title_menu VARCHAR(50) NOT NULL,
-                description_menu TEXT NOT NULL
+                description_menu TEXT NOT NULL,
+                updated_at TIMESTAMPTZ DEFAULT NULL,
+                is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+                inserted_at TIMESTAMPTZ DEFAULT current_timestamp
             )",
+
+            "CREATE TRIGGER update_updated_at_{$dbName}_menu
+            BEFORE UPDATE ON {$dbName}_menu
+            FOR EACH ROW
+            EXECUTE FUNCTION update_updated_at_column()",
 
             "CREATE TABLE {$dbName}_recipe_menu (
                 id SERIAL PRIMARY KEY,
@@ -232,8 +242,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "La base de données '$dbName' a été créée avec succès.";
         echo "Les tables ont été créées avec succès dans la base de données '{$dbName}'.";
 
-        
-        
+
+
         // Créez un fichier de configuration simple (à améliorer pour la sécurité)
         $configData = "<?php\n\$dbHost = '$dbHost';\n\$dbName = '$dbName';\n\$dbUser = '$dbUser';\n\$dbPassword = '$dbPassword';\n";
         file_put_contents('config.php', $configData);
@@ -242,13 +252,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             unlink(__FILE__); // Supprime le fichier installer.php
             header('Location: /admin');
         }
-        
-
     } catch (PDOException $e) {
         die("Erreur lors de la création de la base de données : " . $e->getMessage());
     }
 } else {
-    ?>
+?>
     <form method="post" enctype="multipart/form-data">
         <label for="dbHost">Hôte de la base de données :</label><br>
         <input type="text" id="dbHost" name="dbHost" required><br>
@@ -261,7 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="dbPassword">Mot de passe de la base de données :</label><br>
         <input type="password" id="dbPassword" name="dbPassword" required><br><br>
-        
+
         <label for="nom">Nom :</label><br>
         <input type="text" id="nom" name="nom" required><br>
 
@@ -282,11 +290,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="logo">Logo :</label><br>
         <input type="file" id="imageToUpload" name="imageToUpload" required><br><br>
-        
-        
+
+
 
         <input type="submit" value="Créer la base de données">
     </form>
-    <?php
+<?php
 }
 ?>

@@ -19,7 +19,7 @@
                         <label for="<?= $value["id"] ?>"><?= $value["name"] ?></label>
                     <?php endforeach; ?>
                 <?php elseif ($configInput["type"] === "textarea") : ?>
-                    <textarea name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>></textarea><br>
+                    <textarea name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>><?= $configInput["value"] ?? "" ?></textarea><br>
                 <?php elseif ($configInput["type"] === "select") : ?>
                     <select name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>>
                         <option disabled selected><?= $configInput["placeholder"] ?></option>
@@ -33,14 +33,18 @@
                     </select><br>
                 <?php elseif ($configInput["type"] === "partiel") : ?>
                     <div class="<?= $configInput["class"] ?>">
+                        <h2><?= $configInput["titre"] ?></h2>
                     </div>
                 <?php else : ?>
                     <input name="<?= $name ?><?= ($configInput["type"] === "text" && !empty($configInput["multiple"])) ? "[]" : "" ?>" type="<?= $configInput["type"] ?? "text" ?>" id="<?= $configInput["id"] ?? "" ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" value="<?= $configInput["value"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>><br>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
-
-
+        <? if (!empty($config["div"])) : ?>
+            <div class="<?= $config["div"]["class"] ?? "" ?>">
+                <h2><?= $config["div"]["titre"] ?? "" ?></h2>
+            </div>
+        <? endif; ?>
         <input type="submit" class="button button-primary" value="<?= $config["config"]["submit"] ?? "Envoyer" ?>">
     </div>
 </form>

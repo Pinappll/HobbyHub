@@ -1,5 +1,7 @@
 <table>
+    <h2>Liste des recettes</h2>
     <tr>
+        <th></th>
         <th>Titre</th>
         <th>Ingredient</th>
         <th>Instruction</th>
