@@ -187,3 +187,13 @@
   controller: Navigation
   action: editNavigation
   roles: [admin]
+
+/admin/reviews:
+  controller: Review
+  action: showReviews
+  roles: [admin]
+
+/admin/reviews/edit:
+  controller: Review
+  action: editReview
+  roles: [admin]

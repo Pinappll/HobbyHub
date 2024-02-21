@@ -9,6 +9,7 @@
 namespace App;
 
 use App\Controllers\Error;
+use App\Models\Navigation;
 
 if (file_exists('installer.php')) {
     header('Location: installer.php');
@@ -131,7 +132,13 @@ if (!empty($listOfRoutes[$uri])) {
         die("Vous n'avez pas les droits pour accéder à cette page");
     }
 } else {
-    require "Controllers/Error.php";
-    $customError = new Error();
-    $customError->page404();
+    include "Models/Navigation.php";
+    $navigation = new Navigation();
+    $navigation = $navigation->getOneBy(["link" => $uri], "object");
+    if ($navigation) {
+        include "Controllers/PageController.php";
+        $controller = new \App\Controllers\PageController();
+        $controller->readPage($navigation->getId_page());
+    } else {
+    }
 }
