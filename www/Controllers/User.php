@@ -17,17 +17,17 @@ class User
     {
         $table = new UserTable();
         $configTable = $table->getConfig();
-        $category = new UserModel();
-        $categories = $category->getList();
+        $user = new UserModel();
+        $users = $user->getList(["is_deleted" => false]);
         $myView = new View("Admin/users", "back");
-        $myView->assign("data", $categories);
+        $myView->assign("data", $users);
         $myView->assign("configTable", $configTable);
     }
 
     public function addUser(): void
 {
     $myView = new View("Admin/user-add", "back");
-    $form = new UserInsert(); // Assurez-vous d'avoir une classe UserForm qui définit le formulaire d'ajout d'un utilisateur
+    $form = new UserInsert(); 
     $config = $form->getConfig();
     $errors = [];
     $message = "";
@@ -68,7 +68,9 @@ public function editUser(): void
 
     $id = $_GET["id"];
     $userModel = new UserModel();
+
     $user = $userModel->getOneBy(["id" => $id], "object"); 
+
 
     if (!$user) {
         header("Location: /admin/users");
@@ -85,10 +87,6 @@ public function editUser(): void
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $verificator = new Verificator();
         if ($verificator->checkForm($config, $_REQUEST, $errors)) {
-            $user->setLastname_user($_REQUEST["lastname_user"]);
-            $user->setFirstname_user($_REQUEST["firstname_user"]);
-            $user->setEmail_user($_REQUEST["email_user"]);
-            $user->setIsverified_user(isset($_REQUEST["is_verified_user"]));
             $user->setType_user($_REQUEST["type_user"]);
             
 
@@ -117,11 +115,11 @@ public function deleteUser(): void
 
     $userModel = new UserModel();
 
-    
-    $userModel->setId($_GET["id_user"]);
+    $user = $userModel->getOneBy(["id" => $_GET["id"]], "object");
 
-    
-    $userModel->delete();
+    $user = $user->setIsdeleted_user(true);
+
+    $user->save();
 
     header("Location: /admin/users");
     exit;

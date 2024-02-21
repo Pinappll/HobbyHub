@@ -57,9 +57,9 @@ class UserInsert
                     "label" => "Vérifié",
                     "value" => [
                         [
-                            "id" => "verified", // L'attribut 'id' pour la balise input
-                            "name" => "Vérifié", // Le texte qui sera utilisé pour le label
-                            "checked" => false // La checkbox n'est pas cochée par défaut
+                            "id" => "verified", 
+                            "name" => "Vérifié", 
+                            "checked" => false 
                         ]
                     ],
                     "required" => false 

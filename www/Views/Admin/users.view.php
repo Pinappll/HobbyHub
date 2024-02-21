@@ -2,7 +2,7 @@
 
     <h1>Users</h1>
     <br>
-    <a href="/admin/users/add" class="button button-primary">Ajouter un utilisateur</a>
+    <!-- <a href="/admin/users/add" class="button button-primary">Ajouter un utilisateur</a> -->
     <br>
     <br>
     <?php $this->includeComponent("table", $configTable, $data);
