@@ -12,7 +12,8 @@ class DB
     {
         //connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO('pgsql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV["DB_NAME"] . ';user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+
+            $this->pdo = new \PDO('pgsql:host=' . $_ENV["DB_HOST"] . ';dbname=' . $_ENV["DB_NAME"] . ';user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }

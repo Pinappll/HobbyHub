@@ -1,2 +1,12 @@
-<h2>Les reviews</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam debitis, ducimus, est eveniet, exercitationem iusto labore natus nemo nihil nisi quis voluptas! Et hic illum magni perspiciatis placeat saepe ut.</p>
+<section class="section">
+
+    <h1>Commentaires</h1>
+    
+    <br>
+    <?php $this->includeComponent("table", $configTable, $data);
+    if (isset($this->data["message"])) {
+        echo "<h3>" . $this->data["message"] . "</h3>";
+    }
+    ?>
+    
+</section>

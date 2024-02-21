@@ -250,7 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (file_exists(__FILE__)) {
             unlink(__FILE__); // Supprime le fichier installer.php
-            header('Location: /');
+            header('Location: /admin');
         }
     } catch (PDOException $e) {
         die("Erreur lors de la création de la base de données : " . $e->getMessage());

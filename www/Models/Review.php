@@ -11,7 +11,7 @@ class Review extends DB
     protected int $id_recipie_review;
     protected string $title_review;
     protected string $content_review;
-    protected string $status_review;
+    protected string $status_review="pending";
 
     
     public function __construct()
