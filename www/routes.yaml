@@ -79,6 +79,16 @@
   action: addMenu
   roles: [admin]
 
+/admin/menus/delete:
+  controller: Menu
+  action: deleteMenu
+  roles: [admin]
+
+/admin/menus/edit:
+  controller: Menu
+  action: updateMenu
+  roles: [admin]
+
 /admin/recipes:
   controller: Recipe
   action: showRecipes
@@ -103,6 +113,23 @@
   controller: User
   action: showUsers
   roles: [admin]
+
+/admin/users/add:
+  controller: User
+  action: addUser
+  roles: [admin]
+
+/admin/users/edit:
+  controller: User
+  action: editUser
+  roles: [admin]
+
+/admin/users/delete:
+  controller: User
+  action: deleteUser
+  roles: [admin]
+
+
 
 /admin/reviews:
   controller: Review
