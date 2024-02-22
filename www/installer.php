@@ -250,13 +250,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (file_exists(__FILE__)) {
             unlink(__FILE__); // Supprime le fichier installer.php
-            header('Location: /admin');
+            header('Location: /login');
         }
     } catch (PDOException $e) {
         die("Erreur lors de la création de la base de données : " . $e->getMessage());
     }
 } else {
 ?>
+    <style>
+        form {
+            display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 400px;
+        }
+
+        input {
+            height: 25px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+        }
+
+        body {
+    font-family: Arial, sans-serif;
+    background-color: beige;
+}
+    </style>
     <form method="post" enctype="multipart/form-data">
         <label for="dbHost">Hôte de la base de données :</label><br>
         <input type="text" id="dbHost" name="dbHost" required><br>
