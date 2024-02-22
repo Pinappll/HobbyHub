@@ -16,21 +16,27 @@
    ```
 2. Copiez le fichier .envCopy :
    ```bash
+   cd wwww
    cp .envCopy .env
+   cd .envCopy ../.env
    ```
+3. Remplir le fichier .env
 3. Lancer les services  sur votre machine locale:
    ```bash
-   docker compose up
+   docker compose up -d
    ```
-4. Accéder à postgre :
-   ```bash
-   docker exec -it containerPostgre psql -U nom_utilisateur -d nom_de_bdd
-   ```
+4. Installation du site :
+   - remplir les champs du formulaire
+   - pour récupérer l'hote
+   - ```bash
+     docker inspect easycook-db-1
+     ```
 
 ### CSS
 
  ```bash
 cd .\www\easycook-vite\
 npm i
+npm build
 ```
 
