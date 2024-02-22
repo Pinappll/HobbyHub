@@ -15,15 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $slogan = $_POST['slogan'];
     
     
-    // $userAdmin = new User();
-    // $userAdmin->setLastname_user($nom);
-    // $userAdmin->setFirstname_user($prenom);
-    // $userAdmin->setEmail_user($mail);
-    // $userAdmin->setPassword_user($mot_de_passe);
-    // $userAdmin->setType_user('admin');
-    // $userAdmin->setToken_user('token');
-    // $userAdmin->setIs_verified_user(true);
-    // $userAdmin->setIsDeleted(false);
     
 
 
@@ -249,6 +240,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
     ?>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: beige;
+        }
+       form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 400px;
+       }
+         input {
+            height: 25px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+         }
+         
+    </style>
     <form method="post" enctype="multipart/form-data">
         <label for="dbHost">Hôte de la base de données :</label><br>
         <input type="text" id="dbHost" name="dbHost" required><br>
