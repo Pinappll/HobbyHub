@@ -6,7 +6,7 @@
 
 ### Prérequis
 
-- Assurez-vous d'avoir Docker et Docker Compose installés sur votre machine.
+- Assurez-vous d'avoir Docker et Docker Compose installés sur votre machine. 
 
 ### Instructions
 
