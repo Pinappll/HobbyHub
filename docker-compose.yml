@@ -9,17 +9,19 @@ services:
       - ./server/000-default.conf:/etc/apache2/sites-available/000-default.conf
       - ./server/apache2.conf:/etc/apache2/apache2.conf
       - ./server/php.ini:/usr/local/etc/php/php.ini
+
   db:
     image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USER}
-      
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - ./sql_scripts:/docker-entrypoint-initdb.d/
+
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -29,5 +31,8 @@ services:
       - "8080:80"
     depends_on:
       - db
+    volumes:
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+
 volumes:
   postgres-data:
