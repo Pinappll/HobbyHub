@@ -31,7 +31,6 @@ class Security
             if ($verificator->checkForm($config, $_REQUEST, $errors)) {
                 $user = new User();
                 $user = $user->getOneBy(["email_user" => $_REQUEST["email"]], "object");
-                var_dump($user);
                 if (empty($user)) {
                     $errors[] = "le login ou le mot de passe est incorrect";
                 } else {
