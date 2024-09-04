@@ -95,149 +95,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
+        // Lire et préparer le script SQL
+        $sqlFile = './sql_scripts/script.sql';
+        $sql = file_get_contents($sqlFile);
+        $sql = str_replace('{PREFIX}', $dbName, $sql);
 
-        // Tableaux contenant les requêtes SQL pour créer les tables
-        $queries = [
+        // Exécuter le script SQL
+        $pdo->exec($sql);
 
-            "CREATE TABLE {$dbName}_user (
-                id SERIAL PRIMARY KEY,
-                lastname_user VARCHAR(50) NOT NULL,
-                firstname_user VARCHAR(50) NOT NULL,
-                email_user VARCHAR(320) NOT NULL UNIQUE,
-                is_verified_user BOOLEAN NOT NULL DEFAULT FALSE,
-                password_user VARCHAR(255) NOT NULL,
-                token_user VARCHAR(64) NOT NULL,
-                type_user TEXT NOT NULL CHECK (type_user IN ('viewer', 'chef', 'admin')),
-                is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
-                inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
-                updated_at TIMESTAMPTZ
-            )",
-            "CREATE OR REPLACE FUNCTION update_updated_at_column()
-           RETURNS TRIGGER AS $$
-           BEGIN
-               NEW.updated_at = current_timestamp;
-               RETURN NEW;
-           END;
-           $$ LANGUAGE plpgsql",
-
-            "CREATE TRIGGER update_updated_at_{$dbName}_user
-           BEFORE UPDATE ON {$dbName}_user
-           FOR EACH ROW
-           EXECUTE FUNCTION update_updated_at_column()",
-
-            "INSERT INTO {$dbName}_user (lastname_user, firstname_user, email_user, password_user, type_user, token_user, is_verified_user, is_deleted) 
-           VALUES ('$nom', '$prenom', '$mail', '$mot_de_passe', 'admin', 'token' , TRUE, FALSE)",
-
-            "CREATE TABLE {$dbName}_setting (
-               name_setting VARCHAR(50) NOT NULL,
-               slogan_setting VARCHAR(255) NOT NULL,
-               logo_url_setting TEXT NOT NULL,
-               color_setting VARCHAR(50) NOT NULL
-           )",
-
-            "INSERT INTO {$dbName}_setting (name_setting, slogan_setting, logo_url_setting, color_setting)
-            VALUES ('$siteName', '$slogan', '$logoPath', 'blue')",
-
-            "CREATE TABLE {$dbName}_recipe (
-               id SERIAL PRIMARY KEY,
-               id_user_recipe INT NOT NULL,
-               title_recipe VARCHAR(50) NOT NULL,
-               ingredient_recipe TEXT NOT NULL,
-               instruction_recipe TEXT NOT NULL,
-               image_url_recipe TEXT NOT NULL,
-               is_deleted BOOLEAN DEFAULT FALSE,
-               inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
-               updated_at TIMESTAMPTZ DEFAULT NULL,
-               CONSTRAINT fk_user_recipe FOREIGN KEY (id_user_recipe) REFERENCES {$dbName}_user(id)
-           )",
-
-            "CREATE TRIGGER update_updatedat_{$dbName}_recipe
-           BEFORE UPDATE ON {$dbName}_recipe
-           FOR EACH ROW
-           EXECUTE FUNCTION update_updated_at_column()",
-
-            "CREATE TABLE {$dbName}_category (
-            id SERIAL PRIMARY KEY,
-            name_category VARCHAR(50) NOT NULL,
-            is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
-            updated_at TIMESTAMPTZ DEFAULT NULL
-            )",
-
-            "CREATE TRIGGER update_updated_at_{$dbName}_category
-            BEFORE UPDATE ON {$dbName}_category
-            FOR EACH ROW
-            EXECUTE FUNCTION update_updated_at_column()",
-
-            "CREATE TABLE {$dbName}_recipe_category (
-                id SERIAL PRIMARY KEY,
-                id_recipe_category INT NOT NULL,
-                id_category INT NOT NULL,
-                CONSTRAINT fk_recipe_category_recipe FOREIGN KEY (id_recipe_category) REFERENCES {$dbName}_recipe(id),
-                CONSTRAINT fk_recipe_category_category FOREIGN KEY (id_category) REFERENCES {$dbName}_category(id)
-            )",
-
-            "CREATE TABLE {$dbName}_page (
-                id SERIAL PRIMARY KEY,
-                title_page TEXT NOT NULL,
-                content_page TEXT NOT NULL,
-                markup_meta_pages TEXT NOT NULL,
-                id_user INT NOT NULL,
-                CONSTRAINT fk_user_page FOREIGN KEY (id_user) REFERENCES {$dbName}_user(id)
-            )",
-
-            "CREATE TABLE {$dbName}_review (
-                id SERIAL PRIMARY KEY,
-                id_user_review INT NOT NULL,
-                id_recipe_review INT NOT NULL,
-                title_review VARCHAR(50) NOT NULL,
-                content_review TEXT NOT NULL,
-                status_review TEXT NOT NULL CHECK (status_review IN ('accept', 'process', 'cancel', '')),
-                is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
-                inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
-                updated_at TIMESTAMPTZ DEFAULT NULL,
-                CONSTRAINT fk_user_review FOREIGN KEY (id_user_review) REFERENCES {$dbName}_user(id),
-                CONSTRAINT fk_recipe_review FOREIGN KEY (id_recipe_review) REFERENCES {$dbName}_recipe(id)
-            )",
-
-            "CREATE TRIGGER update_updated_at_{$dbName}_review
-            BEFORE UPDATE ON {$dbName}_review
-            FOR EACH ROW
-            EXECUTE FUNCTION update_updated_at_column()",
-
-            "CREATE TABLE {$dbName}_menu (
-                id SERIAL PRIMARY KEY,
-                title_menu VARCHAR(50) NOT NULL,
-                description_menu TEXT NOT NULL,
-                updated_at TIMESTAMPTZ DEFAULT NULL,
-                is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
-                inserted_at TIMESTAMPTZ DEFAULT current_timestamp
-            )",
-
-            "CREATE TRIGGER update_updated_at_{$dbName}_menu
-            BEFORE UPDATE ON {$dbName}_menu
-            FOR EACH ROW
-            EXECUTE FUNCTION update_updated_at_column()",
-
-            "CREATE TABLE {$dbName}_recipe_menu (
-                id SERIAL PRIMARY KEY,
-                id_recipe INT NOT NULL,
-                id_menu INT NOT NULL,
-                CONSTRAINT fk_recipe_menu_recipe FOREIGN KEY (id_recipe) REFERENCES {$dbName}_recipe(id),
-                CONSTRAINT fk_recipe_menu_menu FOREIGN KEY (id_menu) REFERENCES {$dbName}_menu(id)
-            )",
-
-            "CREATE TABLE {$dbName}_navigation (
-                id SERIAL PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                link VARCHAR(255),
-                position INT,
-                parent_id INT,
-                level INT
-            )",
-        ];
-        foreach ($queries as $query) {
-            $pdo->exec($query);
+        // Supprimer le fichier SQL après l'exécution
+        if (file_exists($sqlFile)) {
+            unlink($sqlFile);
         }
+        
+         // Insertion de l'utilisateur admin
+         $token = bin2hex(random_bytes(16)); // Génère un token pour l'admin
+         $stmt = $pdo->prepare("
+             INSERT INTO users (lastname, firstname, email, password, type, token, is_verified, is_deleted)
+             VALUES (:lastname, :firstname, :email, :password, 'admin', :token, true, false)
+         ");
+         $stmt->execute([
+             ':lastname' => $nom,
+             ':firstname' => $prenom,
+             ':email' => $mail,
+             ':password' => $mot_de_passe,
+             ':token' => $token
+         ]);
+ 
+         echo "L'utilisateur administrateur a été créé avec succès.";
 
         echo "La base de données '$dbName' a été créée avec succès.";
         echo "Les tables ont été créées avec succès dans la base de données '{$dbName}'.";

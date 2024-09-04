@@ -11,9 +11,10 @@ class DB
     public function __construct()
     {
         //connexion à la bdd via pdo
+        include 'config.php';
         try {
 
-            $this->pdo = new \PDO('pgsql:host=' . $_ENV["DB_HOST"] . ';dbname=' . $_ENV["DB_NAME"] . ';user=' . $_ENV["DB_USER"] . ';password=' . $_ENV["DB_PASSWORD"]);
+            $this->pdo = new \PDO('pgsql:host=' . $dbHost . ';dbname=' . $dbName . ';user=' . $dbUser . ';password=' . $dbPassword);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
@@ -21,7 +22,7 @@ class DB
         $table = get_called_class();
         $table = explode("\\", $table);
         $table = array_pop($table);
-        $dbName = strtolower($_ENV["DB_NAME"]);
+        $dbName = strtolower($dbName);
         $this->table = $dbName . "_" . strtolower($table);
     }
 
