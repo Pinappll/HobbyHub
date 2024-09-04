@@ -13,6 +13,9 @@ class InstallerController
 {
     public function install(): void
     {
+        if(!file_exists('/var/www/html/installer.php')){
+            header('Location: /login');
+        }
         $myView = new View("Admin/config/config",null);
         $form = new FormInit();
         $config = $form->getConfig($_REQUEST);
