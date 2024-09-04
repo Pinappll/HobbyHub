@@ -11,11 +11,6 @@ namespace App;
 use App\Controllers\Error;
 use App\Models\Navigation;
 
-if (file_exists('installer.php')) {
-    header('Location: installer.php');
-    exit();
-}
-
 spl_autoload_register("App\myAutoloader");
 session_start();
 function loadEnv($filePath)
@@ -57,9 +52,13 @@ function myAutoloader(String $class): void
 
 //Comment récupérer et nettoyer l'URI
 // Exemple on doit avoir "/", "/login", "/logout", ...
-$uri = strtolower($_SERVER["REQUEST_URI"]);
-$uri = strtok($uri, "?");
-$uri = strlen($uri) > 1 ? rtrim($uri, "/") : $uri;
+if (file_exists('installer.php')) {
+    
+    $uri = "/installer";
+}else{$uri = strtolower($_SERVER["REQUEST_URI"]);
+    $uri = strtok($uri, "?");
+    $uri = strlen($uri) > 1 ? rtrim($uri, "/") : $uri;}
+
 
 // Récupérer le contenu du fichier routes.yaml
 if (!file_exists("routes.yaml")) {
@@ -95,8 +94,8 @@ function access(array $roles): bool
     }
     return $access;
 }
-
 if (!empty($listOfRoutes[$uri])) {
+    
     if (access($listOfRoutes[$uri]['roles'])) {
         if (!empty($listOfRoutes[$uri]['controller'])) {
             if (!empty($listOfRoutes[$uri]['action'])) {
@@ -112,6 +111,7 @@ if (!empty($listOfRoutes[$uri])) {
                         $objectController = new $controller();
 
                         if (method_exists($objectController, $action)) {
+                            
                             $objectController->$action();
                         } else {
                             die("L'action n'existe pas dans le controller");

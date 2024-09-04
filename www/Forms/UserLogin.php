@@ -15,8 +15,8 @@ class UserLogin
                 "class" => "form"
             ],
             "inputs" => [
-                "email" => ["type" => "email", "class" => "input-form", "placeholder" => "email", "required" => true],
-                "password" => ["type" => "password", "class" => "input-form", "placeholder" => "mot de passe", "required" => true],
+                "email" => ["type" => "email", "class" => "input-form", "placeholder" => "email", "required" => true, "error" => "identifiant incorrect"],
+                "password" => ["type" => "password", "class" => "input-form", "placeholder" => "mot de passe", "required" => true, "error" => "identifiant incorrect"],
             ]
         ];
     }

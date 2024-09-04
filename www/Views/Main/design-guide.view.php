@@ -100,7 +100,7 @@
 				<input type="tel" name="telephone" placeholder="Numéro de téléphone" Pattern="^9[0-9]{7}" size="10">
 			</div>
 			<div class="form-group">
-				<input type="password" name="mot_de_passe" placeholder="Mot de passe">
+				<input type="password" name="password" placeholder="Mot de passe">
 			</div>
 			<div class="form-group">
 				<select name="liste_deroulante">
