@@ -101,7 +101,7 @@ class InstallerController
                     }
             
                     // Lire et préparer le script SQL
-                    $sqlFile = '../../sql_scripts/script.sql';
+                    $sqlFile = '/var/www/html/sql_scripts/script.sql';
                     $sql = file_get_contents($sqlFile);
                     $sql = str_replace('{PREFIX}', $dbName, $sql);
             
@@ -114,16 +114,34 @@ class InstallerController
                      // Insertion de l'utilisateur admin
                      $token = bin2hex(random_bytes(16)); // Génère un token pour l'admin
                      $stmt = $pdo->prepare("
-                         INSERT INTO users (lastname, firstname, email, password, type, token, is_verified, is_deleted)
-                         VALUES (:lastname, :firstname, :email, :password, 'admin', :token, true, false)
-                     ");
-                     $stmt->execute([
-                         ':lastname' => $nom,
-                         ':firstname' => $prenom,
-                         ':email' => $mail,
-                         ':password' => $mot_de_passe,
-                         ':token' => $token
-                     ]);
+                        INSERT INTO {$dbName}_user (
+                            lastname_user, 
+                            firstname_user, 
+                            email_user, 
+                            password_user, 
+                            type_user, 
+                            token_user, 
+                            is_verified_user, 
+                            is_deleted
+                        ) VALUES (
+                            :lastname, 
+                            :firstname, 
+                            :email, 
+                            :password, 
+                            'admin', 
+                            :token, 
+                            true, 
+                            false
+                        )
+                    ");
+
+                    $stmt->execute([
+                        ':lastname' => $nom,
+                        ':firstname' => $prenom,
+                        ':email' => $mail,
+                        ':password' => $mot_de_passe,
+                        ':token' => $token
+                    ]);
              
                      echo "L'utilisateur administrateur a été créé avec succès.";
             
@@ -135,12 +153,12 @@ class InstallerController
                     // Créez un fichier de configuration simple (à améliorer pour la sécurité)
                     $configData = "<?php\n\$dbHost = '$dbHost';\n\$dbName = '$dbName';\n\$dbUser = '$dbUser';\n\$dbPassword = '$dbPassword';\n";
                     file_put_contents('config.php', $configData);
-            
-                    if (file_exists(__FILE__)) {
+                    
+                    if (file_exists('/var/www/html/installer.php')) {
                         if (file_exists($sqlFile)) {
                             unlink($sqlFile);
                         }
-                        unlink(__FILE__); // Supprime le fichier installer.php
+                        unlink('/var/www/html/installer.php'); // Supprime le fichier installer.php
                         header('Location: /login');
                     }
                 } catch (PDOException $e) {
