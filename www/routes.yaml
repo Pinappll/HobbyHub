@@ -207,3 +207,8 @@
   controller: Review
   action: editReview
   roles: [admin]
+
+/api/reviews:
+  controller: Review
+  action: addReview
+  roles: [admin]

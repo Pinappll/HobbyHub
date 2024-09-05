@@ -164,6 +164,22 @@
           },
           category: "Basic",
         },
+        {
+          id: "commentForm",
+          label: "Comment",
+          content: {
+            tagName: 'div',
+            classes: ['commentFormDiv'],
+            components: `
+			<form id="commentForm">
+          <textarea name="comment" placeholder="Laissez un commentaire..." required></textarea>
+          <button type="submit">Poster le commentaire</button>
+      </form>
+      <div id="commentsList"></div>
+      `,
+          },
+          category: "Basic",
+        },
       ],
     },
   });
@@ -177,7 +193,6 @@
   });
 
   document.getElementById('pageForm').addEventListener('submit', function(e) {
-    debugger;
     const htmlContent = editor.getHtml();
     const componentsJson = editor.getComponents();
     const styleJson = editor.getStyle();
