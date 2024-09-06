@@ -21,10 +21,9 @@ class Menu
 
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $recipe = new Recipe();
-            $dbName = strtolower($_ENV["DB_NAME"]);
-            $recipes = $recipe->select($dbName . "_recipe.*")
-                ->join("recipe_category", $dbName . "_recipe.id =" . $dbName . "_recipe_category.id_recipe_category")
-                ->where($dbName . "_recipe_category.id_category=" . $_POST["category"])
+            $recipes = $recipe->select($recipe->getNameDb()."_recipe.*")
+                ->join($recipe->getNameDb()."_recipe_category", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_category.id_recipe_category")
+                ->where($recipe->getNameDb() . "_recipe_category.id_category=" . $_POST["category"])
                 ->execute("object");
             $myView = new View("Partiel/listeRecipeSearch", null);
             $myView->assign("recipes", $recipes);
@@ -74,17 +73,16 @@ class Menu
     public function updateMenu(): void
     {
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $dbName = strtolower($_ENV["DB_NAME"]);
             if (!isset($_POST["category"])) {
                 $recipe = new Recipe();
-                $recipes = $recipe->select()->join("recipe_menu", $dbName . "_recipe.id =" . $dbName . "_recipe_menu.id_recipe")->where($dbName . "_recipe_menu.id_menu=" . $_GET["id"])->execute();
+                $recipes = $recipe->select()->join($recipe->getNameDb()."_recipe_menu", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_menu.id_recipe")->where($recipe->getNameDb() . "_recipe_menu.id_menu=" . $_GET["id"])->execute();
                 $myView = new View("Partiel/listeRecipMenu", null);
                 $myView->assign("recipes", $recipes);
             } else {
                 $recipe = new Recipe();
-                $recipes = $recipe->select($dbName . "_recipe.*")
-                    ->join("recipe_category", $dbName . "_recipe.id =" . $dbName . "_recipe_category.id_recipe_category")
-                    ->where($dbName . "_recipe_category.id_category=" . $_POST["category"])
+                $recipes = $recipe->select($recipe->getNameDb() . "_recipe.*")
+                    ->join($recipe->getNameDb()."_recipe_category", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_category.id_recipe_category")
+                    ->where($recipe->getNameDb() . "_recipe_category.id_category=" . $_POST["category"])
                     ->execute("object");
                 $myView = new View("Partiel/listeRecipeSearch", null);
                 $myView->assign("recipes", $recipes);

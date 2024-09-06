@@ -159,7 +159,7 @@ class InstallerController
                     
                     if (file_exists('/var/www/html/installer.php')) {
                         if (file_exists($sqlFile)) {
-                            unlink($sqlFile);
+                            //unlink($sqlFile);
                         }
                         unlink('/var/www/html/installer.php'); // Supprime le fichier installer.php
                         header('Location: /login');

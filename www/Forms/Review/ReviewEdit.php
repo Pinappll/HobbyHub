@@ -17,7 +17,7 @@ class ReviewEdit
             ],
             "inputs" => [
                 "id_user_review" => ["type" => "hidden"],
-                "id_recipie_review" => ["type" => "hidden"],
+                "id_page_review" => ["type" => "hidden"],
                 "id_review" => ["type" => "hidden"],
                 "status_review" => ["type" => "select", "class" => "input-form", "placeholder" => "Status", "required" => true, "error" => "Votre status doit être un nombre", "options" => ["0" => "attente", "1" => "validé", "2" => "refusé"], "value" => $data["status_review"] ?? ""],
             ]

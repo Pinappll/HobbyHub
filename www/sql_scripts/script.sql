@@ -86,15 +86,14 @@ CREATE TABLE {PREFIX}_page (
 CREATE TABLE {PREFIX}_review (
     id SERIAL PRIMARY KEY,
     id_user_review INT NOT NULL,
-    id_recipe_review INT NOT NULL,
-    title_review VARCHAR(50) NOT NULL,
+    id_page_review INT NOT NULL,
     content_review TEXT NOT NULL,
-    status_review TEXT NOT NULL CHECK (status_review IN ('accept', 'process', 'cancel', '')),
+    status_review TEXT NOT NULL CHECK (status_review IN ('accept', 'pending', 'refuse')),
     is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
     inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
     updated_at TIMESTAMPTZ DEFAULT NULL,
     CONSTRAINT fk_user_review FOREIGN KEY (id_user_review) REFERENCES {PREFIX}_user(id),
-    CONSTRAINT fk_recipe_review FOREIGN KEY (id_recipe_review) REFERENCES {PREFIX}_recipe(id)
+    CONSTRAINT fk_page_review FOREIGN KEY (id_page_review) REFERENCES {PREFIX}_page(id)
 );
 
 CREATE TRIGGER update_updated_at_{PREFIX}_review
