@@ -158,5 +158,6 @@ class PageController
         $myView = new View("Main/page", "front");
         // $contenuJson = '{"html": "<p>Ceci est du contenu HTML récupéré depuis la base de données.</p>"}';
         $myView->assign("page", json_decode($page->getContent_page()));
+        $myView->assign("idPage",json_decode($page->getId()));
     }
 }

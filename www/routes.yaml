@@ -211,4 +211,9 @@
 /api/reviews:
   controller: Review
   action: addReview
-  roles: [admin]
+  roles: []
+
+/api/list/reviews:
+  controller: Review
+  action: listReviews
+  roles: []

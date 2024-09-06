@@ -7,6 +7,7 @@ class DB
     protected ?object $pdo = null;
     private string $table;
     protected string $query;
+    protected string $dbName;
 
     public function __construct()
     {
@@ -22,7 +23,7 @@ class DB
         $table = get_called_class();
         $table = explode("\\", $table);
         $table = array_pop($table);
-        $dbName = strtolower($dbName);
+        $this->dbName = strtolower($dbName);
         $this->table = $dbName . "_" . strtolower($table);
     }
 
@@ -200,8 +201,7 @@ class DB
 
     public function join($table, $on)
     {
-        $dbName = strtolower($_ENV["DB_NAME"]);
-        $this->query .= " JOIN " . $dbName . "_" . strtolower($table) . " ON $on";
+        $this->query .= " JOIN $table ON $on";
         return $this;
     }
 
@@ -240,5 +240,9 @@ class DB
     {
         $this->table;
         return $this;
+    }
+    public function getNameDb()
+    {
+        return $this->dbName;
     }
 }

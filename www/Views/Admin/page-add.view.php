@@ -172,10 +172,16 @@
             classes: ['commentFormDiv'],
             components: `
 			<form id="commentForm">
-          <textarea name="comment" placeholder="Laissez un commentaire..." required></textarea>
-          <button type="submit">Poster le commentaire</button>
-      </form>
-      <div id="commentsList"></div>
+  <!-- ID de l'utilisateur qui poste le commentaire (à générer dynamiquement via votre backend) -->
+  
+  <!-- Champ pour le commentaire -->
+  <textarea name="content_review" placeholder="Laissez un commentaire..." required></textarea>
+  <!-- Bouton pour soumettre le commentaire -->
+  <button type="submit">Poster le commentaire</button>
+</form>
+
+<!-- Liste des commentaires -->
+<div id="commentsList"></div>
       `,
           },
           category: "Basic",
