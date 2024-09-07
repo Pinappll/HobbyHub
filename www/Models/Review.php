@@ -8,8 +8,7 @@ class Review extends DB
 {
     private ?int $id = null;
     protected int $id_user_review;
-    protected int $id_recipie_review;
-    protected string $title_review;
+    protected int $id_page_review;
     protected string $content_review;
     protected string $status_review="pending";
 
@@ -59,42 +58,23 @@ class Review extends DB
         return $this;
     }
 
+
     /**
-     * Get the value of title_review
+     * Get the value of id_page_review
      */ 
-    public function getTitle_review()
+    public function getId_page_review()
     {
-        return $this->title_review;
+        return $this->id_page_review;
     }
 
     /**
-     * Set the value of title_review
+     * Set the value of id_page_review
      *
      * @return  self
      */ 
-    public function setTitle_review($title_review)
+    public function setId_page_review($id_page_review)
     {
-        $this->title_review = $title_review;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id_recipie_review
-     */ 
-    public function getId_recipie_review()
-    {
-        return $this->id_recipie_review;
-    }
-
-    /**
-     * Set the value of id_recipie_review
-     *
-     * @return  self
-     */ 
-    public function setId_recipie_review($id_recipie_review)
-    {
-        $this->id_recipie_review = $id_recipie_review;
+        $this->id_page_review = $id_page_review;
 
         return $this;
     }
