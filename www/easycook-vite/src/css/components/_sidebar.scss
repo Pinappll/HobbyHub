@@ -1,48 +1,70 @@
 .sidebar {
     position: fixed;
-    left: 0;
     top: 0;
-    bottom:0;
-    width: rem(240); 
-    background-color: var(--black);
+    left: 0;
+    width: 250px; /* Largeur de la sidebar */
+    height: 100vh; /* La sidebar prend toute la hauteur de l'écran */
+    background-color: var(--dark-grey); /* Utilise votre variable de couleur */
     z-index: 1000;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Permettre à la sidebar de défiler */
+    
+    /* Ajout de smooth scrolling pour améliorer l'expérience utilisateur */
+    scroll-behavior: smooth;
 
-    .sidebar-title {
-            font-size: rem(22);
-            line-height: rem(28);
-            font-weight: 500;
-            padding: rem(16);
-            color: var(--brown);
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis;
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 80%; /* Logo dans la sidebar */
+            margin-bottom: 1rem;
         }
 
-    ul {
-        @include resetList;
-        @include flexbox(column, nowrap, flex-start, center);
-        
-        li {
-            padding: rem(10) rem(16);
+        .sidebar-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
 
-            a {
-                font-size: rem(18);
-                color: var(--white);
-                text-decoration: none;
+            li {
+                padding: 15px 0;
+
+                a {
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    padding: 10px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+
+                    &:hover {
+                        background-color: var(--dark-grey); /* Couleur de survol */
+                    }
+                }
             }
         }
     }
+}
 
-    @media (min-width: $breakpoint-sm) {
-        width: rem(150); // tablettes
-        .sidebar-title {
-            font-size: rem(18); 
-            padding: rem(12); 
-        }
+/* Appliquer le décalage uniquement si has-sidebar est présent */
+.has-sidebar {
+    @media screen and (min-width: $md-size) {
+        margin-left: 250px; /* Décale le contenu uniquement si la sidebar est présente */
     }
+}
 
-    @media (min-width: $breakpoint-md) {
-        width: rem(240); // ordi
-    }
+main.hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+  
+main {
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }

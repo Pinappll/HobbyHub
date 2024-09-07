@@ -11,11 +11,11 @@ class Mail
     {
         $this->phpmailer = new PHPMailer();
         $this->phpmailer->isSMTP();
-        $this->phpmailer->Host = $_ENV["HOSTMAILTRAP"];
+        $this->phpmailer->Host = $_ENV["HOSTMAILGUN"];
         $this->phpmailer->SMTPAuth = true;
-        $this->phpmailer->Port = $_ENV["PORTMAILTRAP"];
-        $this->phpmailer->Username = $_ENV["USERNAMEMAILTRAP"];
-        $this->phpmailer->Password = $_ENV["PASSWORDMAILTRAP"];
+        $this->phpmailer->Port = $_ENV["PORTMAILGUN"];
+        $this->phpmailer->Username = $_ENV["USERNAMEMAILGUN"];
+        $this->phpmailer->Password = $_ENV["PASSWORDMAILGUN"];
     }
     public function sendMail(array $arrayMail, string $subject, string $contentMail)
     {
