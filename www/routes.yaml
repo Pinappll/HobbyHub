@@ -64,11 +64,6 @@
   action: dashboard
   roles: [admin]
 
-/admin/settings:
-  controller: Setting
-  action: setting
-  roles: [admin]
-
 /admin/menus:
   controller: Menu
   action: showMenus
@@ -217,3 +212,25 @@
   controller: Review
   action: listReviews
   roles: []
+
+/admin/settings:
+  controller: Setting
+  action: setting
+  roles: [admin]
+
+
+/admin/settings/update:
+  controller: Setting
+  action: update
+  roles: [admin]
+
+/admin/export:
+  controller: Export
+  action: export
+  roles: [admin]
+
+/admin/export/export:
+  controller: Export
+  action: exportAction
+  roles: [admin]
+

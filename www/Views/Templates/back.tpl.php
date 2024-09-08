@@ -21,6 +21,17 @@
     <?php include $this->viewName; ?>
   </main>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const sidebar = document.querySelector(".sidebar");
+      const mainContent = document.querySelector("main");
+
+      if (sidebar && mainContent) {
+        mainContent.classList.add("has-sidebar");
+      }
+    });
+  </script>
+
 </body>
 
 </html>

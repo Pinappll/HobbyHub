@@ -53,13 +53,15 @@ $numberOfPages = $page->countRows();
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+        responsive: true,  // Permet le redimensionnement
+        maintainAspectRatio: false, // Utiliser toute la taille du conteneur
+        scales: {
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
 
     const ctx2 = document.getElementById('myChart2');
 
@@ -75,13 +77,15 @@ $numberOfPages = $page->countRows();
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+        responsive: true,  // Permet le redimensionnement
+        maintainAspectRatio: false, // Utiliser toute la taille du conteneur
+        scales: {
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
 
     const ctx3 = document.getElementById('myChart3');
 
@@ -97,13 +101,15 @@ $numberOfPages = $page->countRows();
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+        responsive: true,  // Permet le redimensionnement
+        maintainAspectRatio: false, // Utiliser toute la taille du conteneur
+        scales: {
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
 
     const ctx4 = document.getElementById('myChart4');
 
@@ -119,11 +125,13 @@ $numberOfPages = $page->countRows();
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+        responsive: true,  // Permet le redimensionnement
+        maintainAspectRatio: false, // Utiliser toute la taille du conteneur
+        scales: {
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
 </script>

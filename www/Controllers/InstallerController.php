@@ -13,10 +13,10 @@ class InstallerController
 {
     public function install(): void
     {
-        if(!file_exists('/var/www/html/installer.php')){
+        if (!file_exists('/var/www/html/installer.php')) {
             header('Location: /login');
         }
-        $myView = new View("Admin/config/config",null);
+        $myView = new View("Admin/config/config", null);
         $form = new FormInit();
         $config = $form->getConfig($_REQUEST);
         $errors = [];
@@ -34,14 +34,11 @@ class InstallerController
             $siteName = $_POST['siteName'];
             $slogan = $_POST['slogan'];
             $verificator = new Verificator();
-            if($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)){
-                echo "<pre>";
-                var_dump($_REQUEST);
-                $targetDir = "dist/assets/images"; // Spécifiez le dossier où stocker les images
-                $targetFile = $targetDir . basename($_FILES["imageToUpload"]["name"]);
+            if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
+                $targetDir = "dist/assets/images/"; // Spécifiez le dossier où stocker les images
                 $uploadOk = 1;
-                $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-            
+                $imageFileType = strtolower(pathinfo($_FILES["imageToUpload"]["name"], PATHINFO_EXTENSION)); // Récupérer l'extension du fichier
+
                 // Vérifiez si le fichier est une image réelle
                 if (isset($_POST["submit"])) {
                     $check = getimagesize($_FILES["imageToUpload"]["tmp_name"]);
@@ -53,44 +50,55 @@ class InstallerController
                         $uploadOk = 0;
                     }
                 }
-            
-                // Vérifiez si le fichier existe déjà
-                if (file_exists($targetFile)) {
-                    echo "Désolé, le fichier existe déjà.";
-                    $uploadOk = 0;
-                }
-            
+
                 // Limitez les formats de fichier
-                if (
-                    $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                    && $imageFileType != "gif"
-                ) {
+                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
                     echo "Désolé, seuls les fichiers JPG, JPEG, PNG & GIF sont autorisés.";
                     $uploadOk = 0;
                 }
-            
-            
+
+                // Si tout est ok, essayez de télécharger le fichier
+                if ($uploadOk == 1) {
+                    // Renommer l'image en "logo.extension"
+                    $targetFile = $targetDir . "logo." . $imageFileType; // Renommez toujours en "logo"
+
+                    // Vérifiez si un fichier nommé "logo.extension" existe déjà et supprimez-le
+                    if (file_exists($targetFile)) {
+                        unlink($targetFile); // Supprimer le fichier existant
+                    }
+
+                    // Déplacer le fichier téléchargé dans le répertoire de destination avec le nouveau nom
+                    if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $targetFile)) {
+                        echo "Le fichier a été téléchargé et renommé en logo." . $imageFileType;
+                    } else {
+                        echo "Désolé, il y a eu une erreur lors du téléchargement de votre fichier.";
+                    }
+                }
+
+
+
+
                 $logoPath = "dist/assets/images/" . htmlspecialchars(basename($_FILES["imageToUpload"]["name"]));
-            
+
                 $mot_de_passe = password_hash($mot_de_passe, PASSWORD_DEFAULT);
-            
+
                 $envContent = "DB_HOST=$dbHost\n";
                 $envContent .= "DB_NAME=$dbName\n";
                 $envContent .= "DB_USER=$dbUser\n";
                 $envContent .= "DB_PASSWORD=$dbPassword\n";
-            
+
                 file_put_contents('.env', $envContent, FILE_APPEND);
-            
+
                 try {
                     // Connexion initiale à PostgreSQL sans spécifier de base de données
                     $pdo = new PDO("pgsql:host=$dbHost;dbname=postgres", $dbUser, $dbPassword);
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $sql = "CREATE DATABASE $dbName";
                     $pdo->exec($sql);
-            
+
                     $pdo = new PDO("pgsql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
+
                     // Vérifiez si $uploadOk est défini sur 0 par une erreur
                     if ($uploadOk == 0) {
                         echo "Désolé, votre fichier n'a pas été téléchargé.";
@@ -102,21 +110,21 @@ class InstallerController
                             echo "Désolé, il y a eu une erreur lors du téléchargement de votre fichier.";
                         }
                     }
-            
+
                     // Lire et préparer le script SQL
                     $sqlFile = '/var/www/html/sql_scripts/script.sql';
                     $sql = file_get_contents($sqlFile);
                     $sql = str_replace('{PREFIX}', $dbName, $sql);
-            
+
                     // Exécuter le script SQL
                     $pdo->exec($sql);
-            
+
                     // Supprimer le fichier SQL après l'exécution
-                    
-                    
-                     // Insertion de l'utilisateur admin
-                     $token = bin2hex(random_bytes(16)); // Génère un token pour l'admin
-                     $stmt = $pdo->prepare("
+
+
+                    // Insertion de l'utilisateur admin
+                    $token = bin2hex(random_bytes(16)); // Génère un token pour l'admin
+                    $stmt = $pdo->prepare("
                         INSERT INTO {$dbName}_user (
                             lastname_user, 
                             firstname_user, 
@@ -145,18 +153,18 @@ class InstallerController
                         ':password' => $mot_de_passe,
                         ':token' => $token
                     ]);
-             
-                     echo "L'utilisateur administrateur a été créé avec succès.";
-            
+
+                    echo "L'utilisateur administrateur a été créé avec succès.";
+
                     echo "La base de données '$dbName' a été créée avec succès.";
                     echo "Les tables ont été créées avec succès dans la base de données '{$dbName}'.";
-            
-            
-            
+
+
+
                     // Créez un fichier de configuration simple (à améliorer pour la sécurité)
                     $configData = "<?php\n\$dbHost = '$dbHost';\n\$dbName = '$dbName';\n\$dbUser = '$dbUser';\n\$dbPassword = '$dbPassword';\n";
                     file_put_contents('config.php', $configData);
-                    
+
                     if (file_exists('/var/www/html/installer.php')) {
                         if (file_exists($sqlFile)) {
                             //unlink($sqlFile);
@@ -168,13 +176,10 @@ class InstallerController
                     die("Erreur lors de la création de la base de données : " . $e->getMessage());
                 }
             }
-        
-           
         }
 
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
         $myView->assign("message", $message);
     }
-
 }

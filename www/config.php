@@ -1,5 +1,5 @@
 <?php
-$dbHost = '172.18.0.1';
-$dbName = 'ludo';
-$dbUser = 'test';
+$dbHost = '172.22.0.2';
+$dbName = 'easycook';
+$dbUser = 'mijose';
 $dbPassword = 'test1234';

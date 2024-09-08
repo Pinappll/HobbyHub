@@ -6,6 +6,7 @@ use App\Core\View;
 use App\Models\Review as ReviewModel;
 use App\Tables\ReviewTable;
 use App\Forms\ReviewEdit;
+use App\Models\User;
 
 
 class Review
@@ -29,37 +30,73 @@ class Review
     }
 
     public function addReview(): void
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-            if (isset($_POST['id_page_review']) && isset($_POST['id_user_review']) && isset($_POST['content_review'])) {
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['id_page_review']) && isset($_POST['id_user_review']) && isset($_POST['content_review'])) {
 
-                $review = new ReviewModel();
-                $review->setId_user_review($_POST['id_user_review']);
-                $review->setId_page_review($_POST['id_page_review']);
-                $review->setContent_review($_POST['content_review']);
-                $review->setStatus_review("pending");
+            $review = new ReviewModel();
+            $review->setId_user_review($_POST['id_user_review']);
+            $review->setId_page_review($_POST['id_page_review']);
+            $review->setContent_review($_POST['content_review']);
+            $review->setStatus_review("pending");
 
-                // Enregistrez l'avis et vérifiez si l'enregistrement a réussi
-                if ($review->save()) {
-                    echo json_encode([
-                        'status' => 'success',
-                        'message' => 'Le commentaire a été ajouté avec succès.'
-                    ]);
-                } else {
-                    echo json_encode([
-                        'status' => 'error',
-                        'message' => 'Erreur lors de l\'ajout du commentaire.'
-                    ]);
-                }
+            // Enregistrez l'avis et vérifiez si l'enregistrement a réussi
+            if ($review->save()) {
+                // Envoyer un email aux administrateurs avec le contenu du commentaire
+                $this->notifyAdminsOfNewReview($review);
+
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Le commentaire a été ajouté avec succès et les administrateurs ont été notifiés.'
+                ]);
             } else {
                 echo json_encode([
                     'status' => 'error',
-                    'message' => 'Données manquantes.'
+                    'message' => 'Erreur lors de l\'ajout du commentaire.'
                 ]);
             }
-        } 
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Données manquantes.'
+            ]);
+        }
+    } 
+}
+
+// Méthode pour envoyer des emails aux administrateurs
+private function notifyAdminsOfNewReview(ReviewModel $review): void
+{
+    $userModel = new User();
+    
+    // Trouver tous les admins
+    $admins = $userModel->findAllAdmins();
+
+    // Le sujet de l'email
+    $subject = "Nouveau commentaire en attente de validation";
+
+    // Récupérer les détails du commentaire
+    $content_review = $review->getContent_review();
+    $user_id = $review->getId_user_review();
+    $page_id = $review->getId_page_review();
+
+    // Créer le contenu de l'email avec les détails du commentaire
+    $content = "Un nouveau commentaire a été posté par l'utilisateur avec l'ID : $user_id\n";
+    $content .= "\nLe commentaire est en attente de validation pour la page avec l'ID : $page_id.\n\n";
+    $content .= "Contenu du commentaire :\n";
+    $content .= $content_review;
+
+    // Boucle sur tous les admins et envoie un mail
+    foreach ($admins as $admin) {
+        $email = $admin->getEmail_user();
+
+        // Utilisez votre classe Mail pour envoyer un email
+        $mail = new \App\Core\Mail();
+        $mail->sendMail([$email], $subject, $content);
     }
+}
+
+
 
 
     public function editReview(): void
