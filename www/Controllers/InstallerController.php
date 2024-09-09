@@ -89,7 +89,7 @@ class InstallerController
 
                 try {
                     // Connexion initiale à PostgreSQL avec port et SSL
-                    $pdo = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=postgres;user=$dbUser;password=$dbPassword;sslmode=$sslMode");
+                    $pdo = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=defaultdb;user=$dbUser;password=$dbPassword;sslmode=$sslMode");
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     // Création de la base de données
