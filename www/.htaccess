@@ -1,28 +1,5 @@
 RewriteEngine On
 
-# Bloquer l'accès au fichier .env
-<Files .env>
-    Require all denied
-</Files>
-
-<FilesMatch "\.(config|ini|php)$">
-    Require all denied
-</FilesMatch>
-
-<Directory "/var/www/html/vendor">
-    Require all denied
-</Directory>
-
-<Directory "/var/www/html/node_modules">
-    Require all denied
-</Directory>
-
-<FilesMatch "\.(bak|sql|log|key|pem)$">
-    Require all denied
-</FilesMatch>
-
-# Désactiver le listing des répertoires
-Options -Indexes
 
 # Vos règles existantes pour rediriger vers index.php si le fichier/dossier demandé n'existe pas
 RewriteCond %{REQUEST_FILENAME} !-d
