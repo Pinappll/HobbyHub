@@ -94,7 +94,7 @@ class Security
                     $user->save();
                     $mail = new Mail();
                     $subject = "Vérification du compte";
-                    $content = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost/enable-account?token=' . $activation_token . '">Activer</a>';
+                    $content = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://easycook.ninja/enable-account?token=' . $activation_token . '">Activer</a>';
                     $message = $mail->sendMail([$user->getEmail_user()], $subject, $content);
                 }
             }
@@ -144,7 +144,7 @@ class Security
                     if ($user->save()) {
                         $mail = new Mail();
                         $subject = "Vérification du compte";
-                        $content = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost/change-password?token=' . $token . '">Activer</a>';
+                        $content = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://easycook.ninja/change-password?token=' . $token . '">Activer</a>';
                         $message = $mail->sendMail([$user->getEmail_user()], $subject, $content);
                     } else {
                         $errors = array("Email non envoyé");
