@@ -2,32 +2,23 @@ RewriteEngine On
 
 # Bloquer l'accès au fichier .env
 <Files .env>
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Files>
 
-# Bloquer l'accès aux fichiers de configuration PHP
 <FilesMatch "\.(config|ini|php)$">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </FilesMatch>
 
-# Bloquer l'accès au répertoire vendor
 <Directory "/var/www/html/vendor">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Directory>
 
-# Bloquer l'accès au répertoire node_modules
 <Directory "/var/www/html/node_modules">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Directory>
 
-# Bloquer l'accès aux fichiers de logs, sauvegardes, et clés sensibles
 <FilesMatch "\.(bak|sql|log|key|pem)$">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </FilesMatch>
 
 # Désactiver le listing des répertoires
