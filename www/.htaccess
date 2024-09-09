@@ -1,5 +1,37 @@
 RewriteEngine On
 
+# Bloquer l'accès au fichier .env
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Bloquer l'accès aux fichiers de configuration PHP
+<FilesMatch "\.(config|ini|php)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Bloquer l'accès au répertoire vendor
+<Directory "/var/www/html/vendor">
+    Order allow,deny
+    Deny from all
+</Directory>
+
+# Bloquer l'accès au répertoire node_modules
+<Directory "/var/www/html/node_modules">
+    Order allow,deny
+    Deny from all
+</Directory>
+
+# Bloquer l'accès aux fichiers de logs, sauvegardes, et clés sensibles
+<FilesMatch "\.(bak|sql|log|key|pem)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Désactiver le listing des répertoires
+Options -Indexes
 
 # Vos règles existantes pour rediriger vers index.php si le fichier/dossier demandé n'existe pas
 RewriteCond %{REQUEST_FILENAME} !-d
