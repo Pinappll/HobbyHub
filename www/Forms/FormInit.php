@@ -23,6 +23,14 @@ class FormInit
                     "label" => "Hôte de la base de données :",
                     "value" => $data["dbHost"] ?? ""
                 ],
+                "dbPort" => [
+                    "type" => "text",
+                    "class" => "input-form",
+                    "placeholder" => "Port de la base de données",
+                    "required" => true,
+                    "label" => "Port de la base de données :",
+                    "value" => $data["dbPort"] ?? "5432"
+                ],
                 "dbName" => [
                     "type" => "text",
                     "class" => "input-form",
@@ -46,6 +54,14 @@ class FormInit
                     "required" => true,
                     "label" => "Mot de passe de la base de données :"
                 ],
+                "sslMode" => [
+                    "type" => "text",
+                    "class" => "input-form",
+                    "placeholder" => "Mode SSL",
+                    "required" => true,
+                    "label" => "Mode SSL :",
+                    "value" => $data["sslMode"] ?? "require"
+                ],
                 "nom" => [
                     "type" => "text",
                     "class" => "input-form",
@@ -53,7 +69,6 @@ class FormInit
                     "required" => true,
                     "label" => "Nom :",
                     "value" => $data["nom"] ?? ""
-
                 ],
                 "prenom" => [
                     "type" => "text",
@@ -77,7 +92,7 @@ class FormInit
                     "placeholder" => "Mot de passe",
                     "required" => true,
                     "label" => "Mot de passe :",
-                    "error" => "Votre mot de passe doit faire plus de 8 caractères avec une  minuscule et chiffre"
+                    "error" => "Votre mot de passe doit faire plus de 8 caractères avec une minuscule et chiffre"
                 ],
                 "siteName" => [
                     "type" => "text",
@@ -105,4 +120,3 @@ class FormInit
         ];
     }
 }
-

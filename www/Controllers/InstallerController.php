@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Core\Verificator;
 use App\Core\View;
-use App\Forms\Contact;
 use App\Forms\FormInit;
 use PDO;
 use PDOException;
@@ -21,10 +20,13 @@ class InstallerController
         $config = $form->getConfig($_REQUEST);
         $errors = [];
         $message = "";
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $dbHost = $_POST['dbHost'];
+            $dbPort = $_POST['dbPort'];
             $dbUser = $_POST['dbUser'];
             $dbPassword = $_POST['dbPassword'];
+            $sslMode = $_POST['sslMode'];
             // Le nom de la base de données sera converti en minuscules
             $dbName = strtolower($_POST['dbName']);
             $nom = $_POST['nom'];
@@ -34,6 +36,7 @@ class InstallerController
             $siteName = $_POST['siteName'];
             $slogan = $_POST['slogan'];
             $verificator = new Verificator();
+
             if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
                 $targetDir = "dist/assets/images/"; // Spécifiez le dossier où stocker les images
                 $uploadOk = 1;
@@ -59,15 +62,11 @@ class InstallerController
 
                 // Si tout est ok, essayez de télécharger le fichier
                 if ($uploadOk == 1) {
-                    // Renommer l'image en "logo.extension"
                     $targetFile = $targetDir . "logo." . $imageFileType; // Renommez toujours en "logo"
-
-                    // Vérifiez si un fichier nommé "logo.extension" existe déjà et supprimez-le
                     if (file_exists($targetFile)) {
                         unlink($targetFile); // Supprimer le fichier existant
                     }
 
-                    // Déplacer le fichier téléchargé dans le répertoire de destination avec le nouveau nom
                     if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $targetFile)) {
                         echo "Le fichier a été téléchargé et renommé en logo." . $imageFileType;
                     } else {
@@ -75,52 +74,31 @@ class InstallerController
                     }
                 }
 
-
-
-
                 $logoPath = "dist/assets/images/" . htmlspecialchars(basename($_FILES["imageToUpload"]["name"]));
-
                 $mot_de_passe = password_hash($mot_de_passe, PASSWORD_DEFAULT);
 
+                // Création du contenu du fichier .env
                 $envContent = "DB_HOST=$dbHost\n";
+                $envContent .= "DB_PORT=$dbPort\n";
                 $envContent .= "DB_NAME=$dbName\n";
                 $envContent .= "DB_USER=$dbUser\n";
                 $envContent .= "DB_PASSWORD=$dbPassword\n";
+                $envContent .= "DB_SSLMODE=$sslMode\n";
 
                 file_put_contents('.env', $envContent, FILE_APPEND);
 
                 try {
-                    // Connexion initiale à PostgreSQL sans spécifier de base de données
-                    $pdo = new PDO("pgsql:host=$dbHost;dbname=postgres", $dbUser, $dbPassword);
+                    // Connexion initiale à PostgreSQL avec port et SSL
+                    $pdo = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=postgres;user=$dbUser;password=$dbPassword;sslmode=$sslMode");
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    // Création de la base de données
                     $sql = "CREATE DATABASE $dbName";
                     $pdo->exec($sql);
 
-                    $pdo = new PDO("pgsql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
+                    // Connexion à la nouvelle base de données créée
+                    $pdo = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName;user=$dbUser;password=$dbPassword;sslmode=$sslMode");
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                    // Vérifiez si $uploadOk est défini sur 0 par une erreur
-                    if ($uploadOk == 0) {
-                        echo "Désolé, votre fichier n'a pas été téléchargé.";
-                        // Si tout est ok, essayez de télécharger le fichier
-                    } else {
-                        if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $targetFile)) {
-                            echo "Le fichier " . htmlspecialchars(basename($_FILES["imageToUpload"]["name"])) . " a été téléchargé.";
-                        } else {
-                            echo "Désolé, il y a eu une erreur lors du téléchargement de votre fichier.";
-                        }
-                    }
-
-                    // Lire et préparer le script SQL
-                    $sqlFile = '/var/www/html/sql_scripts/script.sql';
-                    $sql = file_get_contents($sqlFile);
-                    $sql = str_replace('{PREFIX}', $dbName, $sql);
-
-                    // Exécuter le script SQL
-                    $pdo->exec($sql);
-
-                    // Supprimer le fichier SQL après l'exécution
-
 
                     // Insertion de l'utilisateur admin
                     $token = bin2hex(random_bytes(16)); // Génère un token pour l'admin
@@ -145,7 +123,6 @@ class InstallerController
                             false
                         )
                     ");
-
                     $stmt->execute([
                         ':lastname' => $nom,
                         ':firstname' => $prenom,
@@ -156,22 +133,12 @@ class InstallerController
 
                     echo "L'utilisateur administrateur a été créé avec succès.";
 
-                    echo "La base de données '$dbName' a été créée avec succès.";
-                    echo "Les tables ont été créées avec succès dans la base de données '{$dbName}'.";
-
-
-
-                    // Créez un fichier de configuration simple (à améliorer pour la sécurité)
-                    $configData = "<?php\n\$dbHost = '$dbHost';\n\$dbName = '$dbName';\n\$dbUser = '$dbUser';\n\$dbPassword = '$dbPassword';\n";
-                    file_put_contents('config.php', $configData);
-
+                    // Suppression de l'installeur après installation
                     if (file_exists('/var/www/html/installer.php')) {
-                        if (file_exists($sqlFile)) {
-                            //unlink($sqlFile);
-                        }
-                        unlink('/var/www/html/installer.php'); // Supprime le fichier installer.php
+                        unlink('/var/www/html/installer.php'); 
                         header('Location: /login');
                     }
+
                 } catch (PDOException $e) {
                     die("Erreur lors de la création de la base de données : " . $e->getMessage());
                 }
