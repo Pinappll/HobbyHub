@@ -62,7 +62,7 @@ public function exportAction(): void
     $message = "";
 
     // Exécuter la commande pg_dump pour créer le fichier SQL
-    $dumpCommand = "PGPASSWORD={$dbPassword} pg_dump --dbname=postgresql://{$dbUser}@{$dbHost}/{$dbName} > {$dbDumpFile}";
+    $dumpCommand = "PGPASSWORD={$dbPassword} pg_dump --dbname=postgresql://{$dbUser}:{$dbPassword}@{$dbHost}:{$dbPort}/{$dbName}?sslmode={$sslMode} > {$dbDumpFile}";
     exec($dumpCommand, $output, $returnVar);
 
     if ($returnVar !== 0) {
