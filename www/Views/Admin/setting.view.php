@@ -1,2 +1,16 @@
-<h2>Setting</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam debitis, ducimus, est eveniet, exercitationem iusto labore natus nemo nihil nisi quis voluptas! Et hic illum magni perspiciatis placeat saepe ut.</p>
+<section class="section">
+
+    <h1>Paramètres du site</h1>
+    <br>
+    
+    <?php
+    // Inclure le formulaire
+    $this->includeComponent("form", $configForm, $errorsForm);
+    
+    // Afficher un message s'il existe
+    if (isset($this->data["message"])) {
+        echo "<h3>" . $this->data["message"] . "</h3>";
+    }
+    ?>
+    
+</section>

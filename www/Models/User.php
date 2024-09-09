@@ -214,6 +214,11 @@ class User extends DB
         return $this->countRows();
     }
 
+    public function findAllAdmins(): array
+    {
+        return $this->findAllBy(['type_user' => 'admin'], 'object');
+    }
+
 }
 
 

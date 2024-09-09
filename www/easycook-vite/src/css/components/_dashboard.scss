@@ -1,18 +1,39 @@
 .dashboard {
-  @include flexbox(column, wrap, start, center, 20px); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .dashboard-title {
-    padding:rem(20);
+    padding: 20px;
   }
 
   .dashboard-items {
-    @include flexbox(row, wrap, start, center, 20px);
-    padding-left: rem(180); 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 
     .dashboard-item {
-      flex: 1 1 calc(30% - rem(20)); 
-      max-width: calc(30% - rem(20)); 
-      
+      position: relative;
+      flex: 1 1 calc(30% - 20px);
+      max-width: calc(30% - 20px);
+      min-width: 300px;
+      height: 200px; /* Taille par défaut des graphes */
+    }
+
+    .dashboard-item canvas {
+      width: 100% !important; /* Le canvas prend toute la largeur de l'élément parent */
+      height: 100% !important; /* Le canvas prend toute la hauteur de l'élément parent */
+    }
+  }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .dashboard-items {
+    .dashboard-item {
+      flex: 1 1 100%;
+      max-width: 100%;
     }
   }
 }
