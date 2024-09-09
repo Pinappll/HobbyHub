@@ -4,20 +4,36 @@ namespace App\Core;
 
 class DB
 {
-    protected ?object $pdo = null;
+    protected ?\PDO $pdo = null;  // La variable pdo sera de type \PDO ou null
     private string $table;
     protected string $query;
     protected string $dbName;
 
     public function __construct()
     {
-        //connexion à la bdd via pdo
+        // Inclure les paramètres de configuration
         include 'config.php';
-        try {
 
-            $this->pdo = new \PDO('pgsql:host=' . $dbHost . ';dbname=' . $dbName . ';user=' . $dbUser . ';password=' . $dbPassword);
+        // Assurez-vous que toutes les variables nécessaires sont définies dans config.php
+        if (!isset($dbHost, $dbPort, $dbName, $dbUser, $dbPassword, $sslMode)) {
+            die("Les informations de connexion à la base de données ne sont pas correctement définies.");
+        }
+
+        try {
+            // Initialiser PDO avec les informations du fichier config.php
+            $this->pdo = new \PDO(
+                'pgsql:host=' . $dbHost . ';port=' . $dbPort . ';dbname=' . $dbName . ';sslmode=' . $sslMode,
+                $dbUser,
+                $dbPassword
+            );
+
+            // Configurer PDO pour lancer des exceptions en cas d'erreur
+            $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
         } catch (\PDOException $e) {
-            echo "Erreur SQL : " . $e->getMessage();
+            // Logger l'erreur au lieu de l'afficher directement en production
+            error_log("Erreur SQL : " . $e->getMessage());
+            die("Erreur de connexion à la base de données. Veuillez contacter l'administrateur.");
         }
 
         $table = get_called_class();

@@ -1,5 +1,5 @@
 -- User
-CREATE TABLE {PREFIX}_user (
+CREATE TABLE easycook_user (
     id SERIAL PRIMARY KEY,
     lastname_user VARCHAR(50) NOT NULL,
     firstname_user VARCHAR(50) NOT NULL,
@@ -21,13 +21,13 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER update_updated_at_{PREFIX}_user
-BEFORE UPDATE ON {PREFIX}_user
+CREATE TRIGGER update_updated_at_easycook_user
+BEFORE UPDATE ON easycook_user
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
 
 -- Settings
-CREATE TABLE {PREFIX}_setting (
+CREATE TABLE easycook_setting (
     name_setting VARCHAR(50) NOT NULL,
     slogan_setting VARCHAR(255) NOT NULL,
     logo_url_setting TEXT NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE {PREFIX}_setting (
 );
 
 -- Recipe
-CREATE TABLE {PREFIX}_recipe (
+CREATE TABLE easycook_recipe (
     id SERIAL PRIMARY KEY,
     id_user_recipe INT NOT NULL,
     title_recipe VARCHAR(50) NOT NULL,
@@ -45,45 +45,45 @@ CREATE TABLE {PREFIX}_recipe (
     is_deleted BOOLEAN DEFAULT FALSE,
     inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
     updated_at TIMESTAMPTZ DEFAULT NULL,
-    CONSTRAINT fk_user_recipe FOREIGN KEY (id_user_recipe) REFERENCES {PREFIX}_user(id)
+    CONSTRAINT fk_user_recipe FOREIGN KEY (id_user_recipe) REFERENCES easycook_user(id)
 );
 
-CREATE TRIGGER update_updatedat_{PREFIX}_recipe
-BEFORE UPDATE ON {PREFIX}_recipe
+CREATE TRIGGER update_updatedat_easycook_recipe
+BEFORE UPDATE ON easycook_recipe
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
 
 -- Category
-CREATE TABLE {PREFIX}_category (
+CREATE TABLE easycook_category (
     id SERIAL PRIMARY KEY,
     name_category VARCHAR(50) NOT NULL,
     is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
     updated_at TIMESTAMPTZ DEFAULT NULL
 );
 
-CREATE TRIGGER update_updated_at_{PREFIX}_category
-BEFORE UPDATE ON {PREFIX}_category
+CREATE TRIGGER update_updated_at_easycook_category
+BEFORE UPDATE ON easycook_category
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
 
 -- Recipe category
-CREATE TABLE {PREFIX}_recipe_category (
+CREATE TABLE easycook_recipe_category (
     id SERIAL PRIMARY KEY,
     id_recipe_category INT NOT NULL,
     id_category INT NOT NULL,
-    CONSTRAINT fk_recipe_category_recipe FOREIGN KEY (id_recipe_category) REFERENCES {PREFIX}_recipe(id),
-    CONSTRAINT fk_recipe_category_category FOREIGN KEY (id_category) REFERENCES {PREFIX}_category(id)
+    CONSTRAINT fk_recipe_category_recipe FOREIGN KEY (id_recipe_category) REFERENCES easycook_recipe(id),
+    CONSTRAINT fk_recipe_category_category FOREIGN KEY (id_category) REFERENCES easycook_category(id)
 );
 
 -- Page
-CREATE TABLE {PREFIX}_page (
+CREATE TABLE easycook_page (
     id SERIAL PRIMARY KEY,
     title_page TEXT NOT NULL,
     content_page jsonb NOT NULL
 );
 
 -- Review
-CREATE TABLE {PREFIX}_review (
+CREATE TABLE easycook_review (
     id SERIAL PRIMARY KEY,
     id_user_review INT NOT NULL,
     id_page_review INT NOT NULL,
@@ -92,17 +92,17 @@ CREATE TABLE {PREFIX}_review (
     is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
     inserted_at TIMESTAMPTZ DEFAULT current_timestamp,
     updated_at TIMESTAMPTZ DEFAULT NULL,
-    CONSTRAINT fk_user_review FOREIGN KEY (id_user_review) REFERENCES {PREFIX}_user(id),
-    CONSTRAINT fk_page_review FOREIGN KEY (id_page_review) REFERENCES {PREFIX}_page(id)
+    CONSTRAINT fk_user_review FOREIGN KEY (id_user_review) REFERENCES easycook_user(id),
+    CONSTRAINT fk_page_review FOREIGN KEY (id_page_review) REFERENCES easycook_page(id)
 );
 
-CREATE TRIGGER update_updated_at_{PREFIX}_review
-BEFORE UPDATE ON {PREFIX}_review
+CREATE TRIGGER update_updated_at_easycook_review
+BEFORE UPDATE ON easycook_review
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
 
 -- Menu
-CREATE TABLE {PREFIX}_menu (
+CREATE TABLE easycook_menu (
     id SERIAL PRIMARY KEY,
     title_menu VARCHAR(50) NOT NULL,
     description_menu TEXT NOT NULL,
@@ -111,22 +111,22 @@ CREATE TABLE {PREFIX}_menu (
     inserted_at TIMESTAMPTZ DEFAULT current_timestamp
 );
 
-CREATE TRIGGER update_updated_at_{PREFIX}_menu
-BEFORE UPDATE ON {PREFIX}_menu
+CREATE TRIGGER update_updated_at_easycook_menu
+BEFORE UPDATE ON easycook_menu
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
 
 -- Pivot recipe et menu
-CREATE TABLE {PREFIX}_recipe_menu (
+CREATE TABLE easycook_recipe_menu (
     id SERIAL PRIMARY KEY,
     id_recipe INT NOT NULL,
     id_menu INT NOT NULL,
-    CONSTRAINT fk_recipe_menu_recipe FOREIGN KEY (id_recipe) REFERENCES {PREFIX}_recipe(id),
-    CONSTRAINT fk_recipe_menu_menu FOREIGN KEY (id_menu) REFERENCES {PREFIX}_menu(id)
+    CONSTRAINT fk_recipe_menu_recipe FOREIGN KEY (id_recipe) REFERENCES easycook_recipe(id),
+    CONSTRAINT fk_recipe_menu_menu FOREIGN KEY (id_menu) REFERENCES easycook_menu(id)
 );
 
 -- Navigation
-CREATE TABLE {PREFIX}_navigation (
+CREATE TABLE easycook_navigation (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     link VARCHAR(255) UNIQUE,

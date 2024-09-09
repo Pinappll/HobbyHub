@@ -1,5 +1,6 @@
 <?php
-$dbHost = '172.22.0.2';
-$dbName = 'easycook';
-$dbUser = 'mijose';
-$dbPassword = 'test1234';
+$dbHost = 'db-easycook-do-user-15878348-0.h.db.ondigitalocean.com';
+$dbPort = 25060;                                                      
+$dbName = 'easycook';                                                 
+$dbUser = 'doadmin';                                                                                
+$sslMode = 'require';   
