@@ -5,6 +5,7 @@ namespace App\Core;
 class DB
 {
     protected ?object $pdo = null;
+    private static ?\PDO $instance = null; 
     private string $table;
     protected string $query;
     protected string $dbName;
@@ -25,6 +26,18 @@ class DB
         $table = array_pop($table);
         $this->dbName = strtolower($dbName);
         $this->table = $dbName . "_" . strtolower($table);
+    }
+    public static function getPDO(): ?\PDO
+    {
+        if (self::$instance === null) {
+            include 'config.php';
+            try {
+                self::$instance = new \PDO('pgsql:host=' . $dbHost . ';dbname=' . $dbName . ';user=' . $dbUser . ';password=' . $dbPassword);
+            } catch (\PDOException $e) {
+                echo "Erreur SQL : " . $e->getMessage();
+            }
+        }
+        return self::$instance;
     }
 
     public function getDataObject(): array
