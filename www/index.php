@@ -50,41 +50,21 @@ function myAutoloader(String $class): void
 
 
 
-//Comment récupérer et nettoyer l'URI
-// Exemple on doit avoir "/", "/login", "/logout", ...
+// Comment récupérer et nettoyer l'URI
 if (file_exists('installer.php')) {
-    
     $uri = "/installer";
-}else{$uri = strtolower($_SERVER["REQUEST_URI"]);
+} else {
+    $uri = strtolower($_SERVER["REQUEST_URI"]);
     $uri = strtok($uri, "?");
-    $uri = strlen($uri) > 1 ? rtrim($uri, "/") : $uri;}
-
-
-// Récupérer le contenu du fichier routes.yaml
-if (!file_exists("routes.yaml")) {
-    die("Le fichier de routing n'existe pas");
+    $uri = strlen($uri) > 1 ? rtrim($uri, "/") : $uri;
 }
-$listOfRoutes = yaml_parse_file("routes.yaml");
 
-
-//Créer une instance du bon controller
-//et appeler la bonne action
-//en effectuant toutes les vérifications nécessaires
-
-/*
- * [/] => Array
-        (
-            [controller] => Main
-            [action] => home
-        )
- *
- */
+// Fonction pour vérifier l'accès selon les rôles
 function access(array $roles): bool
 {
     $access = true;
     if (!empty($roles)) {
         if (isset($_SESSION["role"])) {
-
             if (!in_array($_SESSION['role'], $roles)) {
                 $access = false;
             }
@@ -94,15 +74,33 @@ function access(array $roles): bool
     }
     return $access;
 }
-if (!empty($listOfRoutes[$uri])) {
-    
-    if (access($listOfRoutes[$uri]['roles'])) {
-        if (!empty($listOfRoutes[$uri]['controller'])) {
-            if (!empty($listOfRoutes[$uri]['action'])) {
 
+// Vérifier si la route existe dans la navigation dynamique d'abord
+include "Models/Navigation.php";
+$navigation = new Navigation();
+$navigation = $navigation->getOneBy(["link" => $uri], "object");
+
+if ($navigation) {
+    // Si une correspondance est trouvée dans la navigation dynamique
+    include "Controllers/PageController.php";
+    $controller = new \App\Controllers\PageController();
+    $controller->readPage($navigation->getId_page());
+} else {
+    // Si aucune correspondance dans la navigation dynamique, on passe aux routes.yaml
+    if (!file_exists("routes.yaml")) {
+        die("Le fichier de routing n'existe pas");
+    }
+    $listOfRoutes = yaml_parse_file("routes.yaml");
+
+    // Vérifier si la route existe dans le fichier routes.yaml
+    if (!empty($listOfRoutes[$uri])) {
+        // Vérifier les rôles et les permissions d'accès
+        if (access($listOfRoutes[$uri]['roles'])) {
+            if (!empty($listOfRoutes[$uri]['controller']) && !empty($listOfRoutes[$uri]['action'])) {
                 $controller = $listOfRoutes[$uri]['controller'];
                 $action = $listOfRoutes[$uri]['action'];
 
+                // Vérifier l'existence du contrôleur et de l'action
                 if (file_exists("Controllers/" . $controller . ".php")) {
                     include "Controllers/" . $controller . ".php";
                     $controller = "App\\Controllers\\" . $controller;
@@ -111,7 +109,6 @@ if (!empty($listOfRoutes[$uri])) {
                         $objectController = new $controller();
 
                         if (method_exists($objectController, $action)) {
-                            
                             $objectController->$action();
                         } else {
                             die("L'action n'existe pas dans le controller");
@@ -123,22 +120,17 @@ if (!empty($listOfRoutes[$uri])) {
                     die("Le fichier controller n'existe pas");
                 }
             } else {
-                die("La route ne contient pas d'action");
+                die("La route ne contient pas d'action ou de controller");
             }
         } else {
-            die("La route ne contient pas de controller");
+            die("Vous n'avez pas les droits pour accéder à cette page");
         }
     } else {
-        die("Vous n'avez pas les droits pour accéder à cette page");
-    }
-} else {
-    include "Models/Navigation.php";
-    $navigation = new Navigation();
-    $navigation = $navigation->getOneBy(["link" => $uri], "object");
-    if ($navigation) {
-        include "Controllers/PageController.php";
-        $controller = new \App\Controllers\PageController();
-        $controller->readPage($navigation->getId_page());
-    } else {
+        // Si aucune correspondance n'est trouvée, afficher une page 404
+        include "Controllers/Error.php";
+        $controller = new \App\Controllers\Error();
+        $controller->page404();
     }
 }
+
+
