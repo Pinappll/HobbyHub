@@ -3,4 +3,5 @@
 www/vendor
 /node_modules
 www/dist/assets/uploads
+www/config.php
 ```
