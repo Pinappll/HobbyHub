@@ -1,5 +1,16 @@
 RewriteEngine On
 
+# Bloquer l'accès au fichier .env
+<Files .env>
+order allow,deny
+Deny from all
+</Files>
+
+# Bloquer l'accès au fichier routes.yaml
+<Files routes.yaml>
+order allow,deny
+Deny from all
+</Files>
 
 # Vos règles existantes pour rediriger vers index.php si le fichier/dossier demandé n'existe pas
 RewriteCond %{REQUEST_FILENAME} !-d

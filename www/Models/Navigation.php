@@ -113,6 +113,11 @@ class Navigation extends DB
 
         return $this;
     }
+
+    public function getAll()
+{
+    return $this->findAll(); // Utilise la méthode findAll pour récupérer toutes les lignes
+}
     // public function getUrlNavigationWhereIsNullOrPageId()
     // {
     //     $db = new DB();

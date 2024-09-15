@@ -234,3 +234,8 @@
   action: exportAction
   roles: [admin]
 
+/sitemap.xml:
+    controller: SitemapController
+    action: generateSitemap
+    roles: []
+
