@@ -1,8 +1,23 @@
+// Wrapper principal qui contient tout le contenu de la page
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; // Assure que la page prend au moins toute la hauteur de l'écran
+}
+
+// Contenu principal qui occupe tout l'espace disponible avant le footer
+.main-content {
+  flex: 1; // Cette section occupe l'espace restant
+  padding: rem(20);
+}
+
+// Footer sticky
 .footer {
   background-color: $gris-fonce;
   color: $blanc;
   padding: rem(40) 0;
   text-align: center;
+  margin-top: auto; // Pousse le footer en bas si le contenu est insuffisant
 
   &__container {
     max-width: rem(1200);
@@ -79,6 +94,24 @@
 
     @include respond-to('desktop') {
       margin-top: 0;
+    }
+  }
+
+  @include respond-to('phone') {
+    padding: rem(20) 0;
+
+    &__links ul {
+      flex-direction: column;
+      gap: rem(10); // Réduction du gap pour les liens en mobile
+    }
+
+    &__socials {
+      justify-content: center;
+    }
+
+    &__copyright {
+      font-size: rem(12); // Réduction de la taille en mobile pour une meilleure lisibilité
+      margin-top: rem(15);
     }
   }
 }

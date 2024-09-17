@@ -16,6 +16,79 @@
     </div>
   </div>
 </div>
+<div class="container">
+  <h1>Nos Catégories</h1>
+  <div class="circular-card-grid">
+      
+          <div class="circular-card">
+              <a href="#" class="circular-card__link">
+                  <div class="circular-card__image">
+                      <img src="../../dist/assets/images/catPattes.jpeg" alt="Card">
+                  </div>
+              </a>
+              <h3 class="circular-card__title">Pattes </h3>
+          </div>
+          <div class="circular-card">
+              <a href="#" class="circular-card__link">
+                  <div class="circular-card__image">
+                      <img src="../../dist/assets/images/catPattes.jpeg" alt="Card">
+                  </div>
+              </a>
+              <h3 class="circular-card__title">Pattes </h3>
+          </div>
+          <div class="circular-card">
+              <a href="#" class="circular-card__link">
+                  <div class="circular-card__image">
+                      <img src="../../dist/assets/images/catPattes.jpeg" alt="Card">
+                  </div>
+              </a>
+              <h3 class="circular-card__title">Pattes </h3>
+          </div>
+          <div class="circular-card">
+              <a href="#" class="circular-card__link">
+                  <div class="circular-card__image">
+                      <img src="../../dist/assets/images/catPattes.jpeg" alt="Card">
+                  </div>
+              </a>
+              <h3 class="circular-card__title">Pattes </h3>
+          </div>
+          <div class="circular-card">
+              <a href="#" class="circular-card__link">
+                  <div class="circular-card__image">
+                      <img src="../../dist/assets/images/catPattes.jpeg" alt="Card">
+                  </div>
+              </a>
+              <h3 class="circular-card__title">Pattes </h3>
+          </div>
+          <div class="circular-card">
+              <a href="#" class="circular-card__link">
+                  <div class="circular-card__image">
+                      <img src="../../dist/assets/images/catPattes.jpeg" alt="Card">
+                  </div>
+              </a>
+              <h3 class="circular-card__title">Pattes </h3>
+          </div>
+  </div>
+</div>
+<div class="container">
+  <h1>Nos Recettes</h1>
+    <div class="recettes__grid ">
+      <a href="#" class="card">
+        <img src="../../dist/assets/images/riz.jpg" alt="Recette 1" class="card__image">
+        <h2 class="card__title">Recette 1</h2>
+      </a>
+      <a href="#" class="card">
+        <img src="../../dist/assets/images/rattatouille.jpg" alt="Recette 2" class="card__image">
+        <h2 class="card__title">Recette 2</h2>
+      </a>
+      <a href="#" class="card">
+        <img src="../../dist/assets/images/pattes.jpg" alt="Recette 3" class="card__image">
+        <h2 class="card__title">Recette 3</h2>
+      </a>
+    </div>
+
+</div>
+
     <!-- <section class="section section-menu">
         <h1>menu</h1>
         <?php if (!empty($data["menu"])) : ?>

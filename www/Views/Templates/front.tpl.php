@@ -12,7 +12,7 @@
   <title>Template Front</title>
 </head>
 
-<body>
+<body class="page-wrapper">
   
   <?php $this->includeComponent("header", [], $this->data); ?>
   <main>
