@@ -1,20 +1,29 @@
-@mixin flexbox($direction, $wrap, $justify, $align, $gap: 0) {
+// _mixins.scss
+
+// Mixin pour une boîte flex personnalisable
+@mixin flex($justify: center, $align: center, $direction: row) {
 	display: flex;
-	flex-direction: $direction;
-	flex-wrap: $wrap;
 	justify-content: $justify;
 	align-items: $align;
-	gap: $gap;
+	flex-direction: $direction;
+  }
+  
+// Mixin pour les médias queries pour responsive design
+@mixin respond-to($breakpoint) {
+@if $breakpoint == 'phone' {
+	@media (max-width: 600px) { @content; }
+} @else if $breakpoint == 'tablet' {
+	@media (max-width: 900px) { @content; }
+} @else if $breakpoint == 'desktop' {
+	@media (min-width: 901px) { @content; }
+}
 }
 
-@mixin resetList {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
+// Mixin pour les polices responsives
+@mixin responsive-font($min-font, $max-font) {
+font-size: $min-font;
 
-@mixin resetButton {
-	cursor: pointer;
-	background: transparent;
-	border: none;
+@include respond-to('desktop') {
+	font-size: $max-font;
+}
 }

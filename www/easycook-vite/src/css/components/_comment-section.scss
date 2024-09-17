@@ -1,0 +1,137 @@
+.comment-section {
+  margin-bottom: rem(40); // Espacement sous la section
+  padding: rem(20);
+  border-radius: rem(15); // Coins arrondis
+  background-color: $jaune-clair; // Fond en mode clair
+  transition: background-color 0.3s ease, border 0.3s ease;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: rem(15); // Espace entre les champs du formulaire
+    margin-bottom: rem(30);
+
+    @include respond-to('phone') {
+      gap: rem(10); // Réduire l'espacement entre les champs en mobile
+    }
+  }
+
+  hr {
+    margin: rem(20) 0;
+    border: none;
+    border-top: 2px solid $blanc;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: rem(14);
+      font-weight: 600;
+      margin-bottom: rem(5);
+      color: $gris;
+    }
+
+    input, textarea {
+      padding: rem(10);
+      border: 1px solid $gris-clair;
+      border-radius: rem(5);
+      font-size: rem(16);
+      transition: border 0.3s ease;
+
+      &:focus {
+        border-color: $jaune;
+        outline: none;
+      }
+
+      @include respond-to('phone') {
+        font-size: rem(14); // Réduire la taille du texte en mobile
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end; // Bouton aligné à droite
+
+    @include respond-to('phone') {
+      justify-content: center; // Centrer le bouton en mobile
+    }
+  }
+
+  &__submit {
+    padding: rem(12) rem(20);
+    background-color: $rouge;
+    color: $blanc;
+    border: none;
+    border-radius: rem(5);
+    cursor: pointer;
+    font-size: rem(16);
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $rouge-fonce;
+    }
+  }
+
+  &__list {
+    .comment {
+      margin-bottom: rem(20);
+
+      &__author {
+        font-weight: 600;
+        margin-bottom: rem(5);
+      }
+
+      &__text {
+        font-size: rem(16);
+        color: $gris;
+
+        @include respond-to('phone') {
+          font-size: rem(14); // Taille légèrement réduite en mobile
+        }
+      }
+    }
+  }
+
+  // Version dark
+  body.dark-mode & {
+    background-color: $dark-foreground; // Fond sombre en mode dark
+    border: 1px solid $dark-border; // Ajout d'une bordure en mode sombre
+    color: $dark-text; // Texte clair en mode sombre
+
+    hr {
+      border-top: 2px solid $dark-border; // Ligne de séparation plus subtile
+    }
+
+    &__field {
+      label {
+        color: $dark-text; // Texte des labels en clair
+      }
+
+      input, textarea {
+        background-color: $dark-background; // Fond des champs en mode sombre
+        border: 1px solid $dark-border; // Bordure plus sombre
+        color: $dark-text; // Texte en clair
+
+        &:focus {
+          border-color: $dark-accent; // Accentuation de la bordure sur focus en dark mode
+        }
+      }
+    }
+
+    &__submit {
+      background-color: $dark-accent; // Bouton en accent dark
+      &:hover {
+        background-color: darken($dark-accent, 10%); // Accentuation du bouton au hover
+      }
+    }
+
+    &__list {
+      .comment__text {
+        color: lighten($dark-text, 20%); // Texte des commentaires plus clair en mode sombre
+      }
+    }
+  }
+}

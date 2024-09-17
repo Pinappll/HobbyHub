@@ -1,0 +1,22 @@
+// _full-width-image.scss
+
+.full-width-image {
+    width: 100vw; // Prend toute la largeur de la fenêtre
+    height: 25vh; // Hauteur fixée à 25% de la hauteur de la fenêtre
+    margin: 0; // Pas de marge
+    padding: 0; // Pas de padding
+    position: relative; // Positionner l'image de manière absolue par rapport à la page si nécessaire
+    left: 50%;  // Décale le conteneur pour compenser l'effet de centrage
+    right: 50%;
+    transform: translateX(-50%); // Centre le conteneur dans la fenêtre sans limiter sa largeur
+    max-width: none; // Ignore toute règle de max-width globale
+    box-sizing: border-box; // Assure que la taille de l'élément est calculée correctement
+  
+    img {
+      width: 100%; // L'image prend toute la largeur de son parent
+      height: 100%; // L'image prend toute la hauteur définie par le conteneur
+      object-fit: cover; // L'image couvre tout l'espace tout en gardant ses proportions
+      display: block; // Supprime les espaces blancs sous l'image
+    }
+  }
+  

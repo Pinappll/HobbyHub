@@ -1,0 +1,62 @@
+// _circular-card-grid.scss
+
+.circular-card-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); // 6 colonnes en desktop
+    gap: rem(20); // Espace entre les cards
+    justify-items: center; // Centrer les cards dans la grille
+  
+    @include respond-to('phone') {
+      grid-template-columns: repeat(3, 1fr); // 3 colonnes en mobile
+      grid-template-rows: repeat(2, 1fr); // 2 lignes en mobile
+    }
+  }
+  
+  .circular-card {
+    text-align: center; // Centrer le texte et l'image
+    padding: rem(10);
+    transition: transform 0.3s ease; // Transition douce pour l'effet de hover
+  
+    &:hover {
+      transform: translateY(rem(-5)); // Légère élévation de la card au hover
+    }
+  
+    &__link {
+      display: block; // Assure que le lien occupe toute la zone de l'image
+    }
+  
+    &__image {
+      width: rem(100);
+      height: rem(100);
+      border-radius: 50%; // Forme circulaire
+      overflow: hidden; // Pour que l'image respecte les bords arrondis
+      margin-bottom: rem(10); // Espace sous l'image
+      transition: transform 0.3s ease, box-shadow 0.3s ease; // Transition pour l'effet de hover
+  
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; // L'image couvre entièrement la forme circulaire
+        display: block; // Supprimer les espaces blancs sous l'image
+      }
+  
+      &:hover {
+        transform: scale(1.1); // Zoom léger sur l'image au hover
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Ajout d'une ombre lors du hover
+      }
+    }
+  
+    &__title {
+      font-size: rem(16);
+      font-weight: 600;
+      color: $gris;
+    }
+  }
+  
+  // Mode sombre
+  body.dark-mode .circular-card {
+    &__title {
+      color: $dark-text; // Couleur du texte en mode sombre
+    }
+  }
+  
