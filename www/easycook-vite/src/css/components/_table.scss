@@ -1,36 +1,110 @@
-.table-container {
-    width: 100%;
-    overflow-x: auto;
-}
+// _table.scss
 
-table {
+.styled-table {
     width: 100%;
     border-collapse: collapse;
-
-    thead {
-        background-color: $grey; /* En-tête gris clair */
-        color: $black-text; /* Texte noir */
+    margin: rem(20) 0;
+    font-size: rem(16);
+    text-align: left;
+    background-color: $blanc;
+    border-radius: rem(8);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  
+    thead tr {
+      background-color: $gris;
+      color: $blanc;
+      text-align: left;
+      font-weight: bold;
     }
-
-    tbody {
-        tr:nth-child {
-            background-color: $white; 
-        }
-
-        color: var(--text-color); /* Texte noir */
-    }
-
+  
     th, td {
-        padding: 10px;
-        border-bottom: 1px solid $grey; /* Bordure grise pour les lignes */
+      padding: rem(12) rem(15);
+      border-bottom: 1px solid $gris-clair;
     }
-
-    th {
-        text-align: left;
-        font-weight: bold;
+  
+    tbody tr {
+      transition: background-color 0.3s ease;
+  
+      &:nth-child(even) {
+        background-color: $gris-clair; // Couleur pour les lignes paires
+      }
+  
+      &:hover {
+        background-color: $jaune-clair; // Changement de couleur au survol
+      }
     }
-
-    td {
-        text-align: center;
+  
+    .table-image {
+      width: rem(80); // Taille de l'image
+      height: auto;
+      border-radius: rem(5); // Coins arrondis pour l'image
     }
-}
+  
+    // Boutons dans la table
+    .button {
+      display: inline-block;
+      padding: rem(8) rem(15);
+      border-radius: rem(5);
+      text-decoration: none;
+      font-size: rem(14);
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+  
+      &-secondary {
+        background-color: $jaune;
+        color: $gris-fonce;
+        &:hover {
+          background-color: darken($jaune, 10%);
+        }
+      }
+  
+      &-danger {
+        background-color: $rouge;
+        color: $blanc;
+        &:hover {
+          background-color: $rouge-fonce;
+        }
+      }
+    }
+  
+    // Mode sombre
+    body.dark-mode & {
+      background-color: $dark-foreground;
+      color: $dark-text;
+  
+      thead tr {
+        background-color: $dark-background;
+      }
+  
+      tbody tr {
+        &:nth-child(even) {
+          background-color: $dark-border; // Couleur alternée en mode sombre
+        }
+  
+        &:hover {
+          background-color: $dark-accent; // Changement de couleur au survol
+        }
+      }
+  
+      th, td {
+        border-color: $dark-border;
+      }
+  
+      .button-secondary {
+        background-color: $dark-accent;
+        color: $dark-text;
+        &:hover {
+          background-color: lighten($dark-accent, 10%);
+        }
+      }
+  
+      .button-danger {
+        background-color: $rouge-fonce;
+        &:hover {
+          background-color: lighten($rouge-fonce, 10%);
+        }
+      }
+    }
+  }
+  
