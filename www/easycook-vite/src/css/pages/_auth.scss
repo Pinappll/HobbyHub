@@ -51,7 +51,7 @@
         }
       }
 
-      .btn {
+      input[type='submit'] {
         background-color: $rouge;
         color: $blanc;
         padding: rem(12);
@@ -116,7 +116,7 @@
         }
       }
 
-      .btn {
+      input[type='submit'] {
         background-color: $dark-accent; // Bouton en accent sombre
         &:hover {
           background-color: darken($dark-accent, 10%);

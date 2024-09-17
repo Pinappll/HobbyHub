@@ -4,7 +4,6 @@ namespace App\Forms;
 
 class UserForgetPassword
 {
-
     public function getConfig(): array
     {
         return [
@@ -16,7 +15,13 @@ class UserForgetPassword
                 "id" => "form-forget-password"
             ],
             "inputs" => [
-                "email" => ["type" => "email", "class" => "input-form", "placeholder" => "Email", "required" => true, "error" => "Le format de l'email est incorrect"],
+                "email" => [
+                    "type" => "email", 
+                    "class" => "input-form", 
+                    "placeholder" => "Email", 
+                    "required" => true, 
+                    "error" => "Le format de l'email est incorrect"
+                ],
             ]
         ];
     }

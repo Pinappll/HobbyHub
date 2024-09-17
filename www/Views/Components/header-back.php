@@ -6,7 +6,7 @@
   </div>
 
   <div class="header-admin__logout">
-    <a href="/logout.php">
+    <a href="/logout">
       <i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion
     </a>
   </div>
