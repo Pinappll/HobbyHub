@@ -17,19 +17,22 @@
 <body>
 
   <?php $this->includeComponent("header-back", [], $this->data); ?>
-  <main>
+  <div class="admin-container">
+  <!-- Include the admin sidebar -->
+  <?php $this->includeComponent("sidebar-admin", [], $this->data); ?>
+  <main  class="admin-content">
     <?php include $this->viewName; ?>
   </main>
-
+  </div>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const sidebar = document.querySelector(".sidebar");
-      const mainContent = document.querySelector("main");
+    const sidebar = document.querySelector(".sidebar-admin");
+    const mainContent = document.querySelector(".admin-content");
 
-      if (sidebar && mainContent) {
-        mainContent.classList.add("has-sidebar");
-      }
-    });
+    if (sidebar && mainContent) {
+      mainContent.classList.add("has-sidebar");
+    }
+  });
   </script>
 
 </body>
