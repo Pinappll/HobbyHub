@@ -1,81 +1,117 @@
-.site-footer {
-	background-color: var(--brown);
-	
-	color: var(--text-color);
-	font-size: rem(13);
-	
-    margin-top: auto;
-    width: 100%;
-	@include flexbox(column, nowrap, normal, normal);
-	.contact{
-		padding: rem(10) rem(12);
-		
-		.adresse{
-			padding-bottom: rem(10);
-		}
-		ul {
+// Wrapper principal qui contient tout le contenu de la page
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; // Assure que la page prend au moins toute la hauteur de l'écran
+}
 
-			:first-child{
-				@include flexbox(column, nowrap, center, center);
-			}
+// Contenu principal qui occupe tout l'espace disponible avant le footer
+.main-content {
+  flex: 1; // Cette section occupe l'espace restant
+  padding: rem(20);
+}
 
-			@include resetList;
-			@include flexbox(column, nowrap, center, center);
-			flex-grow: 1;
-			a {
-				font-weight: 500;
-				line-height: rem(28);
-			}
-		}
+// Footer sticky
+.footer {
+  background-color: $gris-fonce;
+  color: $blanc;
+  padding: rem(40) 0;
+  text-align: center;
+  margin-top: auto; // Pousse le footer en bas si le contenu est insuffisant
 
-		img{
-			width: 20%;
-			height: auto;
-		}
+  &__container {
+    max-width: rem(1200);
+    margin: 0 auto;
+    padding: rem(20);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(20);
 
-		.map{
-			iframe{
-				width: 100%;
-				height: 300px;
-				border: none;
-			}
-			
-		}
-	}
-	.container {
-		background-color: var(--dark-grey);
-		padding: rem(10) rem(12);
-		@include flexbox(column, nowrap, space-between, center, rem(30));
+    @include respond-to('desktop') {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
 
-		justify-content: space-between
-		
-	}
-	
-	ul {
-		@include resetList;
-		@include flexbox(row, wrap, flex-start, center, rem(18));
-		flex-grow: 1;
-		a {
-			font-weight: 500;
-			line-height: rem(28);
-		}
-	}
-	
-	@media screen and (min-width: $md-size){
-		.contact{
-			@include flexbox(row, nowrap, flex-start, center, rem(18));
-			.adresse{
-				width: 40%;
-			}
-			.map{
-				iframe{
-					width: 200%;
-					height: 300px;
-					border: none;
-				}
-			}
-		}
+  &__logo {
+    img {
+      width: rem(120);
+      height: auto;
+    }
+  }
 
-	}
-	
+  &__links {
+    ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: rem(20);
+
+      li {
+        a {
+          color: $blanc;
+          text-decoration: none;
+          font-size: rem(16);
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: $jaune; // Change de couleur au hover
+          }
+        }
+      }
+    }
+  }
+
+  &__socials {
+    display: flex;
+    gap: rem(20);
+
+    a {
+      font-size: rem(20);
+      color: $blanc;
+      text-decoration: none;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: $jaune; // Change de couleur au hover
+      }
+
+      i {
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(1.1); // Légère mise en avant au hover
+        }
+      }
+    }
+  }
+
+  &__copyright {
+    font-size: rem(14);
+    color: lighten($gris-fonce, 30%);
+    margin-top: rem(20);
+
+    @include respond-to('desktop') {
+      margin-top: 0;
+    }
+  }
+
+  @include respond-to('phone') {
+    padding: rem(20) 0;
+
+    &__links ul {
+      flex-direction: column;
+      gap: rem(10); // Réduction du gap pour les liens en mobile
+    }
+
+    &__socials {
+      justify-content: center;
+    }
+
+    &__copyright {
+      font-size: rem(12); // Réduction de la taille en mobile pour une meilleure lisibilité
+      margin-top: rem(15);
+    }
+  }
 }

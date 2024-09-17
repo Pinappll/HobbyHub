@@ -1,9 +1,10 @@
 .button {
-	--bg-color: var(--black);
-	--bg-hover-color: var(--grey);
+	--bg-color: var(--gris-fonce);
+	--bg-hover-color: var(--gris);
+	--text-color: var(--blanc);
 	display: inline-block;
 	padding: rem(10) rem(16);
-	border-radius: var(--main-radius);
+	border-radius: rem(8); // Coins arrondis pour les boutons
 	text-decoration: none;
 	cursor: pointer;
 	font-family: var(--main-font);
@@ -12,37 +13,75 @@
 	line-height: rem(18);
 	border: none;
 	background-color: var(--bg-color);
-
 	color: var(--text-color);
-	box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-
-	transition: all var(--transition-duration);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); // Ombre douce
+	transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  
 	&:hover {
-		background-color: var(--bg-hover-color);
+	  background-color: var(--bg-hover-color);
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); // Ombre plus forte au hover
+	  transform: translateY(-3px); // Légère élévation au hover
 	}
-
+  
 	/* Modificateurs de couleur */
 	&-primary {
-		--bg-color: var(--yellow);
-		--bg-hover-color: var(--yellow-darker);
+	  --bg-color: var(--jaune);
+	  --bg-hover-color: darken(var(--jaune), 10%);
+	  --text-color: var(--gris-fonce);
 	}
+  
 	&-secondary {
-		--bg-color: var(--grey);
-		--bg-hover-color: var(--grey-darker);
+	  --bg-color: var(--gris);
+	  --bg-hover-color: darken(var(--gris), 10%);
+	  --text-color: var(--blanc);
 	}
+  
 	&-danger {
-		--bg-color: var(--red);
-		--bg-hover-color: var(--red-darker);
+	  --bg-color: var(--rouge);
+	  --bg-hover-color: darken(var(--rouge), 10%);
+	  --text-color: var(--blanc);
 	}
-	
-
+  
 	/* Modificateurs de taille */
 	&-lg {
-		padding: rem(16) rem(24);
+	  padding: rem(16) rem(24);
+	  font-size: rem(18);
+	  border-radius: rem(10); // Coins plus arrondis pour les grands boutons
 	}
+  
 	&-sm {
-		font-size: rem(14);
-		line-height: rem(16);
-		padding: rem(8) rem(12);
+	  font-size: rem(14);
+	  line-height: rem(16);
+	  padding: rem(8) rem(12);
+	  border-radius: rem(6); // Coins légèrement arrondis pour les petits boutons
 	}
-}
+  
+	/* Disabled state */
+	&--disabled {
+	  background-color: var(--grey-light);
+	  color: var(--grey-darker);
+	  cursor: not-allowed;
+	  opacity: 0.6;
+	  box-shadow: none;
+	  pointer-events: none;
+	}
+  }
+  
+  /* Mode sombre */
+  body.dark-mode .button {
+	--bg-color: var(--dark-foreground);
+	--bg-hover-color: lighten(var(--dark-foreground), 10%);
+	--text-color: var(--dark-text);
+  
+	&-primary {
+	  --bg-color: var(--dark-accent);
+	  --bg-hover-color: lighten(var(--dark-accent), 10%);
+	  --text-color: var(--dark-text);
+	}
+  
+	&-danger {
+	  --bg-color: var(--rouge-fonce);
+	  --bg-hover-color: lighten(var(--rouge-fonce), 10%);
+	}
+  }
+  

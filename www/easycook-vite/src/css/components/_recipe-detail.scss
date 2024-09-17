@@ -1,0 +1,90 @@
+.recipe-detail {
+  margin-bottom: rem(40); // Espacement sous la recette
+
+  &__title {
+    font-size: rem(32);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: rem(20);
+    color: $gris; // Couleur du texte par défaut
+    transition: color 0.3s ease;
+  }
+
+  &__image {
+    width: 100%; // Occupe toute la largeur disponible du conteneur
+    max-width: rem(600); // Limiter la largeur maximale à 600px
+    border-radius: rem(15); // Arrondir les coins de l'image
+    overflow: hidden; // Empêcher le débordement de l'image en dehors des coins arrondis
+
+    img {
+      width: 100%; // L'image occupe 100% de la largeur du conteneur
+      height: auto; // Ajuste la hauteur proportionnellement à la largeur
+      border-radius: inherit; // Applique les mêmes coins arrondis que le conteneur
+      object-fit: cover; // Maintenir les proportions tout en couvrant l'espace
+    }
+  }
+
+  &__info {
+    display: flex;
+    gap: rem(20);
+    margin-bottom: rem(20);
+    align-items: flex-start;
+
+    @include respond-to('phone') {
+      flex-direction: column; // En mobile, empiler les éléments
+      gap: rem(10); // Réduire l'espacement entre l'image et le texte
+    }
+  }
+
+  &__description {
+    flex: 1;
+    font-size: rem(16);
+    color: $gris; // Couleur par défaut du texte
+    transition: color 0.3s ease;
+
+    @include respond-to('phone') {
+      font-size: rem(14); // Texte légèrement plus petit en mobile
+    }
+  }
+
+  &__ingredients, &__instructions {
+    margin-bottom: rem(20);
+
+    h2 {
+      font-size: rem(24);
+      margin-bottom: rem(10);
+      color: $gris; // Couleur des titres par défaut
+      transition: color 0.3s ease;
+
+      @include respond-to('phone') {
+        font-size: rem(20); // Taille réduite des titres en mobile
+      }
+    }
+
+    ul, ol {
+      font-size: rem(16);
+      color: $gris;
+      line-height: 1.6;
+      transition: color 0.3s ease;
+
+      @include respond-to('phone') {
+        font-size: rem(14); // Texte légèrement réduit en mobile
+      }
+    }
+  }
+
+  // Version dark
+  body.dark-mode & {
+    &__title, &__description, &__ingredients h2, &__instructions h2, ul, ol {
+      color: $dark-text; // Couleur du texte en mode sombre
+    }
+
+    &__description {
+      color: $dark-text; // Couleur du texte pour la description
+    }
+
+    &__ingredients ul, &__instructions ol {
+      color: lighten($dark-text, 20%); // Couleur légèrement plus claire pour les listes
+    }
+  }
+}

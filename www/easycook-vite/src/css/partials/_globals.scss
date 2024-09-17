@@ -1,89 +1,107 @@
+// _globals.scss
+
+// Variables pour le mode clair et sombre
+$blanc: #ffffff;
+$gris: #353238;
+$gris-clair: #cccccc;
+$gris-fonce: #1e1e1e;
+$rouge: #92140c;
+$rouge-fonce: #6d0b00;
+$jaune: #f8c630;
+$jaune-clair: #fbdd92;
+
+$dark-background: #1e1e1e;
+$dark-foreground: #2d2d2d;
+$dark-text: #f8f8f8;
+$dark-accent: #ff6b6b;
+$dark-border: #444;
+
+// Variables de typographie
+$font-size-base: 16px;
+$font-family-base: "Montserrat", sans-serif;
+$line-height-base: 1.6;
+
+// Styles globaux sans max-width appliqué à tous les éléments
 * {
-  box-sizing: border-box;
-  margin: 0;
-
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: $font1;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-h1 {
-  font-size: rem(19);
-  line-height: rem(25);
-  font-weight: 700;
+// Conteneur principal avec largeur maximale
+.container {
+  max-width: rem(1200); // Limite la largeur du contenu à 1200px
+  margin: 0 auto; // Centrer le contenu
+  padding: rem(20); // Ajouter un padding de 20px
+
+  @include respond-to('phone') {
+    max-width: 100%; // Utilise toute la largeur de l'écran en mobile
+    padding: rem(10); // Réduire le padding en mobile
+  }
 }
 
-h2 {
-  font-size: rem(15);
-  line-height: rem(21);
-  font-weight: 700;
-}
-
-h3 {
-  font-size: rem(13);
-  line-height: rem(19);
-  font-weight: 700;
-}
-
-p {
-  font-size: rem(13);
-  line-height: rem(19);
-  font-weight: 400;
+// Styles pour les titres
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-base;
+  font-weight: 700; // Appliquer une police plus grasse pour les titres
+  
+  margin-bottom: rem(10); // Ajouter un espace en-dessous
 }
 
 body {
-  font-family: $font1;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+  font-size: rem(16);
+  font-family: $font-family-base;
+  line-height: $line-height-base;
+  color: $gris;
+  background-color: $blanc;
 
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-
-  background-color: var(--background-color);
-  color: var(--text-color);
-
+  // Styles pour les icônes
+  .icon-moon, .icon-sun, .header__user-icon svg {
+    fill: currentColor; // L'icône prendra automatiquement la couleur du texte
+  }
 }
 
-img {
-  max-width: 100%;
-  height: auto;
+// Mode sombre
+body.dark-mode {
+  background-color: $dark-background;
+  color: $dark-text;
+
+  // Liens en mode sombre
+  a {
+    color: $dark-text;
+
+    &:hover {
+      color: $dark-accent; // Accent rouge sombre pour le hover
+    }
+  }
+
+  // Icônes en mode sombre
+  .icon-moon, .icon-sun, .header__user-icon svg {
+    fill: $dark-text;
+  }
+
+  // Menu et navigation en mode sombre
+  .header__nav ul {
+    background-color: $dark-background;
+  }
+
+  .header__nav ul li a {
+    color: $dark-text;
+
+    &:hover {
+      color: $dark-accent; // Accentuation des liens au survol
+    }
+  }
 }
 
+// Styles pour les liens
 a {
+  font-family: $font-family-base;
   text-decoration: none;
   color: inherit;
 }
 
-input[type="text"] {
-  border-radius: var(--main-radius);
-  border-color: var(--grey);
-  padding: rem(10) rem(18);
-  font-size: inherit;
-}
-
-@media screen and (min-width: $md-size) {
-
-  h1 {
-    font-size: rem(32);
-    line-height: rem(40);
-    font-weight: 700;
-  }
-  
-  h2 {
-    font-size: rem(24);
-    line-height: rem(34);
-    font-weight: 700;
-  }
-  
-  h3 {
-    font-size: rem(24);
-    line-height: rem(28);
-    font-weight: 700;
-  }
-
+// Styles pour les listes
+ul, ol {
+  list-style: none;
 }

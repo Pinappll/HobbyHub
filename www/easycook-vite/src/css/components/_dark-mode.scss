@@ -1,0 +1,53 @@
+#dark-mode-toggle {
+  background: none; // Supprimer le fond du bouton
+  border: none; // Supprimer la bordure du bouton
+  padding: 0; // Supprimer le padding
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  // Pour que les icônes s'adaptent à la taille que tu veux
+  svg {
+    width: rem(24); // Ajuste la taille ici selon ton besoin
+    height: rem(24);
+    fill: currentColor; // Utilise `currentColor` pour s'adapter au thème
+  }
+
+  svg:hover {
+    fill: $dark-accent; // L'icône changera de couleur au survol
+  }
+
+  &:hover {
+    color: $dark-accent; // L'icône changera de couleur au survol
+  }
+
+  &:focus {
+    outline: none; // Supprimer le contour lors du focus
+  }
+
+  // Mode sombre
+  body.dark-mode & {
+    color: $dark-text; // Couleur des icônes en mode sombre
+  }
+}
+
+.header__user-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  svg {
+    width: rem(24);
+    height: rem(24);
+    fill: currentColor; // Utilise la couleur du texte actuelle
+    transition: fill 0.3s ease; // Transition douce pour le hover
+  }
+
+  &:hover svg {
+    fill: $dark-accent; // Changer la couleur de l'icône user au survol
+  }
+   
+ 
+}
+

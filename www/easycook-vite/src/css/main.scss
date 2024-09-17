@@ -1,21 +1,29 @@
-@import "partials/functions";
-@import "partials/mixins";
-@import "partials/fonts";
-@import "partials/variables";
-@import "partials/globals";
-@import "partials/utilities";
+// main.scss
 
-@import "components/front-header";
-@import "components/button";
-@import "components/banner";
-@import "components/card";
-@import "components/grid";
-@import "components/navbar";
-@import "components/sidebar";
-@import "components/footer";
-@import "components/modal";
-@import "components/form";
-@import "components/table";
-@import "components/section";
-@import "components/design-guide";
-@import "components/dashboard";
+// Partials
+@import 'partials/fonts';
+@import 'partials/functions';
+
+@import 'partials/mixins';
+@import 'partials/utilities';
+@import 'partials/globals';
+
+
+// Components
+@import 'components/header';
+@import 'components/dark-mode';
+@import 'components/hero-image-left';
+@import 'components/card';
+@import 'components/full-width-image';  
+@import 'components/circular-card-grid';
+@import 'components/contact-form';
+@import 'components/comment-section';
+@import 'components/recipe-detail';
+@import 'components/footer';
+@import 'components/block';
+@import 'components/admin';
+@import 'components/table';
+@import 'components/button';
+// Pages
+@import 'pages/recettes';
+@import 'pages/auth';

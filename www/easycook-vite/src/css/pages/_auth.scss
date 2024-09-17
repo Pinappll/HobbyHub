@@ -1,0 +1,133 @@
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 3% auto;
+  padding: rem(20);
+  background-color: $blanc; // Fond blanc par défaut
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: rem(10);
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  .form-wrapper {
+    display: none;
+
+    &.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: rem(20);
+      font-size: rem(24);
+      color: $gris; // Couleur par défaut
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: rem(10);
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          font-size: rem(14);
+          color: $gris; // Couleur par défaut
+        }
+
+        input {
+          padding: rem(10);
+          border: 1px solid $gris-clair;
+          border-radius: rem(5);
+          font-size: rem(16);
+          outline: none;
+          transition: border-color 0.3s ease;
+
+          &:focus {
+            border-color: $jaune;
+          }
+        }
+      }
+
+      input[type='submit'] {
+        background-color: $rouge;
+        color: $blanc;
+        padding: rem(12);
+        border: none;
+        border-radius: rem(5);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken($rouge, 10%);
+        }
+      }
+
+      p {
+        text-align: center;
+        margin-top: rem(10);
+        a {
+          color: $jaune;
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Version dark
+  body.dark-mode & {
+    background-color: $dark-foreground; // Fond sombre
+    color: $dark-text; // Couleur de texte claire
+
+    .form-wrapper {
+      h2 {
+        color: $dark-text; // Titre en blanc cassé
+      }
+
+      .form-group {
+        label {
+          color: $dark-text; // Texte du label en blanc cassé
+        }
+
+        input {
+          background-color: $dark-background; // Champ de saisie sombre
+          border: 1px solid $dark-border; // Bordure sombre
+          color: $dark-text; // Texte clair
+
+          &:focus {
+            border-color: $dark-accent; // Bordure d'accentuation au focus en dark mode
+          }
+        }
+      }
+
+      input[type='submit'] {
+        background-color: $dark-accent; // Bouton en accent sombre
+        &:hover {
+          background-color: darken($dark-accent, 10%);
+        }
+      }
+
+      p {
+        a {
+          color: $dark-accent; // Lien en couleur d'accent
+        }
+      }
+    }
+  }
+}

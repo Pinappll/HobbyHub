@@ -1,0 +1,90 @@
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: rem(16);
+
+  &__content {
+    display: flex;
+    flex-direction: row; // Affichage en ligne en desktop
+    align-items: stretch; // Le texte et l'image ont la même hauteur
+    width: 100%;
+    background-color: $blanc;
+    border-radius: rem(10); // Coins arrondis pour l'ensemble du bloc
+    overflow: hidden; // Pour éviter les débordements
+    transition: background-color 0.3s ease;
+
+    .hero__image {
+      flex: 1; // Prend la moitié de l'espace disponible
+      object-fit: cover;
+      width: 50%;
+      height: 100%; // Hauteur égale au texte
+      display: block;
+    }
+
+    .hero__text-box {
+      flex: 1; // Prend l'autre moitié de l'espace disponible
+      background-color: $jaune-clair; // Jaune transparent en mode clair
+      padding: rem(20); // Padding pour le texte
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: $gris; // Couleur du texte
+      text-align: left; // Aligner tout le texte à gauche en desktop
+      transition: background-color 0.3s ease;
+
+      h2, p {
+        margin: 0;
+        text-align: left; // S'assurer que tout le texte (titre + paragraphe) est aligné à gauche
+      }
+    }
+  }
+
+  // Version dark
+  body.dark-mode & {
+    &__content {
+      background-color: $dark-foreground; // Couleur de fond du bloc en mode dark
+    }
+
+    .hero__text-box {
+      background-color: $dark-background; // Fond pour la partie texte en mode dark
+      color: $dark-text; // Texte en blanc cassé
+      border-left: rem(2) solid $dark-border; // Bordure pour séparer image et texte
+    }
+  }
+
+  // Version mobile : image au-dessus et texte en dessous
+  @include respond-to('phone') {
+    .hero__content {
+      flex-direction: column; // Affichage en colonne en mobile
+      text-align: left;
+
+      .hero__image {
+        width: 100%; // Image prend toute la largeur en mobile
+        height: auto; // Ajuste la hauteur de l'image automatiquement
+      }
+
+      .hero__text-box {
+        padding: rem(16);
+        background-color: rgba(248, 198, 48, 0.2); // Jaune transparent en mobile mode clair
+
+        // Version dark
+        body.dark-mode & {
+          background-color: $dark-background; // Fond en mode dark
+        }
+      }
+
+      h2, p {
+        text-align: left;
+      }
+
+      h2 {
+        font-size: rem(20); // Taille du texte réduite en mobile
+      }
+
+      p {
+        font-size: rem(14); // Réduire la taille du texte en mobile
+      }
+    }
+  }
+}
