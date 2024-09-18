@@ -22,6 +22,7 @@ class User
         $myView = new View("Admin/users", "back");
         $myView->assign("data", $users);
         $myView->assign("configTable", $configTable);
+        $myView->assign("title", "Liste des utilisateurs");
     }
 
     public function addUser(): void

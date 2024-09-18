@@ -17,6 +17,7 @@ class Export
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
         $myView->assign("message", $message);
+        $myView->assign("title", "Export");
     }
 
     private function addFilesToZip($directory, $zip, $relativePath = '')

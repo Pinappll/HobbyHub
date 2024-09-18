@@ -40,6 +40,7 @@ class Category
         $myView = new View("Admin/Category/list-category", "back");
         $myView->assign("data", $categories);
         $myView->assign("configTable", $configTable);
+        $myView->assign("title", "Liste des catégories");
     }
     public function deleteCategory(): void
     {

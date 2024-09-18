@@ -11,5 +11,6 @@ class Dashboard
     public function dashboard(): void
     {
         $myView = new View("Admin/admin-dashboard", "back");
+        $myView->assign("title", "Tableau de bord");
     }
 }

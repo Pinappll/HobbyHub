@@ -1,8 +1,5 @@
 <section class="section">
 
-    <h1>Paramètres du site</h1>
-    <br>
-    
     <?php
     // Inclure le formulaire
     $this->includeComponent("form", $configForm, $errorsForm);

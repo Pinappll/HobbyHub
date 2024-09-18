@@ -15,6 +15,7 @@ class Setting
         $errors = [];
         $myView->assign("configForm", $config); // Passer le formulaire à la vue
         $myView->assign("errorsForm", $errors); // Passer les erreurs (même vide) à la vue
+        $myView->assign("title", "Paramètres du site"); // Passer le message (même vide) à la vue
     }
 
     public function update(): void

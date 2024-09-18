@@ -176,5 +176,6 @@ class Recipe
         $myView->assign("configTable", $configTable);
 
         $myView->assign("data", $recipe->getList(["is_deleted" => false], $limit = 100));
+        $myView->assign("title", "Liste des recettes");
     }
 }

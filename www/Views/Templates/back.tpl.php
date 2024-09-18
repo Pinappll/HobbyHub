@@ -10,7 +10,7 @@
   <link rel="stylesheet" type="text/css" href="/easycook-vite/dist/css/style.css">
   <script src="/easycook-vite/dist/js/main.js"></script>
   <script src="https://kit.fontawesome.com/ebcd47c5e0.js" crossorigin="anonymous"></script>
-  <title>Template Back</title>
+  <title><?php echo htmlspecialchars($this->data['title']); ?></title>
 
 </head>
 
