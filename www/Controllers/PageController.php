@@ -26,6 +26,7 @@ class PageController
         $myView = new View("Admin/pages", "back");
         $myView->assign("data", $categories);
         $myView->assign("configTable", $configTable);
+        $myView->assign("title", "Liste des pages");
     }
 
     public function addPage(): void

@@ -142,6 +142,7 @@ private function notifyAdminsOfNewReview(ReviewModel $review): void
         $review = new ReviewModel();
         
         $myView->assign("data", $review->getList());
+        $myView->assign("title", "Liste des avis");
 
     }
     

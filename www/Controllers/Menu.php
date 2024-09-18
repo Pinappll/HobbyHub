@@ -184,5 +184,6 @@ class Menu
         $myView = new View("Admin/Menu/list-menu", "back");
         $myView->assign("configTable", $configTable);
         $myView->assign("data", $data);
+        $myView->assign("title", "Liste des menus");
     }
 }

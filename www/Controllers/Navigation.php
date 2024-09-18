@@ -109,6 +109,7 @@ class Navigation
         $myView = new View("Admin/navigation", "back");
         $myView->assign("configTable", $configTable);
         $myView->assign("data", $navigation->getList());
+        $myView->assign("title", "Navigation");
     }
 
     public function deleteNavigation(): void
