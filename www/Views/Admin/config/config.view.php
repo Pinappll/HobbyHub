@@ -9,13 +9,12 @@
   <link rel="stylesheet" type="text/css" href="../../easycook-vite/dist/css/style.css">
   <script src="https://kit.fontawesome.com/ebcd47c5e0.js" crossorigin="anonymous"></script>
   <script src="../../easycook-vite/dist/js/main.js"></script>
-  <title><?php echo htmlspecialchars($this->data['title']); ?></title>
+  <title>Installeur</title>
 </head>
 
 <body class="page-wrapper">
 <section class="section">
 <?php 
-var_dump($this->data);
 
 $this->includeComponent("form", $configForm, $errorsForm);
 if (isset($this->data["message"])) {
