@@ -11,13 +11,15 @@ class FormInit
                 "method" => "POST",
                 "action" => "", // Spécifiez l'action si nécessaire
                 "submit" => "Créer la base de données",
-                "class" => "form",
+                "class" => "form", // La classe "form" ici correspond au style du form SCSS
                 "enctype" => "multipart/form-data",
+                "title" => "Installeur", // Ajout d'un titre au formulaire
+
             ],
             "inputs" => [
                 "dbHost" => [
                     "type" => "text",
-                    "class" => "input-form",
+                    "class" => "input-form", // Correspond à l'input stylisé en SCSS
                     "placeholder" => "Hôte de la base de données",
                     "required" => true,
                     "label" => "Hôte de la base de données :",
@@ -53,7 +55,6 @@ class FormInit
                     "required" => true,
                     "label" => "Nom :",
                     "value" => $data["nom"] ?? ""
-
                 ],
                 "prenom" => [
                     "type" => "text",
@@ -77,7 +78,7 @@ class FormInit
                     "placeholder" => "Mot de passe",
                     "required" => true,
                     "label" => "Mot de passe :",
-                    "error" => "Votre mot de passe doit faire plus de 8 caractères avec une  minuscule et chiffre"
+                    "error" => "Votre mot de passe doit faire plus de 8 caractères avec une minuscule et un chiffre"
                 ],
                 "siteName" => [
                     "type" => "text",
@@ -105,4 +106,3 @@ class FormInit
         ];
     }
 }
-
