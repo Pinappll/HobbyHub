@@ -1,53 +1,117 @@
 form {
+  width: 100%;
+  max-width: rem(600); // Réduction de la largeur maximale du formulaire
+  margin: rem(40) auto; // Espace en haut et en bas du formulaire, et centré horizontalement
+  padding: rem(20);
+  background-color: $blanc; // Fond blanc pour le formulaire
+  border-radius: rem(10); // Coins arrondis pour le formulaire
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Légère ombre pour la profondeur
+
+  // Titre centré à l'intérieur du formulaire
+  .form-title {
+    text-align: center;
+    font-size: rem(20); // Taille du titre légèrement réduite
+    font-weight: 700;
+    margin-bottom: rem(15); // Réduire l'espacement en dessous du titre
+    color: $gris-fonce;
+  }
 
   .container {
-    @include flexbox(column, wrap, space-between, stretch,rem(16));
+    display: flex;
+    flex-direction: column;
+    gap: rem(10); // Réduction de l'espace entre chaque champ
 
-    .form-group{
-      input{
-        border-radius: var(--main-radius);
-        border: none;
-        padding: rem(10) rem(18);
-        font-size: inherit;
-        width: 100%;
-        background-color: var(--grey-darker);
-        color: var(--red-darker);
-      
-      }
-      input::placeholder{
-        color: var(--text-color);
-      
-      }
-      select{
-        border-radius: var(--main-radius);
-        border: none;
-        padding: rem(10) rem(18);
-        font-size: inherit;
-        width: 100%;
-        background-color: var(--grey-darker);
-        color: var(--text-color);
+    // Message d'erreur
+    .error-message {
+      background-color: $rouge;
+      color: $blanc;
+      padding: rem(8);
+      border-radius: rem(5); // Coins arrondis pour les messages d'erreur
+      margin-bottom: rem(10); // Réduction de l'espace sous les messages d'erreur
+    }
 
-        option{
-          color: var(--text-color);
-          
-          width: 120px !important;
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: rem(6); // Réduction de l'espacement entre le label et l'input
+
+      label {
+        font-size: rem(14);
+        font-weight: 600;
+        color: $gris-fonce;
+      }
+
+      input, textarea, select {
+        width: 100%;
+        padding: rem(8) rem(16); // Réduction du padding pour une apparence plus compacte
+        border: 1px solid $gris-clair;
+        border-radius: rem(5); // Coins arrondis
+        background-color: $gris-clair;
+        color: $gris-fonce;
+        font-size: rem(16);
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: $jaune; // Bordure colorée au focus
+          background-color: lighten($gris-clair, 10%);
         }
       }
-      textarea{
-        border-radius: var(--main-radius);
-        border: none;
-        padding: rem(10) rem(18);
-        font-size: rem(16);
-        width: 100%;
-        background-color: var(--grey-darker);
-        color: var(--text-color);
-      }
-      textarea::placeholder{
-        color: var(--text-color);
+
+      input::placeholder, textarea::placeholder {
+        color: $gris;
       }
 
-      
+      // Styles spécifiques pour les select
+      select {
+        appearance: none; // Retire l'apparence par défaut du navigateur
+        border-radius: rem(5); // Coins arrondis
+      }
+
+      textarea {
+        resize: vertical; // Autoriser le redimensionnement vertical uniquement
+        border-radius: rem(5); // Coins arrondis pour les textarea
+      }
+
+      // Styles spécifiques pour les input[type="color"]
+      input[type="color"] {
+        width: rem(50); // Largeur du champ de couleur
+        height: rem(40); // Hauteur du champ de couleur
+        padding: 0;
+        border-radius: rem(5); // Coins arrondis
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        transition: box-shadow 0.3s ease, transform 0.2s ease;
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 4px 2px $jaune; // Ombre jaune lors du focus
+        }
+
+        &:hover {
+          transform: scale(1.05); // Légère augmentation au hover
+        }
+      }
+    }
+
+    // Bouton de soumission
+    input[type="submit"] {
+      width: 100%;
+      padding: rem(12) rem(20);
+      background-color: $jaune;
+      color: $gris-fonce;
+      font-size: rem(16);
+      font-weight: 600;
+      border: none;
+      border-radius: rem(5); // Coins arrondis pour le bouton
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+
+      &:hover {
+        background-color: darken($jaune, 10%);
+        transform: translateY(-3px); // Légère élévation au hover
+      }
     }
   }
-    
 }
