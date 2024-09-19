@@ -22,11 +22,15 @@ class Recipe
         $errors = [];
         $message = "";
         $categories = new Category();
-        $categories = $categories->findAll();
-        foreach ($categories as $category) {
-            $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category(), "checked" => ""];
+        $categories = $categories->findAllBy(["is_deleted" => false], "object");
+        if(!$categories){
+            $errors[] = "Aucune catégorie n'est disponible";
+        }else{
+            foreach ($categories as $category) {
+                $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category(), "checked" => ""];
+            }
         }
-        $config["inputs"]["categories"]["value"] = $formatCategories;
+        $config["inputs"]["categories"]["value"] = $formatCategories ?? [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($_REQUEST["categories"])) {

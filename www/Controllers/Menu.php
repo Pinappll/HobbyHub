@@ -33,7 +33,7 @@ class Menu
             $error = [];
             $message = "";
             $categories = new Category();
-            $categories = $categories->findAll();
+            $categories = $categories->findAllBy(["is_deleted" => false], "object");
             $formatCategories = [];
             foreach ($categories as $category) {
                 $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category()];
