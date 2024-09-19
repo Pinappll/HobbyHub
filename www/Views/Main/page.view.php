@@ -21,7 +21,7 @@
             const p = document.createElement('p');
             p.textContent = data.message;
             document.getElementById('commentForm').appendChild(p);
-            debugger; // Fonction pour charger les commentaires après soumission
+            document.getElementById('commentForm').reset();
         } else {
             alert('Erreur lors de la soumission du commentaire');
         }

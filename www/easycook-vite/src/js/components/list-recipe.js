@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "POST",
         data: "category=" + value,
         success: function (data) {
-          debugger;
           $(".content-recipe").html(data);
           document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
             checkbox.addEventListener("change", (event) => {
