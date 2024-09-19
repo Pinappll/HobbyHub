@@ -47,28 +47,22 @@ class FormInit
                     "required" => true,
                     "label" => "Mot de passe de la base de données :"
                 ],
-                // Regroupement des champs nom et prénom
-                "nameFields" => [
-                    "type" => "group",
-                    "class" => "name-fields", // Cette classe permet d'afficher nom et prénom côte à côte
-                    "inputs" => [
-                        "nom" => [
-                            "type" => "text",
-                            "class" => "input-form",
-                            "placeholder" => "Nom",
-                            "required" => true,
-                            "label" => "Nom :",
-                            "value" => $data["nom"] ?? ""
-                        ],
-                        "prenom" => [
-                            "type" => "text",
-                            "class" => "input-form",
-                            "placeholder" => "Prénom",
-                            "required" => true,
-                            "label" => "Prénom :",
-                            "value" => $data["prenom"] ?? ""
-                        ]
-                    ]
+                // Champs Nom et Prénom séparés
+                "nom" => [
+                    "type" => "text",
+                    "class" => "input-form",
+                    "placeholder" => "Nom",
+                    "required" => true,
+                    "label" => "Nom :",
+                    "value" => $data["nom"] ?? ""
+                ],
+                "prenom" => [
+                    "type" => "text",
+                    "class" => "input-form",
+                    "placeholder" => "Prénom",
+                    "required" => true,
+                    "label" => "Prénom :",
+                    "value" => $data["prenom"] ?? ""
                 ],
                 "mail" => [
                     "type" => "email",

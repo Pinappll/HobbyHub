@@ -15,6 +15,7 @@
 <body class="page-wrapper">
 <section class="section">
 <?php 
+var_dump($this->data);
 
 $this->includeComponent("form", $configForm, $errorsForm);
 if (isset($this->data["message"])) {
