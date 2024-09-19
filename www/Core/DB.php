@@ -6,7 +6,7 @@ class DB
 {
     protected ?object $pdo = null;
     private static ?\PDO $instance = null; 
-    private string $table;
+    protected string $table;
     protected string $query;
     protected string $dbName;
 
@@ -104,14 +104,22 @@ class DB
         foreach ($data as $column => $value) {
             $sql .= " " . $column . "=:" . $column . " AND";
         }
-        $sql = substr($sql, 0, -3);
+        $sql = substr($sql, 0, -3);  // Supprimer le dernier 'AND'
+
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
+
         if ($return == "object") {
+            // Retourner un objet de la classe appelée
             $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+        } else {
+            // Retourner uniquement les colonnes associatives
+            $queryPrepared->setFetchMode(\PDO::FETCH_ASSOC);
         }
+
         return $queryPrepared->fetch();
     }
+
     public function delete()
     {
         $sql = "DELETE FROM " . $this->table . " WHERE id = " . $this->getId();

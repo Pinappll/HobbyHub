@@ -32,7 +32,7 @@ CREATE TABLE {PREFIX}_setting (
     name_setting VARCHAR(50) NOT NULL,
     slogan_setting VARCHAR(255) NOT NULL,
     logo_url_setting TEXT NOT NULL,
-    color_setting VARCHAR(50)
+    color_setting VARCHAR(255)
 );
 
 
