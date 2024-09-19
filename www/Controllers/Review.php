@@ -145,5 +145,29 @@ private function notifyAdminsOfNewReview(ReviewModel $review): void
         $myView->assign("title", "Liste des avis");
 
     }
+    public function validate(): void
+    {
+        if(isset($_POST["id"])){
+            $review = new ReviewModel();
+            $review = $review->getOneBy(["id" => $_POST["id"]], "object");
+            $review->setStatus_review("accept");
+            $review->save();
+            header("Location: /admin/reviews");
+            exit;
+        }
+        
+        
+    }
+    public function refuse(): void
+    {
+        if(isset($_POST["id"])){
+            $review = new ReviewModel();
+            $review = $review->getOneBy(["id" => $_POST["id"]], "object");
+            $review->setStatus_review("refuse");
+            $review->save();
+            header("Location: /admin/reviews");
+            exit;
+        }
+    }
     
 }
