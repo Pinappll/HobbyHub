@@ -12,7 +12,8 @@ class UserForgetPassword
                 "action" => "/password-forgot",
                 "submit" => "Envoyer",
                 "class" => "form",
-                "id" => "form-forget-password"
+                "id" => "form-forget-password",
+                "title" => "Mot de passe oublié",
             ],
             "inputs" => [
                 "email" => [

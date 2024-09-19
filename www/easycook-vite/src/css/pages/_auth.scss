@@ -4,7 +4,6 @@
   margin: 3% auto;
   padding: rem(20);
   background-color: $blanc; // Fond blanc par défaut
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: rem(10);
   transition: background-color 0.3s ease, color 0.3s ease;
 
@@ -77,6 +76,16 @@
         }
       }
     }
+
+    // Message d'erreur
+    .error-message {
+      background-color: $rouge; // Fond rouge pour l'erreur
+      color: $blanc; // Texte blanc
+      padding: rem(10); // Espacement intérieur
+      border-radius: rem(5); // Coins arrondis
+      margin-bottom: rem(20); // Espace sous le message
+      list-style: none; // Supprimer les puces pour les erreurs
+    }
   }
 
   @keyframes fadeIn {
@@ -127,6 +136,12 @@
         a {
           color: $dark-accent; // Lien en couleur d'accent
         }
+      }
+
+      // Message d'erreur en mode sombre
+      .error-message {
+        background-color: $dark-accent; // Fond d'erreur en mode sombre
+        color: $dark-text; // Texte clair
       }
     }
   }

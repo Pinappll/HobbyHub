@@ -43,6 +43,7 @@ class Security
                                 $_SESSION['username'] = $user->__toString();
                                 $_SESSION["role"] = $user->getType_user();
                                 $message = "Connexion réussie";
+                                header("Location: /");
                             } else {
                                 $errors[] = "le login ou le mot de passe est incorrect";
                             }
@@ -99,7 +100,7 @@ class Security
                 }
             }
         }
-        $myView = new View("Security/register", "front");
+        $myView = new View("Security/login", "front");
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
         $myView->assign("message", $message);
@@ -180,7 +181,7 @@ class Security
                 }
             }
         }
-        $myView = new View("Security/password-forgot", "front");
+        $myView = new View("Security/login", "front");
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
         $myView->assign("message", $message);

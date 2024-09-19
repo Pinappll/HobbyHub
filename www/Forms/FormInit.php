@@ -14,7 +14,6 @@ class FormInit
                 "class" => "form", // La classe "form" ici correspond au style du form SCSS
                 "enctype" => "multipart/form-data",
                 "title" => "Installeur", // Ajout d'un titre au formulaire
-
             ],
             "inputs" => [
                 "dbHost" => [
@@ -48,21 +47,28 @@ class FormInit
                     "required" => true,
                     "label" => "Mot de passe de la base de données :"
                 ],
-                "nom" => [
-                    "type" => "text",
-                    "class" => "input-form",
-                    "placeholder" => "Nom",
-                    "required" => true,
-                    "label" => "Nom :",
-                    "value" => $data["nom"] ?? ""
-                ],
-                "prenom" => [
-                    "type" => "text",
-                    "class" => "input-form",
-                    "placeholder" => "Prénom",
-                    "required" => true,
-                    "label" => "Prénom :",
-                    "value" => $data["prenom"] ?? ""
+                // Regroupement des champs nom et prénom
+                "nameFields" => [
+                    "type" => "group",
+                    "class" => "name-fields", // Cette classe permet d'afficher nom et prénom côte à côte
+                    "inputs" => [
+                        "nom" => [
+                            "type" => "text",
+                            "class" => "input-form",
+                            "placeholder" => "Nom",
+                            "required" => true,
+                            "label" => "Nom :",
+                            "value" => $data["nom"] ?? ""
+                        ],
+                        "prenom" => [
+                            "type" => "text",
+                            "class" => "input-form",
+                            "placeholder" => "Prénom",
+                            "required" => true,
+                            "label" => "Prénom :",
+                            "value" => $data["prenom"] ?? ""
+                        ]
+                    ]
                 ],
                 "mail" => [
                     "type" => "email",
