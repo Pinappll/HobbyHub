@@ -234,6 +234,16 @@
   action: exportAction
   roles: [admin]
 
+/admin/reviews/validate:
+  controller: Review
+  action: validate
+  roles: [admin]
+
+/admin/reviews/refuse:
+  controller: Review
+  action: refuse
+  roles: [admin]
+
 /sitemap.xml:
     controller: SitemapController
     action: generateSitemap
