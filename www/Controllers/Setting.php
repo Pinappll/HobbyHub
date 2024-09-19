@@ -8,8 +8,14 @@ use App\Models\Setting as SettingModel; // Alias pour le modèle Setting
 
 class Setting
 {
+    
+    
     public function setting(): void
     {
+        $couleurAccent = "#f8c630";
+        $couleurAccentClair = "#fbdd92";
+        $couleurPrincipale = "#ffffff";
+        $couleurSecondaire = "#cccccc";
         $myView = new View("Admin/setting", "back");
         $form = new SettingUpdate();
         $config = $form->getConfig();
@@ -43,6 +49,13 @@ class Setting
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errorsForm); // Passer un tableau vide à la vue
         $myView->assign("title", "Paramètres du site");
+        $myView->assign("couleurCSS", [
+            'couleur_principale' => $couleurPrincipale,
+            'couleur_secondaire' => $couleurSecondaire,
+            'couleur_accent' => $couleurAccent,
+            'couleur_accent_clair' => $couleurAccentClair,
+        ]);
+        
     }
 
 
