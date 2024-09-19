@@ -107,7 +107,7 @@ class InstallerController
 
                     // Insertion des paramètres du site dans la table settings
                     $stmt = $pdo->prepare("
-                        INSERT INTO {$dbName}_settings (
+                        INSERT INTO {$dbName}_setting (
                             name_setting, 
                             slogan_setting, 
                             logo_url_setting, 
