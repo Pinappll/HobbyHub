@@ -10,6 +10,14 @@
   <script src="https://kit.fontawesome.com/ebcd47c5e0.js" crossorigin="anonymous"></script>
   <script src="../../easycook-vite/dist/js/main.js"></script>
   <title><?php echo htmlspecialchars($this->data['title']); ?></title>
+  <style>
+    :root {
+        --couleur-principale: <?= $couleurCSS['couleur_principale'] ?>;
+        --couleur-secondaire: <?= $couleurCSS['couleur_secondaire'] ?>;
+        --couleur-accent: <?= $couleurCSS['couleur_accent'] ?>;
+        --couleur-accent-clair: <?= $couleurCSS['couleur_accent_clair'] ?>;
+    }
+</style>
 </head>
 
 <body class="page-wrapper">
