@@ -18,7 +18,10 @@
 
         // Vérification du succès et rechargement des commentaires si succès
         if (data.status === 'success') {
-            loadComments(); // Fonction pour charger les commentaires après soumission
+            const p = document.createElement('p');
+            p.textContent = data.message;
+            document.getElementById('commentForm').appendChild(p);
+            debugger; // Fonction pour charger les commentaires après soumission
         } else {
             alert('Erreur lors de la soumission du commentaire');
         }

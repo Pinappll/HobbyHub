@@ -27,6 +27,7 @@ class DB
     
     // Créer le nom de la table en fonction du nom de la base de données et du modèle
     $this->table = strtolower($dbName) . "_" . strtolower($table);
+    $this->dbName = $dbName;
 }
 
     

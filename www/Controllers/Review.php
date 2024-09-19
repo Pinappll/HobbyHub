@@ -19,7 +19,7 @@ class Review
         $review = new ReviewModel();
         $data = $review->select($review->getNameDb() . "_review.*,".$review->getNameDb()."_user.firstname_user,".$review->getNameDb()."_user.lastname_user")
             ->join($review->getNameDb()."_user", $review->getNameDb() . "_review.id_user_review = " .$review->getNameDb()."_user.id")
-            ->where($review->getNameDb() . "_review.id_page_review = " . $_GET["id_page_review"] . " AND " . $review->getNameDb() . "_review.status_review = 'accepted'")
+            ->where($review->getNameDb() . "_review.id_page_review = " . $_GET["id_page_review"] . " AND " . $review->getNameDb() . "_review.status_review = 'accept'")
             ->execute();
 
         // Utilisation de la vue pour afficher les données des reviews
