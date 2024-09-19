@@ -20,7 +20,6 @@ class Recipe extends DB
         parent::__construct();
     }
 
-
     /**
      * Get the value of id
      */

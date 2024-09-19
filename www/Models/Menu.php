@@ -9,6 +9,8 @@ class Menu extends DB
     private ?int $id = null;
     protected string $title_menu;
     protected string $description_menu;
+    protected int $id_restaurant_menu;
+    protected int $id_recipie_menu;
     protected bool $is_deleted;
 
     public function __construct()

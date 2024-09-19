@@ -53,27 +53,6 @@ BEFORE UPDATE ON {PREFIX}_recipe
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
 
--- Category
-CREATE TABLE {PREFIX}_category (
-    id SERIAL PRIMARY KEY,
-    name_category VARCHAR(50) NOT NULL,
-    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
-    updated_at TIMESTAMPTZ DEFAULT NULL
-);
-
-CREATE TRIGGER update_updated_at_{PREFIX}_category
-BEFORE UPDATE ON {PREFIX}_category
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at_column();
-
--- Recipe category
-CREATE TABLE {PREFIX}_recipe_category (
-    id SERIAL PRIMARY KEY,
-    id_recipe_category INT NOT NULL,
-    id_category INT NOT NULL,
-    CONSTRAINT fk_recipe_category_recipe FOREIGN KEY (id_recipe_category) REFERENCES {PREFIX}_recipe(id),
-    CONSTRAINT fk_recipe_category_category FOREIGN KEY (id_category) REFERENCES {PREFIX}_category(id)
-);
 
 -- Page
 CREATE TABLE {PREFIX}_page (

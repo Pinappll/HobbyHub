@@ -7,26 +7,35 @@ class DB
     protected ?object $pdo = null;
     private static ?\PDO $instance = null; 
     private string $table;
-    protected string $query;
     protected string $dbName;
 
     public function __construct()
     {
-        //connexion à la bdd via pdo
+        // Connexion à la base de données via PDO
         include 'config.php';
         try {
-
             $this->pdo = new \PDO('pgsql:host=' . $dbHost . ';dbname=' . $dbName . ';user=' . $dbUser . ';password=' . $dbPassword);
         } catch (\PDOException $e) {
             echo "Erreur SQL : " . $e->getMessage();
         }
 
+        // Détermination du nom de la table à partir du nom de la classe appelante
         $table = get_called_class();
         $table = explode("\\", $table);
         $table = array_pop($table);
         $this->dbName = strtolower($dbName);
         $this->table = $dbName . "_" . strtolower($table);
     }
+
+    public static function getTable(): string
+    {
+        include 'config.php';
+        $table = get_called_class();
+        $table = explode("\\", $table);
+        $table = array_pop($table);
+        return $dbName . "_" . strtolower($table);
+    }
+
     public static function getPDO(): ?\PDO
     {
         if (self::$instance === null) {
@@ -40,33 +49,33 @@ class DB
         return self::$instance;
     }
 
+    // Récupère toutes les données sous forme d'un tableau associatif
     public function getDataObject(): array
     {
         return array_diff_key(get_object_vars($this), get_class_vars(get_class()));
     }
 
+    // Sauvegarde ou met à jour un enregistrement
     public function save()
     {
         $data = $this->getDataObject();
 
         if (empty($this->getId())) {
+            // Requête d'insertion
             $sql = "INSERT INTO " . $this->table . "(" . implode(",", array_keys($data)) . ") 
             VALUES (:" . implode(",:", array_keys($data)) . ")";
         } else {
+            // Requête de mise à jour
             $sql = "UPDATE " . $this->table . " SET ";
             foreach ($data as $column => $value) {
-                if (substr($column, 0, 2) === 'is') {
-                    $data[$column] = ($value === true) ? "true" : "false";
-                }
                 $sql .= $column . "=:" . $column . ",";
             }
-            $sql = substr($sql, 0, -1);
+            $sql = rtrim($sql, ',');
             $sql .= " WHERE id = " . $this->getId();
-        };
+        }
 
         $queryPrepared = $this->pdo->prepare($sql);
         $success = $queryPrepared->execute($data);
-
 
         if (empty($this->getId())) {
             $lastInsertId = $this->pdo->lastInsertId();
@@ -76,6 +85,7 @@ class DB
         return $success;
     }
 
+    // Récupère tous les enregistrements
     public function findAll(): array
     {
         $sql = "SELECT * FROM " . $this->table;
@@ -84,6 +94,7 @@ class DB
         return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
     }
 
+    // Récupère un enregistrement par ID
     public static function populate(int $id): object
     {
         $class = get_called_class();
@@ -91,23 +102,25 @@ class DB
         return $object->getOneBy(["id" => $id], "object");
     }
 
-
-
-    //$data = ["id"=>1] ou ["email"=>"y.skrzypczyk@gmail.com"]
+    // Récupère un enregistrement par un critère spécifique
     public function getOneBy(array $data, string $return = "array")
     {
         $sql = "SELECT * FROM " . $this->table . " WHERE ";
         foreach ($data as $column => $value) {
-            $sql .= " " . $column . "=:" . $column . " AND";
+            $sql .= $column . "=:" . $column . " AND ";
         }
-        $sql = substr($sql, 0, -3);
+        $sql = rtrim($sql, "AND ");
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
+
         if ($return == "object") {
             $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
         }
+
         return $queryPrepared->fetch();
     }
+
+    // Supprime un enregistrement par ID
     public function delete()
     {
         $sql = "DELETE FROM " . $this->table . " WHERE id = " . $this->getId();
@@ -115,6 +128,7 @@ class DB
         return $queryPrepared->execute();
     }
 
+    // Compte le nombre total de lignes dans la table
     public function countRows(): int
     {
         $sql = "SELECT COUNT(*) FROM " . $this->table;
@@ -123,6 +137,7 @@ class DB
         return $queryPrepared->fetchColumn();
     }
 
+    // Récupère une colonne spécifique dans la table
     public function getColumns(string $column): array
     {
         $sql = "SELECT " . $column . " FROM " . $this->table;
@@ -131,6 +146,7 @@ class DB
         return $queryPrepared->fetchAll(\PDO::FETCH_COLUMN);
     }
 
+    // Récupère un ID basé sur une colonne spécifique
     public function getIdFromTable(string $column, string $value): int
     {
         $sql = "SELECT id FROM " . $this->table . " WHERE " . $column . " = :" . $column;
@@ -139,123 +155,73 @@ class DB
         return $queryPrepared->fetchColumn();
     }
 
+    // Filtrage simple pour récupérer une liste avec limite et offset
     public function getList(array $filters = [], int $limit = 10, int $offset = 0): array
     {
         $sql = "SELECT * FROM " . $this->table;
         $params = [];
-
+        $types = []; // Pour stocker les types des paramètres
+    
         if (!empty($filters)) {
             $sql .= " WHERE ";
             foreach ($filters as $column => $value) {
-                $sql .= " $column = :$column AND";
+                // Convertir les valeurs booléennes en int pour la base de données
+                if (is_bool($value)) {
+                    $value = $value ? 1 : 0;
+                }
+                $sql .= "$column = :$column AND ";
                 $params[":$column"] = $value;
+    
+                // Déterminer le type de paramètre en fonction du type de valeur
+                $types[":$column"] = \PDO::PARAM_INT; // Utilisez PDO::PARAM_STR si la colonne est de type string
             }
-            $sql = rtrim($sql, 'AND');
+            $sql = rtrim($sql, "AND ");
         }
-
+    
         $sql .= " LIMIT :limit OFFSET :offset";
         $params[':limit'] = $limit;
         $params[':offset'] = $offset;
-
+    
         $queryPrepared = $this->pdo->prepare($sql);
-        foreach ($params as $param => &$val) {
-            if (is_int($val)) {
-                $paramType = \PDO::PARAM_INT;
-            } elseif (is_bool($val)) {
-                $paramType = \PDO::PARAM_BOOL;
-            } else {
-                $paramType = \PDO::PARAM_STR;
-            }
-            $queryPrepared->bindParam($param, $val, $paramType);
+    
+        // Lier les paramètres avec les types appropriés
+        foreach ($params as $param => $value) {
+            $type = $types[$param] ?? \PDO::PARAM_STR; // Par défaut, utilisez PDO::PARAM_STR
+            $queryPrepared->bindValue($param, $value, $type);
         }
-
+    
         $queryPrepared->execute();
-        return $queryPrepared->fetchAll();
+        
+        return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
     }
-
-
+    
 
     public function findAllBy(array $filters = [], $return = "array")
-    {
-        $sql = "SELECT * FROM " . $this->table;
-        $params = [];
+{
+    $sql = "SELECT * FROM " . $this->table;
+    $params = [];
 
-        if (!empty($filters)) {
-            $sql .= " WHERE ";
-            foreach ($filters as $column => $value) {
-                $sql .= " $column = :$column AND";
-                $params[":$column"] = $value;
-            }
-            $sql = rtrim($sql, 'AND');
-        }
-
-        $queryPrepared = $this->pdo->prepare($sql);
-        foreach ($params as $param => &$val) {
-            if (is_int($val)) {
-                $paramType = \PDO::PARAM_INT;
-            } elseif (is_bool($val)) {
-                $paramType = \PDO::PARAM_BOOL;
+    if (!empty($filters)) {
+        $sql .= " WHERE ";
+        foreach ($filters as $column => $value) {
+            // Utiliser LIKE si la valeur contient %
+            if (strpos($value, '%') !== false) {
+                $sql .= "$column LIKE :$column AND ";
             } else {
-                $paramType = \PDO::PARAM_STR;
+                $sql .= "$column = :$column AND ";
             }
-            $queryPrepared->bindParam($param, $val, $paramType);
+            $params[":$column"] = $value;
         }
-        if ($return == "object") {
-            $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
-        }
-        $queryPrepared->execute();
-        return $queryPrepared->fetchAll();
-    }
-    public function select($columns = '*')
-    {
-        $this->query = "SELECT $columns FROM $this->table";
-        return $this;
+        $sql = rtrim($sql, "AND ");
     }
 
-    public function join($table, $on)
-    {
-        $this->query .= " JOIN $table ON $on";
-        return $this;
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute($params);
+
+    if ($return == "object") {
+        $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
     }
 
-    public function where($conditions)
-    {
-        $this->query .= " WHERE $conditions";
-        return $this;
-    }
-
-    public function orderBy($column, $direction = 'ASC')
-    {
-        $this->query .= " ORDER BY $column $direction";
-        return $this;
-    }
-
-    public function limit($limit)
-    {
-        $this->query .= " LIMIT $limit";
-        return $this;
-    }
-
-    public function getQuery()
-    {
-        return $this->query;
-    }
-    public function execute(string $return = "array")
-    {
-        $queryPrepared = $this->pdo->prepare($this->query);
-        if ($return == "object") {
-            $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
-        }
-        $queryPrepared->execute();
-        return $queryPrepared->fetchAll();
-    }
-    public function from()
-    {
-        $this->table;
-        return $this;
-    }
-    public function getNameDb()
-    {
-        return $this->dbName;
-    }
+    return $queryPrepared->fetchAll();
+}
 }

@@ -6,45 +6,35 @@ use App\Core\Verificator;
 use App\Core\View;
 use App\Forms\Menu\MenuInsert;
 use App\Forms\Menu\MenuEdit;
-use App\Models\Category;
 use App\Models\Menu as MenuModel;
 use App\Models\Recipe;
+use App\Controllers\Recipe as RecipeController;
 use App\Models\Recipe_category;
 use App\Models\Recipe_menu;
 use App\Tables\MenuTable;
 
 class Menu
 {
-
+    private array $ids_recipe = [];
     public function addMenu(): void
     {
 
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $recipe = new Recipe();
-            $recipes = $recipe->select($recipe->getNameDb()."_recipe.*")
-                ->join($recipe->getNameDb()."_recipe_category", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_category.id_recipe_category")
-                ->where($recipe->getNameDb() . "_recipe_category.id_category=" . $_POST["category"])
-                ->execute("object");
-            $myView = new View("Partiel/listeRecipeSearch", null);
-            $myView->assign("recipes", $recipes);
+            if(isset($_GET["search_value"])){
+                $recipe = new RecipeController();
+                $recipe->searchRecipes($_GET["search_value"]);
+            } 
         } else {
             $form = new MenuInsert();
             $config = $form->getConfig();
             $error = [];
             $message = "";
-            $categories = new Category();
-            $categories = $categories->findAll();
-            $formatCategories = [];
-            foreach ($categories as $category) {
-                $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category()];
-            }
-            $config["inputs"]["select_recipe"]["option"] = $formatCategories;
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                if (!isset($_REQUEST["search_recipe"])) {
+                    $_REQUEST["search_recipe"] = [];
+                }
                 if (!isset($_REQUEST["recipe"])) {
                     $_REQUEST["recipe"] = [];
-                }
-                if (!isset($_REQUEST["select_recipe"])) {
-                    $_REQUEST["select_recipe"] = [];
                 }
                 $verificator = new Verificator();
                 if ($verificator->checkForm($config, $_REQUEST, $error)) {
@@ -69,25 +59,11 @@ class Menu
             $myView->assign("errorsForm", $error);
             $myView->assign("message", $message);
         }
+        
     }
     public function updateMenu(): void
     {
-        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            if (!isset($_POST["category"])) {
-                $recipe = new Recipe();
-                $recipes = $recipe->select()->join($recipe->getNameDb()."_recipe_menu", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_menu.id_recipe")->where($recipe->getNameDb() . "_recipe_menu.id_menu=" . $_GET["id"])->execute();
-                $myView = new View("Partiel/listeRecipMenu", null);
-                $myView->assign("recipes", $recipes);
-            } else {
-                $recipe = new Recipe();
-                $recipes = $recipe->select($recipe->getNameDb() . "_recipe.*")
-                    ->join($recipe->getNameDb()."_recipe_category", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_category.id_recipe_category")
-                    ->where($recipe->getNameDb() . "_recipe_category.id_category=" . $_POST["category"])
-                    ->execute("object");
-                $myView = new View("Partiel/listeRecipeSearch", null);
-                $myView->assign("recipes", $recipes);
-            }
-        } else {
+
             if (!isset($_GET["id"])) {
                 header("Location: /admin/menus");
             } else {
@@ -103,12 +79,6 @@ class Menu
                     $config = $form->getConfig(["id" => $id, "title" => $menu->getTitle_menu(), "description" => $menu->getDescription_menu()]);
                     $error = [];
                     $message = "";
-                    $categories = new Category();
-                    $categories = $categories->findAll();
-                    foreach ($categories as $category) {
-                        $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category()];
-                    }
-                    $config["inputs"]["select_recipe"]["option"] = $formatCategories;
                     if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         if (!isset($_REQUEST["recipe"])) {
                             $_REQUEST["recipe"] = [];
@@ -161,7 +131,7 @@ class Menu
                     $myView->assign("message", $message);
                 }
             }
-        }
+        
     }
     public function deleteMenu(): void
     {

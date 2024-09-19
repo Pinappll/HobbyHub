@@ -42,6 +42,7 @@ class Security
                                 $_SESSION['user_id'] = $user->getId();
                                 $_SESSION['username'] = $user->__toString();
                                 $_SESSION["role"] = $user->getType_user();
+                                $_SESSION["token"] = $user->getToken_user();
                                 $message = "Connexion réussie";
                             } else {
                                 $errors[] = "le login ou le mot de passe est incorrect";

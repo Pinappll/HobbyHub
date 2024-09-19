@@ -32,9 +32,10 @@
                         <?php endif; ?>
                     </select><br>
                 <?php elseif ($configInput["type"] === "partiel") : ?>
-                    <div class="<?= $configInput["class"] ?>">
-                        <h2><?= $configInput["titre"] ?></h2>
-                    </div>
+                    <?php if (isset($configInput["view"])): ?>
+                        <?php include __DIR__ . '/../' . $configInput["view"]; ?>
+                    <?php endif; ?>
+
                 <?php elseif ($configInput["type"] === "color") : ?>
                     <!-- Gestion du type color -->
                     <label for="<?= $name ?>"><?= $configInput["label"] ?? "" ?></label>

@@ -19,10 +19,10 @@ class MenuInsert
             "inputs" => [
                 "title" => ["type" => "text", "class" => "input-form", "placeholder" => "Titre", "required" => true, "error" => "Votre titre doit faire plus de 2 caractères"],
                 "description" => ["type" => "textarea", "class" => "input-form", "placeholder" => "Contenu", "required" => true, "error" => "Votre description doit faire plus de 2 caractères"],
-                "select_recipe" => ["type" => "select", "class" => "select-category", "placeholder" => "Catégorie", "required" => true, "error" => "Une recette doit être sélectionnée", "name" => "category", "required", "placeholder" => "choisir une catégorie", "error" => "Une catégorie doit être sélectionnée"],
-                "recipe" => ["type" => "partiel", "class" => "recipe", "error" => "Une recette doit être sélectionnée", "titre" => "Liste des recettes selectionnées"],
+                "search_recipe" => ["type" => "text", "id"=>"search_recipe","class" => "input-form", "placeholder" => "Rechercher une recette", "required" => false, "error" => "Votre recherche doit faire plus de 2 caractères"],
+                "recipe" => ["type" => "partiel", "class" => "recipe", "error" => "Une recette doit être sélectionnée", "titre" => "Liste des recettes selectionnées", "view" => "Partiel/listeSelectedRecipe.view.php", ],
             ],
-            "div" => ["class" => "content-recipe", "titre" => "Liste des recettes"],
+
 
         ];
     }

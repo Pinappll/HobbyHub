@@ -8,4 +8,8 @@
     if (isset($this->data["message"])) {
         echo "<h3>" . $this->data["message"] . "</h3>";
     }
-?>
+    ?>
+    <div id="content-recipe">
+
+    </div>
+</section >

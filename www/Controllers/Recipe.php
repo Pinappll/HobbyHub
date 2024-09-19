@@ -13,6 +13,7 @@ use App\Tables\RecipeTable;
 
 class Recipe
 {
+    
 
     public function addRecipe(): void
     {
@@ -21,17 +22,8 @@ class Recipe
         $config = $form->getConfig();
         $errors = [];
         $message = "";
-        $categories = new Category();
-        $categories = $categories->findAll();
-        foreach ($categories as $category) {
-            $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category(), "checked" => ""];
-        }
-        $config["inputs"]["categories"]["value"] = $formatCategories;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!isset($_REQUEST["categories"])) {
-                $_REQUEST["categories"] = [];
-            }
             $verificator = new Verificator();
             if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
 
@@ -49,12 +41,6 @@ class Recipe
                     $recipe->setInstruction_recipe($_REQUEST["instruction_recipe"]);
                     $recipe->setImage_url_recipe($to);
                     $recipe->save();
-                    foreach ($_REQUEST["categories"] as $category) {
-                        $recipeCategory = new Recipe_category();
-                        $recipeCategory->setId_recipe_category($recipe->getId());
-                        $recipeCategory->setId_category($category);
-                        $recipeCategory->save();
-                    }
                     $message = "Recette ajoutée";
                 } else {
                     $errors[] = "Erreur lors de l'upload de l'image";
@@ -85,22 +71,6 @@ class Recipe
             $recipe = $recipe->getOneBy(["id" => $id], "object");
 
             if ($recipe) {
-                $categories = new Category();
-                $categories = $categories->findAll();
-                $recipe_catagories = new Recipe_category();
-                $recipe_catagories = $recipe_catagories->findAllBy(["id_recipe_category" => $recipe->getId()]);
-                $id_recipe_categories = [];
-                foreach ($recipe_catagories as $recipe_catagory) {
-                    $id_recipe_categories[] = $recipe_catagory["id_category"];
-                }
-                foreach ($categories as $category) {
-                    if (is_array($id_recipe_categories) && isset($id_recipe_categories) && !empty($id_recipe_categories)) {
-                        $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category(), "checked" => in_array($category->getId(), $id_recipe_categories) ? "checked" : ""];
-                    } else {
-                        $formatCategories[] = ["id" => $category->getId(), "name" => $category->getName_category(), "checked" => ""];
-                    }
-                }
-                $config["inputs"]["categories"]["value"] = $formatCategories;
                 $config["inputs"]["title"]["value"] = $recipe->getTitle_recipe();
                 $config["inputs"]["ingredients_recipe"]["value"] = $recipe->getIngredient_recipe();
                 $config["inputs"]["instruction_recipe"]["value"] = $recipe->getInstruction_recipe();
@@ -109,9 +79,6 @@ class Recipe
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $verificator = new Verificator();
-                if (!isset($_REQUEST["categories"])) {
-                    $_REQUEST["categories"] = [];
-                }
                 if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
                     if ($_FILES["inputFileImage"]["error"] != 4) {
                         $uploadDir = "dist/assets/uploads/";
@@ -130,26 +97,8 @@ class Recipe
                     $recipe->setTitle_recipe($_REQUEST["title"]);
                     $recipe->setIngredient_recipe($_REQUEST["ingredients_recipe"]);
                     $recipe->setInstruction_recipe($_REQUEST["instruction_recipe"]);
-                    if ($recipe->save()) {
-
-                        $categoriesFromFront = array_map('intval', $_REQUEST["categories"]);
-                        $different = array_merge(array_diff($id_recipe_categories, $categoriesFromFront), array_diff($categoriesFromFront, $id_recipe_categories));
-                        if (!empty($different)) {
-                            foreach ($different as $category) {
-                                $recipeCategory = new Recipe_category();
-                                $recipeCategory = $recipeCategory->getOneBy(["id_recipe_category" => $id, "id_category" => $category], "object");
-                                if ($recipeCategory) {
-                                    $recipeCategory->delete();
-                                } else {
-                                    $recipeCategory = new Recipe_category();
-                                    $recipeCategory->setId_recipe_category($id);
-                                    $recipeCategory->setId_category($category);
-                                    $recipeCategory->save();
-                                }
-                            }
-                        }
-                        header("Location: /admin/recipes");
-                    }
+                    header("Location: /admin/recipes");
+                    
                 }
             }
             $myView->assign("configForm", $config);
@@ -178,4 +127,47 @@ class Recipe
         $myView->assign("data", $recipe->getList(["is_deleted" => false], $limit = 100));
         $myView->assign("title", "Liste des recettes");
     }
+    public function searchRecipes(): void
+    {
+        if (isset($_GET["search_value"])) {
+            $recipe = new RecipeModel();
+            
+            
+            if($_GET["search_value"] == ""){
+                $data= [];
+            }else{
+                $data = $recipe->findAllBy(["title_recipe"=>"%".$_GET["search_value"]."%"], "object");
+            }
+            $myView = new View("Partiel/listeRecipeSearch", null);
+            $myView->assign("recipes", $data);
+    
+            }
+        
+    }
+    public function getRecipe(): void
+{
+    if (isset($_GET["id"])) {
+        $recipeModel = new RecipeModel();
+        $recipe = $recipeModel->getOneBy(["id" => $_GET["id"]]);
+
+        if ($recipe) {
+            // Filtrer le tableau pour enlever les clés numériques
+            $filteredRecipe = array_filter($recipe, function ($key) {
+                return !is_numeric($key);
+            }, ARRAY_FILTER_USE_KEY);
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'La recette a été récupérée avec succès.',
+                'data' => $filteredRecipe // Utiliser le tableau filtré
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Recette non trouvée.'
+            ]);
+        }
+    }
+}
+
 }

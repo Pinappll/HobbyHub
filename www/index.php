@@ -83,12 +83,13 @@ function access(array $roles): bool
 {
     $access = true;
     if (!empty($roles)) {
-        if (isset($_SESSION["role"])) {
-
-            if (!in_array($_SESSION['role'], $roles)) {
-                $access = false;
+        $user = new \App\Models\User();
+        $role = $user->getOneBy(["token_user" => $_SESSION["token"]], "object")->getType_user();
+        if($role){
+            if (!in_array($role, $roles)) {
+            $access = false;
             }
-        } else {
+        }else{
             $access = false;
         }
     }
