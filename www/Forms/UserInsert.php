@@ -12,7 +12,8 @@ class UserInsert
                 "action" => "/register",
                 "submit" => "S'inscrire",
                 "class" => "form",
-                "id" => "form-register"
+                "id" => "form-register",
+                "title" => "Inscription",
             ],
             "inputs" => [
                 "firstname" => [

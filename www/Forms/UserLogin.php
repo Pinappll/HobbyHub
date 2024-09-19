@@ -11,7 +11,8 @@ class UserLogin
                 "method" => "POST",
                 "action" => "/login",
                 "submit" => "Se connecter",
-                "class" => "form"
+                "class" => "form",
+                "title" => "Connexion",
             ],
             "inputs" => [
                 "email" => [

@@ -1,7 +1,7 @@
 <div class="auth-container">
         <!-- Section for Login Form -->
         <section class="section form-wrapper form-login active">
-            <h2>Connexion</h2>
+            
             <?php 
             // Include the login form configuration and display it
             $loginForm = new \App\Forms\UserLogin();
@@ -19,7 +19,7 @@
 
         <!-- Section for Signup Form -->
         <section class="section form-wrapper form-signup">
-            <h2>Inscription</h2>
+            
             <?php 
             // Include the registration form configuration and display it
             $registerForm = new \App\Forms\UserInsert();
@@ -36,7 +36,7 @@
 
         <!-- Section for Forgot Password Form -->
         <section class="section form-wrapper form-forgot-password">
-            <h2>Mot de passe oublié</h2>
+          
             <?php 
             // Include the forgot password form configuration and display it
             $forgotPasswordForm = new \App\Forms\UserForgetPassword();

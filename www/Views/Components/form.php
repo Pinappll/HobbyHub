@@ -5,7 +5,7 @@
     <?php endif; ?>
     <div class="container">
         <?php if (!empty($data)) : ?>
-            <div style="background-color: red">
+            <div class="error-message">
                 <?php foreach ($data as $error) : ?>
                     <li><?= $error ?></li>
                 <?php endforeach; ?>
