@@ -28,11 +28,13 @@ EXECUTE FUNCTION update_updated_at_column();
 
 -- Settings
 CREATE TABLE {PREFIX}_setting (
+    id SERIAL PRIMARY KEY,
     name_setting VARCHAR(50) NOT NULL,
     slogan_setting VARCHAR(255) NOT NULL,
     logo_url_setting TEXT NOT NULL,
     color_setting VARCHAR(50) NOT NULL
 );
+
 
 -- Recipe
 CREATE TABLE {PREFIX}_recipe (

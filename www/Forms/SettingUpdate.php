@@ -19,7 +19,7 @@ class SettingUpdate
                 "imageToUpload" => [
                     "type" => "file",
                     "class" => "input-form",
-                    "required" => true,
+                    "required" => false,
                     "label" => "Choisissez le nouveau logo :"
                 ],
                 // Couleurs génériques

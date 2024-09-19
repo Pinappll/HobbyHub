@@ -11,22 +11,25 @@ class DB
     protected string $dbName;
 
     public function __construct()
-    {
-        //connexion à la bdd via pdo
-        include 'config.php';
-        try {
-
-            $this->pdo = new \PDO('pgsql:host=' . $dbHost . ';dbname=' . $dbName . ';user=' . $dbUser . ';password=' . $dbPassword);
-        } catch (\PDOException $e) {
-            echo "Erreur SQL : " . $e->getMessage();
-        }
-
-        $table = get_called_class();
-        $table = explode("\\", $table);
-        $table = array_pop($table);
-        $this->dbName = strtolower($dbName);
-        $this->table = $dbName . "_" . strtolower($table);
+{
+    // connexion à la bdd via pdo
+    include 'config.php';  // Configuration de la base de données (doit définir $dbHost, $dbName, $dbUser, $dbPassword)
+    try {
+        $this->pdo = new \PDO('pgsql:host=' . $dbHost . ';dbname=' . $dbName . ';user=' . $dbUser . ';password=' . $dbPassword);
+    } catch (\PDOException $e) {
+        echo "Erreur SQL : " . $e->getMessage();
     }
+
+    // Obtenir le nom de la table dynamiquement : "dbnam_settings" où "dbnam" est le nom de la base de données
+    $table = get_called_class();
+    $table = explode("\\", $table);
+    $table = array_pop($table);
+    
+    // Créer le nom de la table en fonction du nom de la base de données et du modèle
+    $this->table = strtolower($dbName) . "_" . strtolower($table);
+}
+
+    
     public static function getPDO(): ?\PDO
     {
         if (self::$instance === null) {

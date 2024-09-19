@@ -33,6 +33,8 @@ class InstallerController
             $mot_de_passe = $_POST['password'];
             $siteName = $_POST['siteName'];
             $slogan = $_POST['slogan'];
+            $colorSetting = $_POST['color'] ?? null; // Peut être nul
+
             $verificator = new Verificator();
             if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
                 $targetDir = "dist/assets/images/"; // Spécifiez le dossier où stocker les images
@@ -75,18 +77,15 @@ class InstallerController
                     }
                 }
 
-
-
-
-                $logoPath = "dist/assets/images/" . htmlspecialchars(basename($_FILES["imageToUpload"]["name"]));
+                $logoPath = "dist/assets/images/logo." . $imageFileType; // URL du logo
 
                 $mot_de_passe = password_hash($mot_de_passe, PASSWORD_DEFAULT);
 
+                // Créez un fichier .env avec les infos de connexion DB
                 $envContent = "DB_HOST=$dbHost\n";
                 $envContent .= "DB_NAME=$dbName\n";
                 $envContent .= "DB_USER=$dbUser\n";
                 $envContent .= "DB_PASSWORD=$dbPassword\n";
-
                 file_put_contents('.env', $envContent, FILE_APPEND);
 
                 try {
@@ -96,31 +95,36 @@ class InstallerController
                     $sql = "CREATE DATABASE $dbName";
                     $pdo->exec($sql);
 
+                    // Connexion à la nouvelle base de données
                     $pdo = new PDO("pgsql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    // Vérifiez si $uploadOk est défini sur 0 par une erreur
-                    if ($uploadOk == 0) {
-                        echo "Désolé, votre fichier n'a pas été téléchargé.";
-                        // Si tout est ok, essayez de télécharger le fichier
-                    } else {
-                        if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $targetFile)) {
-                            echo "Le fichier " . htmlspecialchars(basename($_FILES["imageToUpload"]["name"])) . " a été téléchargé.";
-                        } else {
-                            echo "Désolé, il y a eu une erreur lors du téléchargement de votre fichier.";
-                        }
-                    }
-
-                    // Lire et préparer le script SQL
+                    // Lire et préparer le script SQL pour créer les tables
                     $sqlFile = '/var/www/html/sql_scripts/script.sql';
                     $sql = file_get_contents($sqlFile);
                     $sql = str_replace('{PREFIX}', $dbName, $sql);
-
-                    // Exécuter le script SQL
                     $pdo->exec($sql);
 
-                    // Supprimer le fichier SQL après l'exécution
-
+                    // Insertion des paramètres du site dans la table settings
+                    $stmt = $pdo->prepare("
+                        INSERT INTO {$dbName}_settings (
+                            name_setting, 
+                            slogan_setting, 
+                            logo_url_setting, 
+                            color_setting
+                        ) VALUES (
+                            :siteName, 
+                            :slogan, 
+                            :logoUrl, 
+                            :colorSetting
+                        )
+                    ");
+                    $stmt->execute([
+                        ':siteName' => $siteName,
+                        ':slogan' => $slogan,
+                        ':logoUrl' => $logoPath,
+                        ':colorSetting' => $colorSetting
+                    ]);
 
                     // Insertion de l'utilisateur admin
                     $token = bin2hex(random_bytes(16)); // Génère un token pour l'admin
@@ -145,7 +149,6 @@ class InstallerController
                             false
                         )
                     ");
-
                     $stmt->execute([
                         ':lastname' => $nom,
                         ':firstname' => $prenom,
@@ -154,20 +157,12 @@ class InstallerController
                         ':token' => $token
                     ]);
 
-                    echo "L'utilisateur administrateur a été créé avec succès.";
+                    echo "Les paramètres du site ont été enregistrés et l'utilisateur administrateur a été créé avec succès.";
 
-                    echo "La base de données '$dbName' a été créée avec succès.";
-                    echo "Les tables ont été créées avec succès dans la base de données '{$dbName}'.";
-
-
-
-                    // Créez un fichier de configuration simple (à améliorer pour la sécurité)
-                    $configData = "<?php\n\$dbHost = '$dbHost';\n\$dbName = '$dbName';\n\$dbUser = '$dbUser';\n\$dbPassword = '$dbPassword';\n";
-                    file_put_contents('config.php', $configData);
-
+                    // Supprimez le fichier d'installation
                     if (file_exists('/var/www/html/installer.php')) {
                         if (file_exists($sqlFile)) {
-                            //unlink($sqlFile);
+                            // unlink($sqlFile);
                         }
                         unlink('/var/www/html/installer.php'); // Supprime le fichier installer.php
                         header('Location: /login');
