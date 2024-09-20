@@ -78,7 +78,7 @@ class FormInit
                     "placeholder" => "Mot de passe",
                     "required" => true,
                     "label" => "Mot de passe :",
-                    "error" => "Votre mot de passe doit faire plus de 8 caractères avec une minuscule et un chiffre"
+                    "error" => "Votre mot de passe doit faire plus de 8 caractères avec une majuscule et un chiffre"
                 ],
                 "siteName" => [
                     "type" => "text",
