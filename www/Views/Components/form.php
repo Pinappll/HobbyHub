@@ -23,7 +23,7 @@
                     <textarea name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>><?= $configInput["value"] ?? "" ?></textarea><br>
                 <?php elseif ($configInput["type"] === "select") : ?>
                     <select name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>>
-                        <option disabled selected><?= $configInput["placeholder"] ?></option>
+                        <option disabled selected value="0"><?= $configInput["placeholder"] ?></option>
                         <?php foreach ($configInput["option"] as $option) : ?>
                             <option value="<?= $option["id"] ?>" <?= $option["selected"] ?? "" ?>><?= $option["name"] ?></option>
                         <?php endforeach; ?>

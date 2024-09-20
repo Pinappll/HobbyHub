@@ -19,7 +19,7 @@ class Menu
     {
 
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            
+
             $category = $_POST["category"];
             $recipe = new Recipe();
 
@@ -156,7 +156,6 @@ class Menu
         } else {
             $category = $_POST["category"];
             $recipe = new Recipe();
-            $id = $_GET["id"];
 
             // Récupérer les recettes envoyées depuis le front-end (selectedRecipes)
             $selectedRecipes = isset($_POST["selectedRecipes"]) ? $_POST["selectedRecipes"] : [];
@@ -240,7 +239,7 @@ class Menu
                         $_REQUEST["recipe"] = [];
                     }
                     if (!isset($_REQUEST["select_recipe"])) {
-                        $_REQUEST["select_recipe"] = [];
+                        $_REQUEST["select_recipe"] = $config["inputs"]["select_recipe"]["option"] = $formatCategories;;
                     }
                     $verificator = new Verificator();
                     if ($verificator->checkForm($config, $_REQUEST, $error)) {
