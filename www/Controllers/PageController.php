@@ -156,13 +156,14 @@ class PageController
         $page = new PageModel();
         $page = $page->getOneBy(["id" => $_GET["id"]], "object");
         if ($page) {
+
             // Démarrage d'une transaction
             $pdo = DB::getPDO();
             try {
                 $pdo->beginTransaction();
     
                 // Suppression de la page
-                $page->delete();
+                $page->setde();
     
                 // Récupération de la navigation liée à la page
                 $navigation = new Navigation();
