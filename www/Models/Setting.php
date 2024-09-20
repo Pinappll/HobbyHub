@@ -53,5 +53,14 @@ class Setting extends DB
     return $queryPrepared->execute($params);
 }
 
+public function getSiteName(): ?string
+    {
+        // Utiliser la méthode getColumns pour récupérer la colonne name_setting
+        $names = $this->getColumns('name_setting');
+        
+        // Renvoyer le premier nom (il doit y avoir un seul enregistrement pour le nom du site)
+        return !empty($names) ? $names[0] : null;
+    }
+
 
 }

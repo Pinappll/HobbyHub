@@ -14,7 +14,7 @@ class ExportForm
                 "class" => "form",
             ],
             "inputs" => [
-                // Pas d'inputs ici, juste un bouton d'exportation
+                // Pas d'inputs 
             ]
         ];
     }

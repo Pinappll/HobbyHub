@@ -19,51 +19,54 @@ use PHPMailer\PHPMailer\SMTP;
 class Security
 {
     public function login(): void
-    {
-        $form = new UserLogin();
-        $config = $form->getConfig();
-        $errors = [];
-        $message = "";
+{
+    $form = new UserLogin();
+    $config = $form->getConfig();
+    $errors = [];
+    $message = "";
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $verificator = new Verificator();
-            if ($verificator->checkForm($config, $_REQUEST, $errors)) {
-                $user = new User();
-                $user = $user->getOneBy(["email_user" => $_REQUEST["email"]], "object");
-                if (empty($user)) {
-                    $errors[] = "le login ou le mot de passe est incorrect";
+        $verificator = new Verificator();
+        if ($verificator->checkForm($config, $_REQUEST, $errors)) {
+            $user = new User();
+            $user = $user->getOneBy(["email_user" => $_REQUEST["email"]], "object");
+
+            if (empty($user)) {
+                $errors[] = "Le login ou le mot de passe est incorrect";
+            } else {
+                // Vérification si le compte est supprimé (soft delete)
+                if ($user->getIsDeleted()) {
+                    $errors[] = "Votre compte a été désactivé. Veuillez contacter l'administrateur.";
                 } else {
                     if ($user->getIsverified_user()) {
-                        if ($user) {
-                            $password_hash_from_db = $user->getPassword_user();
+                        $password_hash_from_db = $user->getPassword_user();
 
-                            if (password_verify($_REQUEST["password"], $password_hash_from_db)) {
-                                $_SESSION['user_id'] = $user->getId();
-                                $_SESSION['username'] = $user->__toString();
-                                $_SESSION["role"] = $user->getType_user();
-                                $_SESSION["token"] = $user->getToken_user();
-                                $message = "Connexion réussie";
-                                header("Location: /");
-                            } else {
-                                $errors[] = "le login ou le mot de passe est incorrect";
-                            }
+                        if (password_verify($_REQUEST["password"], $password_hash_from_db)) {
+                            $_SESSION['user_id'] = $user->getId();
+                            $_SESSION['username'] = $user->__toString();
+                            $_SESSION["role"] = $user->getType_user();
+                            $_SESSION["token"] = $user->getToken_user();
+                            $message = "Connexion réussie";
+                            header("Location: /");
                         } else {
-                            $errors[] = "le login ou le mot de passe est incorrect";
+                            $errors[] = "Le login ou le mot de passe est incorrect";
                         }
                     } else {
-                        $errors[] = "Veuillez vérifier votre compte";
+                        $errors[] = "Veuillez vérifier votre compte.";
                     }
                 }
             }
         }
-        $myView = new View("Security/login", "front");
-        $myView->assign("configForm", $config);
-        $myView->assign("errorsForm", $errors);
-        $myView->assign("message", $message);
-        $myView->assign("title", "Connexion");
-        $myView->assign("description", "Veuillez-vous connectez pour accéder à votre compte");
     }
+    $myView = new View("Security/login", "front");
+    $myView->assign("configForm", $config);
+    $myView->assign("errorsForm", $errors);
+    $myView->assign("message", $message);
+    $myView->assign("title", "Connexion");
+    $myView->assign("description", "Veuillez-vous connecter pour accéder à votre compte.");
+}
+
 
     public function logout(): void
     {

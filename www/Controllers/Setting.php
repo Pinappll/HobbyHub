@@ -142,4 +142,30 @@ class Setting
         $myView->assign("message", $message); // Passer le message de succès/échec
     }
 
+    public function updatefooter(): void
+    {
+
+        // update de name setting 
+        $settingModel = new SettingModel();
+        $settingModel->updateSettings([
+            'name_setting' => $_POST['name_setting'] ?? '',
+            'slogan_setting' => $_POST['slogan_setting'] ?? '',
+        ]);
+
+        // Recharger le formulaire après la soumission
+        $form = new SettingUpdate();
+        $config = $form->getConfig();
+
+        // Retourner à la vue settings avec les erreurs, la config et le message
+        $myView = new View("Admin/setting", "back");
+        $myView->assign("configForm", $config); // Recharger le formulaire après soumission
+        $myView->assign("message", "Les informations du footer ont été mises à jour avec succès.");
+
+
+    }
+
+    
+
+
+
 }
