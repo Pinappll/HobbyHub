@@ -14,6 +14,7 @@ class Verificator
             $data[$name] = "0"; // On considère qu'elle est décochée donc on lui assigne "0"
         }
 
+
         // Vérifier si les données sont bien présentes dans $data
         if (!isset($data[$name])) {
             die("Tentative de Hack");

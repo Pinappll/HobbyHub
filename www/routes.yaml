@@ -124,6 +124,11 @@
   action: deleteUser
   roles: [admin]
 
+/admin/users/anonymize:
+  controller: User
+  action: anonymizeUser
+  roles: [admin]
+
 
 
 /admin/reviews:
@@ -224,9 +229,14 @@
   action: update
   roles: [admin]
 
-/admin/settings/updatefooter:
-  controller: Setting
-  action: updatefooter
+/admin/footer:
+  controller: Footer
+  action: footer
+  roles: [admin]
+
+/admin/footer/update:
+  controller: Footer
+  action: update
   roles: [admin]
 
 

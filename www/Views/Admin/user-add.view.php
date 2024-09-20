@@ -2,8 +2,6 @@
 
     <h1>Users</h1>
     <br>
-    <a href="/admin/users/add" class="button button-primary">Ajouter un utilisateur</a>
-    <br>
     <br>
     <?php $this->includeComponent("form", $configForm, $errorsForm);
     if (isset($this->data["message"])) {

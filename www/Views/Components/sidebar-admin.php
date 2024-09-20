@@ -9,6 +9,7 @@
       <li><a href="/admin/reviews">Reviews</a></li>
       <li><a href="/admin/navigation">Navigation</a></li>
       <li><a href="/admin/settings">Settings</a></li>
+      <li><a href="/admin/footer">Footer</a></li>
       <li><a href="/admin/category">Categories</a></li>
       <li><a href="/admin/export">Export</a></li>
     </ul>

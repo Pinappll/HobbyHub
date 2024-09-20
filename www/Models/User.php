@@ -140,9 +140,9 @@ class User extends DB
      *
      * @return  self
      */
-    public function setType_user($typer_user)
+    public function setType_user($type_user)
     {
-        $this->type_user = $typer_user;
+        $this->type_user = $type_user;
 
         return $this;
     }
@@ -242,6 +242,19 @@ class User extends DB
     $queryPrepared = $this->pdo->prepare($sql);
     $queryPrepared->execute();
     return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
+}
+
+// anonymize a user
+public function anonymize(): bool
+{
+    $this->setFirstname_user("Anonyme");
+    $this->setLastname_user("Anonyme");
+    $this->setEmail_user("anonyme" . $this->getId() . "@anonyme.com");
+    $this->setIsverified_user(false);
+    $this->setType_user("viewer");
+
+    return $this->save();
+
 }
 
 

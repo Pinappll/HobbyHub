@@ -4,7 +4,6 @@
     <?php if (!empty($config["config"]["title"])) : ?>
         <h1 class="form-title"><?= $config["config"]["title"] ?></h1>
     <?php endif; ?>
-
     <div class="container">
         <!-- Affichage des erreurs, si elles existent -->
         <?php if (!empty($data) && is_array($data)) : ?>
@@ -19,7 +18,6 @@
 
         <!-- Boucle sur chaque champ du formulaire -->
         <?php foreach ($config["inputs"] as $name => $configInput) : ?>
-
             <div class="form-group">
 
                 <!-- Gestion des textareas -->
@@ -30,7 +28,6 @@
 
                 <!-- Gestion des selects -->
                 <?php elseif ($configInput["type"] === "select") : ?>
-<
                     <label for="<?= $name ?>"><?= $configInput["placeholder"] ?? "" ?></label>
                     <select name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>>
                         <option disabled selected><?= $configInput["placeholder"] ?? "Sélectionner" ?></option>
@@ -61,9 +58,6 @@
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
-
-       
-
         <!-- Bouton de soumission -->
         <input type="submit" class="button button-primary" value="<?= $config["config"]["submit"] ?? "Envoyer" ?>">
     </div>

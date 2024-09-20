@@ -70,8 +70,9 @@ public function editUser(): void
     $id = $_GET["id"];
     $userModel = new UserModel();
 
-    $user = $userModel->getOneBy(["id" => $id], "object"); 
-
+    // Récupérer l'utilisateur par ID
+    $user = $userModel->getOneBy(["id" => $id], "object");
+    
 
     if (!$user) {
         header("Location: /admin/users");
@@ -80,16 +81,29 @@ public function editUser(): void
 
     $myView = new View("Admin/user-edit", "back");
     $form = new UserUpdate(); 
-    $config = $form->getConfig();
+    $config = $form->getConfig($user);  // Passer les données utilisateur au formulaire
     $errors = [];
     $message = "";
 
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $verificator = new Verificator();
-        if ($verificator->checkForm($config, $_REQUEST, $errors)) {
-            $user->setType_user($_REQUEST["type_user"]);
-            
+        if ($verificator->checkForm($config, $_POST, $errors)) {
+            // Mettre à jour les champs avec les nouvelles données soumises
+            $user->setLastname_user($_POST["lastname_user"]);
+            $user->setFirstname_user($_POST["firstname_user"]);
+            $user->setEmail_user($_POST["email_user"]);
+            $user->setType_user($_POST["type_user"]);
+            $user->setIsverified_user(isset($_POST["is_verified_user"]));
+            var_dump($user);
+            // Vérifier si un mot de passe a été soumis
+            if (!empty($_POST["password_user"])) {
+                $user->setPassword_user($_POST["password_user"]);
+            }
+
+            // Générer un token s'il est nécessaire
+            if (empty($user->getToken_user())) {
+                $user->setToken_user(bin2hex(random_bytes(16)));
+            }
 
             if ($user->save()) {
                 $message = "Utilisateur modifié avec succès.";
@@ -101,10 +115,12 @@ public function editUser(): void
         }
     }
 
-    $myView->assign("configForm", $config);
-    $myView->assign("errorsForm", $errors);
-    $myView->assign("message", $message);
+    // Assigner les valeurs du formulaire et les erreurs à la vue
+    $myView->assign("configForm", $config);  // Assigner le formulaire à la vue
+    $myView->assign("errorsForm", $errors);  // Assigner les erreurs du formulaire à la vue
+    $myView->assign("message", $message);    // Assigner un message à la vue
 }
+
 
 
 public function deleteUser(): void
@@ -131,7 +147,31 @@ public function deleteUser(): void
         exit;
     }
 
-// hard delete
+// anonymizeUser method
+public function anonymizeUser(): void
+{
+    // Vérifier si l'ID utilisateur est présent
+    if (!isset($_GET["id"]) || empty($_GET["id"])) {
+        header("Location: /admin/users");
+        exit;
+    }
+
+    $userModel = new UserModel();
+    $user = $userModel->getOneBy(["id" => $_GET["id"]], "object");
+
+    if (!$user) {
+        header("Location: /admin/users");
+        exit;
+    }
+
+    // Appel de la méthode anonymize du modèle
+    $user->anonymize();
+
+    // Redirection après l'anonymisation
+    header("Location: /admin/users");
+    exit;
+}
+
 
  
     

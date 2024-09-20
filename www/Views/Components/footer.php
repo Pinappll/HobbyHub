@@ -2,6 +2,14 @@
 // Instancier le modèle Setting pour récupérer le nom du site
 $settingModel = new \App\Models\Setting();
 $siteName = $settingModel->getSiteName();
+
+// Récupérer les liens des réseaux sociaux
+$socialLinks = $settingModel->getSocialLinks();
+
+// Définir les liens par défaut s'ils ne sont pas présents en base
+$linkFacebook = $socialLinks['facebook'] ?? 'https://facebook.com';
+$linkInstagram = $socialLinks['instagram'] ?? 'https://instagram.com';
+$linkTwitter = $socialLinks['twitter'] ?? 'https://twitter.com';
 ?>
 
 <footer class="footer">
@@ -12,22 +20,14 @@ $siteName = $settingModel->getSiteName();
       </a>
     </div>
 
-    <div class="footer__links">
-      <ul>
-      <li><a href="#">Légal</a></li>
-                <li><a href="#">Cookies</a></li>
-                <li><a href="#">À propos des pubs</a></li>
-      </ul>
-    </div>
-
     <div class="footer__socials">
-      <a href="https://facebook.com" target="_blank">
+      <a href="<?= htmlspecialchars($linkFacebook) ?>" target="_blank">
         <i class="fab fa-facebook-f"></i>
       </a>
-      <a href="https://instagram.com" target="_blank">
+      <a href="<?= htmlspecialchars($linkInstagram) ?>" target="_blank">
         <i class="fab fa-instagram"></i>
       </a>
-      <a href="https://twitter.com" target="_blank">
+      <a href="<?= htmlspecialchars($linkTwitter) ?>" target="_blank">
         <i class="fab fa-twitter"></i>
       </a>
     </div>

@@ -17,7 +17,8 @@ class UserTable
             ["name" => "inserted_at", "title" => "Date d'inscription"],
             ["name" => "updated_at", "title" => "Dernière mise à jour"],
             ["name" => "edit", "title" => "Éditer", "type" => "edit", "route" => "/admin/users/edit?id="],
-            ["name" => "delete", "title" => "Supprimer", "type" => "delete", "route" => "/admin/users/delete?id="]
+            ["name" => "delete", "title" => "Supprimer", "type" => "delete", "route" => "/admin/users/delete?id="],
+            ["name" => "anonymized", "title" => "Anonymiser", "type" => "delete", "route" => "/admin/users/anonymize?id="],
         ];
     }
 }

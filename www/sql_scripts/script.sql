@@ -31,6 +31,9 @@ CREATE TABLE {PREFIX}_setting (
     id SERIAL PRIMARY KEY,
     name_setting VARCHAR(50) NOT NULL,
     slogan_setting VARCHAR(255) NOT NULL,
+    link_instagram_setting VARCHAR(255),
+    link_facebook_setting VARCHAR(255),
+    link_twitter_setting VARCHAR(255),
     logo_url_setting TEXT NOT NULL,
     color_setting VARCHAR(255)
 );
