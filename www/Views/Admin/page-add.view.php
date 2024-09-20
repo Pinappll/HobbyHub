@@ -314,6 +314,105 @@ const editor = grapesjs.init({
         },
         category: "Hero",
       },
+      {
+        id: "recettes-section",
+        label: "Recettes Section",
+        content: {
+          tagName: 'section',
+          classes: ['recettes'],
+          components: `
+            <div class="recettes">
+              <h1>Nos Recettes</h1>
+              <div class="recettes__grid">
+                <div class="card">
+                  <a href="/recette1" class="card__link">
+                    <img src="../../dist/assets/images/recette1.jpg" alt="Recette 1" class="card__image">
+                    <h2 class="card__title">Recette 1</h2>
+                    <p class="card__description">Description courte de la recette 1.</p>
+                  </a>
+                </div>
+                <div class="card">
+                  <a href="/recette2" class="card__link">
+                    <img src="../../dist/assets/images/recette2.jpg" alt="Recette 2" class="card__image">
+                    <h2 class="card__title">Recette 2</h2>
+                    <p class="card__description">Description courte de la recette 2.</p>
+                  </a>
+                </div>
+                <div class="card">
+                  <a href="/recette3" class="card__link">
+                    <img src="../../dist/assets/images/recette3.jpg" alt="Recette 3" class="card__image">
+                    <h2 class="card__title">Recette 3</h2>
+                    <p class="card__description">Description courte de la recette 3.</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          `,
+        },
+        category: "Recettes",
+      },
+      {
+  id: "circular-card-grid",
+  label: "Circular Card Grid",
+  content: {
+    tagName: 'div',
+    classes: ['circular-card-grid'],
+    components: `
+      <div class="circular-card">
+        <a href="/link1" class="circular-card__link">
+          <div class="circular-card__image">
+            <img src="../../dist/assets/images/card1.jpg" alt="Card 1">
+          </div>
+          <h2 class="circular-card__title">Card 1</h2>
+        </a>
+      </div>
+      <div class="circular-card">
+        <a href="/link2" class="circular-card__link">
+          <div class="circular-card__image">
+            <img src="../../dist/assets/images/card2.jpg" alt="Card 2">
+          </div>
+          <h2 class="circular-card__title">Card 2</h2>
+        </a>
+      </div>
+      <div class="circular-card">
+        <a href="/link3" class="circular-card__link">
+          <div class="circular-card__image">
+            <img src="../../dist/assets/images/card3.jpg" alt="Card 3">
+          </div>
+          <h2 class="circular-card__title">Card 3</h2>
+        </a>
+      </div>
+      <div class="circular-card">
+        <a href="/link4" class="circular-card__link">
+          <div class="circular-card__image">
+            <img src="../../dist/assets/images/card4.jpg" alt="Card 4">
+          </div>
+          <h2 class="circular-card__title">Card 4</h2>
+        </a>
+      </div>
+      <div class="circular-card">
+        <a href="/link5" class="circular-card__link">
+          <div class="circular-card__image">
+            <img src="../../dist/assets/images/card5.jpg" alt="Card 5">
+          </div>
+          <h2 class="circular-card__title">Card 5</h2>
+        </a>
+      </div>
+      <div class="circular-card">
+        <a href="/link6" class="circular-card__link">
+          <div class="circular-card__image">
+            <img src="../../dist/assets/images/card6.jpg" alt="Card 6">
+          </div>
+          <h2 class="circular-card__title">Card 6</h2>
+        </a>
+      </div>
+    `,
+  },
+  category: "Recettes",
+}
+
+
+
 
     ],
   },
