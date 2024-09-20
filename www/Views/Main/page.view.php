@@ -1,4 +1,12 @@
+<link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet" />
+<link href="https://unpkg.com/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css" rel="stylesheet" />
+<script src="https://unpkg.com/grapesjs"></script>
+<script src="https://unpkg.com/grapesjs-blocks-basic"></script>
+<style>
+    <?= $styles ?>
+</style>
 <?= $page->html ?>
+
 <script>
     
     document.getElementById('commentForm').addEventListener('submit', async function(e) {
