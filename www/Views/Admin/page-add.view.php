@@ -1,5 +1,4 @@
-<link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet" />
-<link href="https://unpkg.com/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css" rel="stylesheet" />
+
 <style>
   /* Structure du wrapper */
 #wrapper {
@@ -110,8 +109,7 @@ body, html {
 }
 
 </style>
-<script src="https://unpkg.com/grapesjs"></script>
-<script src="https://unpkg.com/grapesjs-blocks-basic"></script>
+
 <header id="header">
   <div class="title">Page Builder</div>
   <?php $this->includeComponent("form", $configForm, $errorsForm);
@@ -128,8 +126,6 @@ body, html {
 </div>
 
 <script>
-  // Initialisation de l'éditeur GrapeJS
-  // Initialisation de l'éditeur GrapeJS
 const editor = grapesjs.init({
   container: "#editor",
   plugins: ["gjs-blocks-basic"],
