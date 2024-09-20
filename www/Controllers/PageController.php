@@ -52,7 +52,7 @@ class PageController
                     $navigation->setName($_REQUEST["name"]);
                     $navigation->setLink($_REQUEST["link"]);
                     $navigation->setPosition($_REQUEST["position"]);
-                    $navigation->setParent_id($_REQUEST["parent_id"]);
+                    $navigation->setParentId($_REQUEST["parent_id"]);
                     $navigation->setLevel($_REQUEST["level"]);
 
                     $navigation->save();
@@ -62,7 +62,7 @@ class PageController
                         throw new Exception("Navigation introuvable");
                     }
     
-                    $navigation->setId_page($page->getId());
+                    $navigation->setIdPage($page->getId());
     
                     // Sauvegarde de la mise à jour de la navigation
                     if (!$navigation->save()) {
@@ -209,7 +209,45 @@ class PageController
         $page = (new PageModel())->getOneBy(['id' => $id], "object");
         $myView = new View("Main/page", "front");
         // $contenuJson = '{"html": "<p>Ceci est du contenu HTML récupéré depuis la base de données.</p>"}';
+        $styles = '';
+
+        $styles = '';
+
+        foreach (json_decode($page->getContent_page())->styles as $style) {
+            // Vérifiez si les sélecteurs sont un tableau d'objets ou de chaînes
+            if (isset($style->selectors) && is_array($style->selectors)) {
+                // Si ce sont des objets, récupérez le nom avec un point devant
+                $selectors = implode(', ', array_map(function($s) {
+                    return isset($s->name) ? '.' . $s->name : ''; // Ajoutez un point
+                }, $style->selectors));
+            } elseif (isset($style->selectors) && is_string($style->selectors)) {
+                // Si c'est une chaîne, ajoutez un point si c'est une classe
+                $selectors = '.' . $style->selectors;
+            } else {
+                continue; // Si selectors est absent, passer à l'itération suivante
+            }
+
+            // Nettoyez les sélecteurs pour éviter les chaînes vides
+            $selectors = trim($selectors);
+            if (empty($selectors)) {
+                continue; // Passer si aucun sélecteur valide
+            }
+
+            $styleContent = '';
+            foreach ($style->style as $property => $value) {
+                $styleContent .= "{$property}: {$value}; ";
+            }
+
+            // Ajout de la règle CSS
+            $styles .= "{$selectors} { {$styleContent} } ";
+
+            // Gérer les styles media
+            if (isset($style->mediaText)) {
+                $styles .= "@media {$style->mediaText} { {$selectors} { {$styleContent} } } ";
+            }
+        }
         $myView->assign("page", json_decode($page->getContent_page()));
+        $myView->assign("styles", $styles);
         $myView->assign("idPage",json_decode($page->getId()));
     }
 }

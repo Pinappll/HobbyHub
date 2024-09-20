@@ -18,10 +18,10 @@
   action: home
   roles: []
 
-/contact:
-  controller: Main
-  action: contact
-  roles: []
+# /contact:
+#   controller: Main
+#   action: contact
+#   roles: []
 
 /login:
   controller: Security
@@ -178,25 +178,25 @@
 
 
 
-# /admin/navigation:
-#   controller: Navigation
-#   action: showNavigation
-#   roles: [admin]
+/admin/navigation:
+  controller: Navigation
+  action: showNavigation
+  roles: [admin]
 
-# /admin/navigation/add:
-#   controller: Navigation
-#   action: addNavigation
-#   roles: [admin]
+/admin/navigation/add:
+  controller: Navigation
+  action: addNavigation
+  roles: [admin]
 
-# /admin/navigation/delete:
-#   controller: Navigation
-#   action: deleteNavigation
-#   roles: [admin]
+/admin/navigation/delete:
+  controller: Navigation
+  action: deleteNavigation
+  roles: [admin]
 
-# /admin/navigation/edit:
-#   controller: Navigation
-#   action: editNavigation
-#   roles: [admin]
+/admin/navigation/edit:
+  controller: Navigation
+  action: editNavigation
+  roles: [admin]
 
 /admin/reviews:
   controller: Review

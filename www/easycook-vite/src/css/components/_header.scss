@@ -1,5 +1,3 @@
-// _header.scss
-
 .header {
   padding: rem(16);
 
@@ -13,6 +11,7 @@
   &__logo {
     display: flex;
     align-items: center;
+
     img {
       width: rem(120);
       height: auto;
@@ -22,11 +21,12 @@
   &__menu {
     display: flex;
     align-items: center;
-    gap: rem(10);
+    gap: rem(20);
 
     & .header__user-icon {
       display: flex;
       align-items: center;
+
       img {
         width: rem(30);
         margin-right: rem(10);
@@ -94,6 +94,7 @@
           color: $gris;
           text-decoration: none;
           font-size: rem(14);
+          transition: color 0.3s ease;
 
           &:hover {
             color: $rouge;
@@ -140,6 +141,7 @@
       border-top: rem(1) solid $gris-clair;
       flex-direction: column;
       align-items: flex-start;
+      z-index: 100;
     }
 
     &__nav.active ul {
@@ -147,7 +149,7 @@
       transition: all 0.3s ease;
     }
 
-    // Flèche dropdown en mobile
+    // Dropdown en mobile
     .has-dropdown {
       .dropdown {
         position: relative;
@@ -164,7 +166,7 @@
   // Desktop styles
   @include respond-to('desktop') {
     &__menu {
-      gap: rem(20);
+      gap: rem(40);
     }
 
     &__burger {
@@ -197,6 +199,37 @@
     // Dropdown hover en desktop
     .has-dropdown:hover .dropdown {
       display: block;
+    }
+  }
+
+  // Mode sombre
+  body.dark-mode & {
+    background-color: $dark-foreground;
+    color: $dark-text;
+
+    .header__menu a {
+      color: $dark-text;
+
+      &:hover {
+        color: $dark-accent;
+      }
+    }
+
+    .dropdown {
+      background-color: $dark-foreground;
+      color: $dark-text;
+
+      li a {
+        color: $dark-text;
+
+        &:hover {
+          color: $dark-accent;
+        }
+      }
+    }
+
+    .header__burger span {
+      background-color: $dark-text;
     }
   }
 }

@@ -1,14 +1,19 @@
-<section class="section">
+<?php 
+if (isset($configForm) && isset($errorsForm)) {
+    // Inclusion du composant avec les valeurs pré-remplies
+    $this->includeComponent("form", $configForm, $errorsForm);
+} else {
+    echo "<p>Le formulaire n'est pas disponible pour le moment.</p>";
+}
 
-    <h1>Navigation</h1>
-    <br>
-    <a href="/admin/navigation" class="button button-primary">Retour</a>
-    <br>
-    <br>
-    <?php $this->includeComponent("form", $configForm, $errorsForm);
-    if (isset($this->data["message"])) {
-        echo "<h3>" . $this->data["message"] . "</h3>";
+// Affichage des erreurs s'il y en a
+if (!empty($errorsForm)) {
+    echo "<div class='errors'>";
+    foreach ($errorsForm as $error) {
+        echo "<p>" . htmlspecialchars($error) . "</p>";
     }
-    ?>
+    echo "</div>";
+}
 
-</section>
+?>
+

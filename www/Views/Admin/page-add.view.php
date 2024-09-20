@@ -110,8 +110,7 @@ body, html {
 }
 
 </style>
-<script src="https://unpkg.com/grapesjs"></script>
-<script src="https://unpkg.com/grapesjs-blocks-basic"></script>
+
 <header id="header">
   <div class="title">Page Builder</div>
   <?php $this->includeComponent("form", $configForm, $errorsForm);
@@ -128,8 +127,6 @@ body, html {
 </div>
 
 <script>
-  // Initialisation de l'éditeur GrapeJS
-  // Initialisation de l'éditeur GrapeJS
 const editor = grapesjs.init({
   container: "#editor",
   plugins: ["gjs-blocks-basic"],

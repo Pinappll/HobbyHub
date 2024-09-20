@@ -1,32 +1,108 @@
-<?php 
+<?php
 
 namespace App\Forms;
 
+use App\Models\Navigation as NavigationModel;
+
 class NavigationUpdate
 {
+    public function getConfig(array $data = []): array
+{
+    $parents = $data['parents'] ?? [];
+    $nextPosition = $data['nextPosition'] ?? 1;
+    $selectedPosition = $data['selectedPosition'] ?? null;
+    $selectedParent = $data['selectedParent'] ?? null;
+    $isInNavbar = $data['is_in_navbar'] ?? 0;
 
-    public function getConfig(array $data): array
-    {
-        $navigations_id = isset($data['navigations_id']) ? $data['navigations_id'] : null;
-        $navigations = isset($data['navigations']) ? $data['navigations'] : null;
+    // Générer les options pour les positions
+    $positionOptions = [];
+    $positionsInNavbar = array_unique($data['positionsInNavbar'] ?? []);
+    sort($positionsInNavbar);
 
-        return [
-            "config" => [
-                "method" => "POST",
-                "action" => "/admin/navigation/edit?id_navigation=" . $data["id_navigation"] ?? "",
-                "submit" => "modifier",
-                "class" => "form",
-                "id" => "form-navigation-update",
-            ],
-            "inputs" => [
-                "id_user" => ["type" => "hidden"],
-                "id_navigation" => ["type" => "hidden"],
-                "name" => ["type" => "text", "class" => "input-form", "placeholder" => "Nom", "required" => true, "error" => "Votre nom doit faire plus de 2 caractères" , "value" => $data["name"] ?? ""],
-                "link" => ["type" => "text", "class" => "input-form", "placeholder" => "Lien", "required" => true, "error" => "Votre lien doit faire plus de 2 caractères"],
-                "position" => ["type" => "number", "class" => "input-form", "placeholder" => "Position", "required" => true, "error" => "Votre position doit être un nombre"],
-                "parent_id" => ["type" => "select", "class" => "input-form", "placeholder" => "Parent", "required" => true, "error" => "Votre parent doit être un nombre", "options" => $navigations, "value" => $navigations_id],
-                "level" => ["type" => "number", "class" => "input-form", "placeholder" => "Niveau", "required" => false, "error" => "Votre niveau doit être un nombre"],
-            ]
+    foreach ($positionsInNavbar as $position) {
+        $positionOptions[] = [
+            "value" => $position,
+            "label" => "Position " . $position,
+            "selected" => ($position == $selectedPosition)
         ];
     }
+
+    // Ajouter l'option pour la prochaine position disponible
+    if (!in_array($nextPosition, $positionsInNavbar)) {
+        $positionOptions[] = [
+            "value" => $nextPosition,
+            "label" => "Prochaine position " . $nextPosition,
+            "selected" => ($nextPosition == $selectedPosition)
+        ];
+    }
+
+    // Générer les options pour les parents présents dans la navbar
+    $parentOptions = [["value" => 0, "label" => "Aucun parent", "selected" => ($selectedParent === null || $selectedParent == 0)]];
+
+    foreach ($parents as $parent) {
+        if (isset($parent['id']) && isset($parent['name'])) {
+            $parentOptions[] = [
+                "value" => $parent['id'],
+                "label" => $parent['name'],
+                "selected" => ($parent['id'] == $selectedParent)
+            ];
+        }
+    }
+
+    return [
+        "config" => [
+            "method" => "POST",
+            "action" => "/admin/navigation/edit?id_navigation=" . $data['id'],
+            "submit" => "Modifier",
+            "class" => "form",
+            "id" => "form-navigation-update",
+        ],
+        "inputs" => [
+            "name" => [
+                "type" => "text",
+                "class" => "input-form",
+                "placeholder" => "Nom",
+                "required" => true,
+                "error" => "Votre nom doit faire plus de 2 caractères",
+                "value" => $data['name'] ?? ''
+            ],
+            "position" => [
+                "type" => "select",
+                "class" => "input-form",
+                "placeholder" => "Position",
+                "required" => true,
+                "error" => "Veuillez sélectionner une position valide",
+                "options" => $positionOptions
+            ],
+            "parent_id" => [
+                "type" => "select",
+                "class" => "input-form",
+                "placeholder" => "Parent",
+                "required" => false,
+                "error" => "Veuillez sélectionner une navigation parent valide",
+                "options" => $parentOptions
+            ],
+            "level" => [
+                "type" => "number",
+                "class" => "input-form",
+                "placeholder" => "Niveau",
+                "required" => true,
+                "error" => "Votre niveau doit être un nombre",
+                "value" => $data['level'] ?? 1
+            ],
+            "is_in_navbar" => [
+                "type" => "select",
+                "class" => "input-form",
+                "placeholder" => "Afficher dans la navbar",
+                "required" => true,
+                "options" => [
+                    ["value" => 1, "label" => "Oui", "selected" => ($isInNavbar == 1)],
+                    ["value" => 0, "label" => "Non", "selected" => ($isInNavbar == 0)]
+                ],
+                "error" => "Veuillez choisir si la navigation doit apparaître dans la navbar."
+            ]
+        ]
+    ];
+}
+
 }

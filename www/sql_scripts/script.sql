@@ -145,5 +145,6 @@ CREATE TABLE {PREFIX}_navigation (
     parent_id INT,
     level INT,
     id_page INT DEFAULT 0,
+    is_in_navbar INT DEFAULT 0,
     is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
