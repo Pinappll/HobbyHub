@@ -8,6 +8,7 @@ class Page extends DB
 {
     private ?int $id = null;
     protected string $title_page;
+    
     // Je veux que le contenu de la page soit en json
 
 
