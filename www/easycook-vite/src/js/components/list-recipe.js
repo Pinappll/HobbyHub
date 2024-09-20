@@ -28,11 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Gestion du changement de catégorie
     $("#form-menu-insert .select-category").on("change", function () {
+      var checkedValues = $('input[name="recipe[]"]:checked').map(function () {
+        return this.value;
+      }).get(); // `.get()` convertit l'objet jQuery en tableau normal
       var value = $(this).val();
       $.ajax({
         url: "/admin/menus/add",
         type: "POST",
-        data: "category=" + value,
+        data: {
+          category: value,
+          selectedRecipes: checkedValues // Envoyer toutes les recettes sélectionnées
+        },
         success: function (data) {
           $(".content-recipe").html(data);
 
@@ -40,10 +46,22 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
             checkbox.addEventListener("change", (event) => {
               var row = event.target.closest("tr");
-              var destinationTable = event.target.checked
-                ? document.querySelector("#recipe tbody")
-                : document.querySelector(".content-recipe table tbody");
-              destinationTable.appendChild(row);
+              var categories = $(row).find('.hidden').data('categorie-id'); // Récupère les catégories
+              var selectedCategory = parseInt($(".select-category").val(), 10); // Convertir en nombre
+
+              if (!event.target.checked) {
+                // Si décoché, vérifier si la catégorie sélectionnée est dans les catégories
+                if (categories.includes(selectedCategory)) {
+                  // Déplacer la ligne vers le tableau de contenu
+                  document.querySelector(".content-recipe table tbody").appendChild(row);
+                } else {
+                  // Sinon, supprimer la ligne
+                  row.remove();
+                }
+              } else {
+                // Si coché, ajouter la ligne au tableau principal
+                document.querySelector("#recipe tbody").appendChild(row);
+              }
             });
           });
         },
@@ -65,10 +83,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // Gestion du changement de catégorie
     $("#form-menu-edit .select-category").on("change", function () {
       var value = $(this).val();
+
+      // Récupérer toutes les valeurs des checkboxes cochés
+      var checkedValues = $('input[name="recipe[]"]:checked').map(function () {
+        return this.value;
+      }).get(); // `.get()` convertit l'objet jQuery en tableau normal
+
       $.ajax({
         url: "/admin/menus/edit?id=" + id + "&category=" + value,
         type: "POST",
-        data: "category=" + value,
+        data: {
+          category: value,
+          selectedRecipes: checkedValues // Envoyer toutes les recettes sélectionnées
+        },
         success: function (data) {
           $(".content-recipe").html(data);
 
@@ -76,15 +103,21 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
             checkbox.addEventListener("change", (event) => {
               var row = event.target.closest("tr");
-              if (event.target.checked) {
-                document.querySelector("#recipe tbody").appendChild(row);
-              } else {
-                var contentRecipeBody = document.querySelector(".content-recipe table tbody");
-                if (contentRecipeBody) {
-                  contentRecipeBody.appendChild(row);
+              var categories = $(row).find('.hidden').data('categorie-id'); // Récupère les catégories
+              var selectedCategory = parseInt($(".select-category").val(), 10); // Convertir en nombre
+
+              if (!event.target.checked) {
+                // Si décoché, vérifier si la catégorie sélectionnée est dans les catégories
+                if (categories.includes(selectedCategory)) {
+                  // Déplacer la ligne vers le tableau de contenu
+                  document.querySelector(".content-recipe table tbody").appendChild(row);
                 } else {
+                  // Sinon, supprimer la ligne
                   row.remove();
                 }
+              } else {
+                // Si coché, ajouter la ligne au tableau principal
+                document.querySelector("#recipe tbody").appendChild(row);
               }
             });
           });
