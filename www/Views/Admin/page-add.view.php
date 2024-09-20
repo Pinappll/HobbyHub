@@ -1,4 +1,5 @@
-
+<link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet" />
+<link href="https://unpkg.com/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css" rel="stylesheet" />
 <style>
   /* Structure du wrapper */
 #wrapper {
