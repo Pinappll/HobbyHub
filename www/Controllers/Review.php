@@ -17,10 +17,11 @@ class Review
 
     if (isset($_GET["id_page_review"])) {
         $review = new ReviewModel();
-        $data = $review->select($review->getNameDb() . "_review.*,".$review->getNameDb()."_user.firstname_user,".$review->getNameDb()."_user.lastname_user")
-            ->join($review->getNameDb()."_user", $review->getNameDb() . "_review.id_user_review = " .$review->getNameDb()."_user.id")
-            ->where($review->getNameDb() . "_review.id_page_review = " . $_GET["id_page_review"] . " AND " . $review->getNameDb() . "_review.status_review = 'accept'")
-            ->execute();
+        $idPageReview = isset($_GET["id_page_review"]) && is_numeric($_GET["id_page_review"]) ? (int)$_GET["id_page_review"] : 0; // Ou gérer l'erreur comme nécessaire
+        $data = $review->select($review->getNameDb() . "_review.*, " . $review->getNameDb() . "_user.firstname_user, " . $review->getNameDb() . "_user.lastname_user")
+        ->join($review->getNameDb() . "_user", $review->getNameDb() . "_review.id_user_review = " . $review->getNameDb() . "_user.id")
+        ->where($review->getNameDb() . "_review.id_page_review = :id_page_review AND " . $review->getNameDb() . "_review.status_review = 'accept'")
+        ->executeWithParams([':id_page_review' => $idPageReview]);
 
         // Utilisation de la vue pour afficher les données des reviews
         $myView = new View("Partiel/listeReview", null);

@@ -36,7 +36,7 @@ class Category
         $table = new CategoryTable();
         $configTable = $table->getConfig();
         $category = new CategoryModel();
-        $categories = $category->getList();
+        $categories = $category->findAllBy(["is_deleted" => false], );
         $myView = new View("Admin/Category/list-category", "back");
         $myView->assign("data", $categories);
         $myView->assign("configTable", $configTable);
@@ -44,13 +44,17 @@ class Category
     }
     public function deleteCategory(): void
     {
-        if (isset($_GET["id"])) {
+        if (!isset($_GET["id"])) {
+            header("Location: /admin/category");
+        }else{
             $category = new CategoryModel();
             $category = $category->getOneBy(['id' => $_GET["id"]], "object");
-            if ($category) {
-                $category->setIs_deleted(true);
-                $category->save();
+            if (!$category) {
+                header("Location: /admin/category");
             }
+            $category->setIs_deleted(true);
+            $category->save();
+            header("Location: /admin/category");
         }
         header("Location: /admin/category");
     }
@@ -75,6 +79,7 @@ class Category
                 if ($verif->checkForm($configForm, $_POST, $error)) {
                     $category->setName_category($_POST["nameCategory"]);
                     $category->save();
+                    $configForm["inputs"]["nameCategory"]["value"] = $_POST["nameCategory"];
                     $message = "La catégorie de recette a bien été modifier";
                 }
             }

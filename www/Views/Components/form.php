@@ -13,17 +13,17 @@
         <?php endif; ?>
 
         <?php foreach ($config["inputs"] as $name => $configInput) : ?>
-            <div class="form-group">
+            <div class="form-group<?= !empty($configInput["flex-row"]) && $configInput["flex-row"] === true ? ' flex-row' : '' ?>">
                 <?php if ($configInput["type"] === "checkbox") : ?>
                     <?php foreach ($configInput["value"] as $value) : ?>
-                        <input name="<?= $name ?>[]" type="<?= $configInput["type"] ?>" id="<?= $value["id"] ?>" value="<?= $value["id"] ?>" <?= ($value["checked"]) ? "checked" : "" ?> <?= (!empty($configInput["required"])) ? "required" : "" ?>>
+                        <input class="<?= $configInput["class"] ?? "" ?>" name="<?= $name ?>[]" type="<?= $configInput["type"] ?>" id="<?= $value["id"] ?>" value="<?= $value["id"] ?>" <?= ($value["checked"]) ? "checked" : "" ?> <?= (!empty($configInput["required"])) ? "required" : "" ?>>
                         <label for="<?= $value["id"] ?>"><?= $value["name"] ?></label>
                     <?php endforeach; ?>
                 <?php elseif ($configInput["type"] === "textarea") : ?>
                     <textarea name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>><?= $configInput["value"] ?? "" ?></textarea><br>
                 <?php elseif ($configInput["type"] === "select") : ?>
                     <select name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>>
-                        <option disabled selected><?= $configInput["placeholder"] ?></option>
+                        <option disabled selected value="0"><?= $configInput["placeholder"] ?></option>
                         <?php foreach ($configInput["option"] as $option) : ?>
                             <option value="<?= $option["id"] ?>" <?= $option["selected"] ?? "" ?>><?= $option["name"] ?></option>
                         <?php endforeach; ?>
