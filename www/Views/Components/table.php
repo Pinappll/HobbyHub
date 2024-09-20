@@ -18,6 +18,9 @@
                     
                     <?php elseif ($column["name"] === "delete") : ?>
                         <td><a href="<?= htmlspecialchars($column["route"] .  $row["id"]) ?>" class="button button-danger">Supprimer</a></td>
+                    
+                    <?php elseif ($column["name"] === "anonymized") : ?>
+                        <td><a href="<?= htmlspecialchars($column["route"] .  $row["id"]) ?>" class="button button-danger">Anonymiser</a></td>
 
                     <?php elseif ($column["name"] === "validation") : ?>
                         <td class="<?= htmlspecialchars($column["class"]) ?>">

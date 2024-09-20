@@ -11,7 +11,7 @@ class Verificator
 
         //Est-ce qu'on a le bon nb d'inputs
         if (count($config["inputs"]) != count($data)) {
-            die("Tentative de Hack");
+            die("Tentative de Hack1");
         } else {
             //CSRF ???
             foreach ($config["inputs"] as $name => $input) {

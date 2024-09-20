@@ -1,5 +1,7 @@
 <section class="section">
-    <h1>Users</h1>
+<h1>Users</h1>
+    <br>
+    <a href="/admin/users/add" class="button button-primary">Ajouter un utilisateur</a>
     <br>
     <br>
     <!-- Ajouter le conteneur table-container ici -->
