@@ -291,4 +291,27 @@ class DB
     // Récupérer les résultats
     return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
 }
+public function findBy(array $filters = []): array
+{
+    $sql = "SELECT * FROM " . $this->table;
+    $params = [];
+
+    if (!empty($filters)) {
+        $sql .= " WHERE ";
+        foreach ($filters as $column => $value) {
+            $sql .= "$column = :$column AND ";
+            $params[":$column"] = $value;
+        }
+        $sql = rtrim($sql, ' AND ');
+    }
+
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute($params);
+    return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC); // Renvoie un tableau associatif
+}
+public function query(string $sql)
+{
+    return $this->pdo->query($sql);
+}
+
 }
