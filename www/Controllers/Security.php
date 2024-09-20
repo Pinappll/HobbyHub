@@ -20,6 +20,11 @@ class Security
 {
     public function login(): void
 {
+
+    if (isset($_SESSION['user_id'])) {
+        header("Location: /");
+    } else {
+
     $form = new UserLogin();
     $config = $form->getConfig();
     $errors = [];
@@ -66,6 +71,7 @@ class Security
     $myView->assign("title", "Connexion");
     $myView->assign("description", "Veuillez-vous connecter pour accéder à votre compte.");
 }
+}
 
 
     public function logout(): void
@@ -77,6 +83,9 @@ class Security
 
     public function register(): void
     {
+        if (isset($_SESSION['user_id'])) {
+            header("Location: /");
+        }else{
         $form = new UserInsert();
         $config = $form->getConfig();
         $errors = [];
@@ -111,6 +120,7 @@ class Security
         $myView->assign("title", "Inscription");
         $myView->assign("description", "Veuillez-vous inscrire pour porfiter de nos services");
     }
+    }
 
     public function enableAccount()
     {
@@ -134,6 +144,9 @@ class Security
 
     public function passwordForgot()
     {
+        if (isset($_SESSION['user_id'])) {
+            header("Location: /");
+        }else{
         $form = new UserForgetPassword();
         $config = $form->getConfig();
         $errors = array();
@@ -163,6 +176,8 @@ class Security
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
         $myView->assign("message", $message);
+        $myView->assign("title", "Mot de passe oublié");
+        }
     }
 
     public function changePassword()
