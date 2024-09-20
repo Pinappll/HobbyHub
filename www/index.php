@@ -60,14 +60,19 @@ function access(array $roles): bool
     $access = true;
     if (!empty($roles)) {
         $user = new \App\Models\User();
-        $role = $user->getOneBy(["token_user" => $_SESSION["token"]], "object")->getType_user();
+        if (empty($_SESSION["token"])) {
+            $access = false;
+        }else{
+            $role = $user->getOneBy(["token_user" => $_SESSION["token"]], "object")->getType_user();
         if ($role) {
             if (!in_array($role, $roles)) {
                 $access = false;
             }
         } else {
             $access = false;
+        };
         }
+        
     }
     return $access;
 }
