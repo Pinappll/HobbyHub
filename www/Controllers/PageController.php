@@ -52,7 +52,7 @@ class PageController
                     $navigation->setName($_REQUEST["name"]);
                     $navigation->setLink($_REQUEST["link"]);
                     $navigation->setPosition($_REQUEST["position"]);
-                    $navigation->setParent_id($_REQUEST["parent_id"]);
+                    $navigation->setParentId($_REQUEST["parent_id"]);
                     $navigation->setLevel($_REQUEST["level"]);
 
                     $navigation->save();
@@ -62,7 +62,7 @@ class PageController
                         throw new Exception("Navigation introuvable");
                     }
     
-                    $navigation->setId_page($page->getId());
+                    $navigation->setIdPage($page->getId());
     
                     // Sauvegarde de la mise à jour de la navigation
                     if (!$navigation->save()) {
