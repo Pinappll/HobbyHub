@@ -142,7 +142,7 @@ private function notifyAdminsOfNewReview(ReviewModel $review): void
         $myView->assign("configTable", $configTable);
         $review = new ReviewModel();
         
-        $myView->assign("data", $review->getList());
+        $myView->assign("data", $review->findAllBy(["is_deleted" => false]));
         $myView->assign("title", "Liste des avis");
 
     }

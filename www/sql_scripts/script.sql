@@ -141,5 +141,6 @@ CREATE TABLE {PREFIX}_navigation (
     position INT,
     parent_id INT,
     level INT,
-    id_page INT DEFAULT 0
+    id_page INT DEFAULT 0,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );

@@ -8,6 +8,9 @@ class Page extends DB
 {
     private ?int $id = null;
     protected string $title_page;
+    protected string $content_page;
+    protected bool $is_deleted;
+
     
     // Je veux que le contenu de la page soit en json
 
@@ -86,5 +89,24 @@ class Page extends DB
     public function countPages(): int
     {
         return $this->countRows();
+    }
+    /**
+     * Get the value of is_deleted
+     */
+    public function getIs_deleted()
+    {
+        return $this->is_deleted;
+    }
+
+    /**
+     * Set the value of is_deleted
+     *
+     * @return  self
+     */
+    public function setIs_deleted($is_deleted)
+    {
+        $this->is_deleted = $is_deleted;
+
+        return $this;
     }
 }

@@ -11,6 +11,7 @@ class Review extends DB
     protected int $id_page_review;
     protected string $content_review;
     protected string $status_review="pending";
+    protected bool $is_deleted;
 
     
     public function __construct()
@@ -121,5 +122,21 @@ class Review extends DB
     public function countReviews(): int
     {
         return $this->countRows();
+    }
+    public function getIs_deleted()
+    {
+        return $this->is_deleted;
+    }
+
+    /**
+     * Set the value of is_deleted
+     *
+     * @return  self
+     */
+    public function setIs_deleted($is_deleted)
+    {
+        $this->is_deleted = $is_deleted;
+
+        return $this;
     }
 }
