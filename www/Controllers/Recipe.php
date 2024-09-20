@@ -36,6 +36,9 @@ class Recipe
             if (!isset($_REQUEST["categories"])) {
                 $_REQUEST["categories"] = [];
             }
+            if($_REQUEST["categories"] == []){
+                $errors[] = "Veuillez sélectionner au moins une catégorie";
+            }else{
             $verificator = new Verificator();
             if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
 
@@ -63,7 +66,7 @@ class Recipe
                 } else {
                     $errors[] = "Erreur lors de l'upload de l'image";
                 }
-            }
+            }}
         }
 
         $myView->assign("configForm", $config);
@@ -90,7 +93,7 @@ class Recipe
 
             if ($recipe) {
                 $categories = new Category();
-                $categories = $categories->findAll();
+                $categories = $categories->findAllBy(["is_deleted" => false], "object");
                 $recipe_catagories = new Recipe_category();
                 $recipe_catagories = $recipe_catagories->findAllBy(["id_recipe_category" => $recipe->getId()]);
                 $id_recipe_categories = [];
@@ -116,6 +119,9 @@ class Recipe
                 if (!isset($_REQUEST["categories"])) {
                     $_REQUEST["categories"] = [];
                 }
+                if($_REQUEST["categories"] == []){
+                    $errors[] = "Veuillez sélectionner au moins une catégorie";
+                }else{
                 if ($verificator->checkForm($config, array_merge($_REQUEST, $_FILES), $errors)) {
                     if ($_FILES["inputFileImage"]["error"] != 4) {
                         $uploadDir = "dist/assets/uploads/";
@@ -156,6 +162,7 @@ class Recipe
                     }
                 }
             }
+            }
             $myView->assign("configForm", $config);
             $myView->assign("errorsForm", $errors);
             $myView->assign("message", $message);
@@ -178,8 +185,12 @@ class Recipe
         $recipe = new RecipeModel();
         $myView = new View("Admin/recipes", "back");
         $myView->assign("configTable", $configTable);
-
-        $myView->assign("data", $recipe->getList(["is_deleted" => false], $limit = 100));
+        
+        $dataRecipe = $recipe->select($recipe->getNameDb()."_recipe.*")
+        ->join($recipe->getNameDb()."_recipe_category", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_category.id_recipe_category")
+        ->join($recipe->getNameDb()."_category", $recipe->getNameDb()."_category.id = " . $recipe->getNameDb() . "_recipe_category.id_category")
+        ->where($recipe->getNameDb() . "_category.is_deleted=false")->execute();
+        $myView->assign("data", $dataRecipe);
         $myView->assign("title", "Liste des recettes");
     }
 }

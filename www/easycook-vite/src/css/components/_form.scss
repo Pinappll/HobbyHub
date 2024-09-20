@@ -3,6 +3,9 @@
   display: block; // Assure que le formulaire conserve un comportement en bloc
   
 }
+.radio-categorie{
+  width: inherit !important;
+}
 form {
   width: 100%;
   max-width: rem(600); // Réduction de la largeur maximale du formulaire

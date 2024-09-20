@@ -13,10 +13,10 @@
         <?php endif; ?>
 
         <?php foreach ($config["inputs"] as $name => $configInput) : ?>
-            <div class="form-group">
+            <div class="form-group<?= !empty($configInput["flex-row"]) && $configInput["flex-row"] === true ? ' flex-row' : '' ?>">
                 <?php if ($configInput["type"] === "checkbox") : ?>
                     <?php foreach ($configInput["value"] as $value) : ?>
-                        <input name="<?= $name ?>[]" type="<?= $configInput["type"] ?>" id="<?= $value["id"] ?>" value="<?= $value["id"] ?>" <?= ($value["checked"]) ? "checked" : "" ?> <?= (!empty($configInput["required"])) ? "required" : "" ?>>
+                        <input class="<?= $configInput["class"] ?? "" ?>" name="<?= $name ?>[]" type="<?= $configInput["type"] ?>" id="<?= $value["id"] ?>" value="<?= $value["id"] ?>" <?= ($value["checked"]) ? "checked" : "" ?> <?= (!empty($configInput["required"])) ? "required" : "" ?>>
                         <label for="<?= $value["id"] ?>"><?= $value["name"] ?></label>
                     <?php endforeach; ?>
                 <?php elseif ($configInput["type"] === "textarea") : ?>

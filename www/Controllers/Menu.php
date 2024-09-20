@@ -20,11 +20,12 @@ class Menu
     {
 
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $category = $_POST["category"];
             $recipe = new Recipe();
             $recipes = $recipe->select($recipe->getNameDb()."_recipe.*")
                 ->join($recipe->getNameDb()."_recipe_category", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_category.id_recipe_category")
-                ->where($recipe->getNameDb() . "_recipe_category.id_category=" . $_POST["category"])
-                ->execute("object");
+                ->where($recipe->getNameDb() . "_recipe_category.id_category = :category AND " . $recipe->getNameDb() . "_recipe.is_deleted=false")
+                ->executeWithParams([':category' => $category], "object");
             $myView = new View("Partiel/listeRecipeSearch", null);
             $myView->assign("recipes", $recipes);
         } else {
@@ -75,7 +76,12 @@ class Menu
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             if (!isset($_POST["category"])) {
                 $recipe = new Recipe();
-                $recipes = $recipe->select()->join($recipe->getNameDb()."_recipe_menu", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_menu.id_recipe")->where($recipe->getNameDb() . "_recipe_menu.id_menu=" . $_GET["id"])->execute();
+                $id = $_GET["id"]; // Validez cette valeur au besoin
+
+                $recipes = $recipe->select()
+                    ->join($recipe->getNameDb() . "_recipe_menu", $recipe->getNameDb() . "_recipe.id = " . $recipe->getNameDb() . "_recipe_menu.id_recipe")
+                    ->where($recipe->getNameDb() . "_recipe_menu.id_menu = :id")
+                    ->executeWithParams([':id' => $id], "object");
                 $myView = new View("Partiel/listeRecipMenu", null);
                 $myView->assign("recipes", $recipes);
             } else {

@@ -262,4 +262,27 @@ class DB
     {
         return $this->dbName;
     }
+    public function executeWithParams(array $params = [], string $return = "array")
+{
+    $queryPrepared = $this->pdo->prepare($this->query);
+    
+    foreach ($params as $param => &$val) {
+        if (is_int($val)) {
+            $paramType = \PDO::PARAM_INT;
+        } elseif (is_bool($val)) {
+            $paramType = \PDO::PARAM_BOOL;
+        } else {
+            $paramType = \PDO::PARAM_STR;
+        }
+        $queryPrepared->bindParam($param, $val, $paramType);
+    }
+
+    if ($return == "object") {
+        $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+    }
+    
+    $queryPrepared->execute();
+    return $queryPrepared->fetchAll();
+}
+
 }
