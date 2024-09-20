@@ -16,6 +16,7 @@ class Navigation extends DB
     protected ?int $parent_id = null;
     protected int $level;
     protected int $id_page;
+    protected bool $is_deleted;
 
     public function __construct()
     {
@@ -118,6 +119,25 @@ class Navigation extends DB
 {
     return $this->findAll(); // Utilise la méthode findAll pour récupérer toutes les lignes
 }
+/**
+     * Get the value of is_deleted
+     */
+    public function getIs_deleted()
+    {
+        return $this->is_deleted;
+    }
+
+    /**
+     * Set the value of is_deleted
+     *
+     * @return  self
+     */
+    public function setIs_deleted($is_deleted)
+    {
+        $this->is_deleted = $is_deleted;
+
+        return $this;
+    }
     // public function getUrlNavigationWhereIsNullOrPageId()
     // {
     //     $db = new DB();

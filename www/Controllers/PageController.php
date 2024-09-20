@@ -22,7 +22,7 @@ class PageController
         $table = new PageTable();
         $configTable = $table->getConfig();
         $category = new PageModel();
-        $categories = $category->getList();
+        $categories = $category->findAllBy(["is_deleted" => false] );
         $myView = new View("Admin/pages", "back");
         $myView->assign("data", $categories);
         $myView->assign("configTable", $configTable);
@@ -153,36 +153,51 @@ class PageController
             header("Location: /admin/pages");
             exit;
         }
+        
         $page = new PageModel();
         $page = $page->getOneBy(["id" => $_GET["id"]], "object");
         if ($page) {
-
-            // Démarrage d'une transaction
             $pdo = DB::getPDO();
-            try {
-                $pdo->beginTransaction();
+                try {
+                    $pdo->beginTransaction();
+                    
+                    $page->setIs_deleted(true);
+                    if (!$page->save()) {
+                        throw new Exception("Échec supression de la page");
+                    }
+                    $navigation = new Navigation();
+                    $navigation = $navigation->getOneBy(["id_page" => $_GET["id"]], "object");
+                    if($navigation){
+                        $navigation->setIs_deleted(true);
+
+                    }
+                    $review = new Review();
+                    $review = $review->findAllBy(["id_page_review" => $_GET["id"]], "object");
+                    
+                    if($review){
+                        foreach ($review as $review) {
+                            $review->setIs_deleted(true);
+                            if (!$review->save()) {
+                                throw new Exception("Échec de la suppression des reviews");
+                            }
+                        }
+                    }
+                    
+                    
+                    // Validation de la transaction
+                    $pdo->commit();
     
-                // Suppression de la page
-                $page->setde();
-    
-                // Récupération de la navigation liée à la page
-                $navigation = new Navigation();
-                $navigation = $navigation->getOneBy(["id_page" => $_GET["id"]], "object");
-    
-                // Suppression de la navigation si elle existe
-                if ($navigation) {
-                    $navigation->delete();
+                    // Redirection en cas de succès
+                    header('Location: /admin/pages');
+                    exit;
+
+                } catch (\Exception $e) {
+                    $pdo->rollBack();
+                    $error[] = $e->getMessage();
+                    
                 }
-    
-                // Validation des opérations
-                $pdo->commit();
-            } catch (\Exception $e) {
-                // En cas d'erreur, annule la transaction
-                $pdo->rollBack();
-                echo "Erreur lors de la suppression : " . $e->getMessage();
-                exit;
-            }
         }
+        
     
         // Redirection vers la liste des pages après la suppression
         header("Location: /admin/pages");
