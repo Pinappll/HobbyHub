@@ -1,4 +1,33 @@
 // _table.scss
+.content-recipe, .recipe {
+  table {
+    td {
+      max-width: rem(100); /* Ajuste la largeur maximale des cellules */
+      white-space: nowrap; /* Empêche le retour à la ligne */
+      overflow: hidden; /* Masque le texte qui dépasse */
+      text-overflow: ellipsis; /* Ajoute les trois petits points pour les débordements */
+      text-align: center; /* Centre le texte dans la cellule */
+      vertical-align: middle; /* Centre le contenu verticalement */
+      width: rem(100);
+      img{
+        width: rem(80); // Taille de l'image
+        height: auto;
+        border-radius: rem(5); // Coins arrondis pour l'image
+      }
+    }
+    
+    /* Applique également aux en-têtes (si besoin) */
+    th {
+      max-width: rem(100); /* Ajuste la largeur maximale des en-têtes */
+      white-space: nowrap; /* Empêche le retour à la ligne */
+      overflow: hidden; /* Masque le texte qui dépasse */
+      text-overflow: ellipsis; /* Ajoute les trois petits points pour les débordements */
+      text-align: center; /* Centre le texte dans l'en-tête */
+      vertical-align: middle; /* Centre le contenu verticalement */
+      width: rem(100);
+    }
+  }
+}
 
 .styled-table {
     width: 100%;

@@ -14,6 +14,7 @@ class Navigation extends DB
     protected int $level;
     protected int $id_page;
     protected int $is_in_navbar; // Change de boolean à int
+    protected bool $is_deleted;
 
     public function __construct()
     {
@@ -261,4 +262,29 @@ class Navigation extends DB
         }
     }
 
+
+/**
+     * Get the value of is_deleted
+     */
+    public function getIs_deleted()
+    {
+        return $this->is_deleted;
+    }
+
+    /**
+     * Set the value of is_deleted
+     *
+     * @return  self
+     */
+    public function setIs_deleted($is_deleted)
+    {
+        $this->is_deleted = $is_deleted;
+
+        return $this;
+    }
+    // public function getUrlNavigationWhereIsNullOrPageId()
+    // {
+    //     $db = new DB();
+    //     $data = $db->select()->fro
+    // }
 }

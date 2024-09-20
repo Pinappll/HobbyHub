@@ -81,8 +81,14 @@ CREATE TABLE {PREFIX}_recipe_category (
 CREATE TABLE {PREFIX}_page (
     id SERIAL PRIMARY KEY,
     title_page TEXT NOT NULL,
-    content_page jsonb NOT NULL
+    content_page jsonb NOT NULL,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    updated_at TIMESTAMPTZ DEFAULT NULL
 );
+CREATE TRIGGER update_updated_at_{PREFIX}_page
+BEFORE UPDATE ON {PREFIX}_page
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
 
 -- Review
 CREATE TABLE {PREFIX}_review (
@@ -137,4 +143,5 @@ CREATE TABLE {PREFIX}_navigation (
     level INT,
     id_page INT DEFAULT 0,
     is_in_navbar INT DEFAULT 0,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );

@@ -19,15 +19,18 @@
 
         <!-- Boucle sur chaque champ du formulaire -->
         <?php foreach ($config["inputs"] as $name => $configInput) : ?>
+
             <div class="form-group">
 
                 <!-- Gestion des textareas -->
                 <?php if ($configInput["type"] === "textarea") : ?>
                     <label for="<?= $name ?>"><?= $configInput["placeholder"] ?? "" ?></label>
+
                     <textarea name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" placeholder="<?= $configInput["placeholder"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>><?= $configInput["value"] ?? "" ?></textarea><br>
 
                 <!-- Gestion des selects -->
                 <?php elseif ($configInput["type"] === "select") : ?>
+<
                     <label for="<?= $name ?>"><?= $configInput["placeholder"] ?? "" ?></label>
                     <select name="<?= $name ?>" class="<?= $configInput["class"] ?? "" ?>" <?= (!empty($configInput["required"])) ? "required" : "" ?>>
                         <option disabled selected><?= $configInput["placeholder"] ?? "Sélectionner" ?></option>
@@ -37,6 +40,7 @@
                                     <?= $option["label"] ?>
                                 </option>
                             <?php endforeach; ?>
+
                         <?php endif; ?>
                     </select><br><br>
 
