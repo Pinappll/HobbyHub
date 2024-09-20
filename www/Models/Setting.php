@@ -20,32 +20,47 @@ class Setting extends DB
     // Méthode pour récupérer les paramètres existants
     public function getSettings(): ?array
     {
-        // Utiliser la table dynamique définie dans DB
-        $sql = "SELECT * FROM " . $this->table . " WHERE id = 1"; // Supposons que l'enregistrement avec id=1 contient les paramètres globaux
+        $sql = "SELECT * FROM " . $this->table . " WHERE id = 1"; // Récupérer les paramètres globaux
         $queryPrepared = self::getPDO()->prepare($sql);
         $queryPrepared->execute();
-        return $queryPrepared->fetch(\PDO::FETCH_ASSOC);
+        $result = $queryPrepared->fetch(\PDO::FETCH_ASSOC);
+
+        return $result ?: []; // Retourner un tableau vide si aucun résultat
     }
+
 
     // Méthode pour mettre à jour les paramètres (couleurs, logo, etc.)
     public function updateSettings(array $settings): bool
+{
+    // Construire la requête d'UPDATE avec les paramètres fournis
+    $sql = "UPDATE " . $this->table . " SET 
+                name_setting = :name_setting, 
+                slogan_setting = :slogan_setting, 
+                logo_url_setting = :logo_url_setting, 
+                color_setting = :color_setting
+            WHERE id = 1";  // Supposons que les paramètres globaux sont dans l'enregistrement id=1
+
+    $queryPrepared = self::getPDO()->prepare($sql);
+
+    // Préparer les paramètres pour la mise à jour
+    $params = [
+        ':name_setting' => $settings['name_setting'] ?? '',
+        ':slogan_setting' => $settings['slogan_setting'] ?? '',
+        ':logo_url_setting' => $settings['logo_url_setting'] ?? '',
+        ':color_setting' => $settings['color_setting'] ?? ''
+    ];
+
+    return $queryPrepared->execute($params);
+}
+
+public function getSiteName(): ?string
     {
-        // Utiliser la table dynamique définie dans DB
-        $sql = "UPDATE " . $this->table . " SET 
-                    name_setting = :name_setting, 
-                    slogan_setting = :slogan_setting, 
-                    logo_url_setting = :logo_url_setting, 
-                    color_setting = :color_setting
-                WHERE id = 1";  // Supposons que les paramètres globaux sont dans l'enregistrement id=1
-
-        $queryPrepared = self::getPDO()->prepare($sql);
-
-        return $queryPrepared->execute([
-            ':name_setting' => $settings['name_setting'] ?? '',
-            ':slogan_setting' => $settings['slogan_setting'] ?? '',
-            ':logo_url_setting' => $settings['logo_url_setting'] ?? '',
-            ':color_setting' => $settings['color_setting'] ?? ''
-        ]);
+        // Utiliser la méthode getColumns pour récupérer la colonne name_setting
+        $names = $this->getColumns('name_setting');
+        
+        // Renvoyer le premier nom (il doit y avoir un seul enregistrement pour le nom du site)
+        return !empty($names) ? $names[0] : null;
     }
+
 
 }

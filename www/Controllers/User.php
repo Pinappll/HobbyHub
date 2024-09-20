@@ -108,22 +108,31 @@ public function editUser(): void
 
 
 public function deleteUser(): void
-{
-    if (!isset($_GET["id"]) || empty($_GET["id"])) {
+    {
+        // Vérifier si l'ID utilisateur est présent
+        if (!isset($_GET["id"]) || empty($_GET["id"])) {
+            header("Location: /admin/users");
+            exit;
+        }
+
+        $userModel = new UserModel();
+        $user = $userModel->getOneBy(["id" => $_GET["id"]], "object");
+
+        if (!$user) {
+            header("Location: /admin/users");
+            exit;
+        }
+
+        // Appel de la méthode delete du modèle (soft delete)
+        $user->delete();
+
+        // Redirection après la suppression
         header("Location: /admin/users");
         exit;
     }
 
-    $userModel = new UserModel();
+// hard delete
 
-    $user = $userModel->getOneBy(["id" => $_GET["id"]], "object");
-
-    $user = $user->setIsdeleted_user(true);
-
-    $user->save();
-
-    header("Location: /admin/users");
-    exit;
-}
+ 
     
 }

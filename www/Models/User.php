@@ -219,6 +219,32 @@ class User extends DB
         return $this->findAllBy(['type_user' => 'admin'], 'object');
     }
 
+    public function delete(): bool
+    {
+        // Soft delete : mettre à jour is_deleted à true
+        $this->setIsDeleted(true);
+
+        // Sauvegarder les modifications (soft delete)
+        return $this->save();
+    }
+
+     /**
+     * Get the number of users grouped by month based on the inserted_at field.
+     */
+    public function getUserRegistrationsByMonth(): array
+    {
+        return $this->getCountByMonth('inserted_at');
+    }
+
+    public function countUsersByRole(): array
+{
+    $sql = "SELECT type_user, COUNT(*) as count FROM " . $this->getTable() . " WHERE is_deleted = false GROUP BY type_user";
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute();
+    return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
+}
+
+
 }
 
 

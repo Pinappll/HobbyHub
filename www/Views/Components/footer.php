@@ -1,3 +1,9 @@
+<?php
+// Instancier le modèle Setting pour récupérer le nom du site
+$settingModel = new \App\Models\Setting();
+$siteName = $settingModel->getSiteName();
+?>
+
 <footer class="footer">
   <div class="footer__container">
     <div class="footer__logo">
@@ -27,7 +33,7 @@
     </div>
 
     <div class="footer__copyright">
-      <p>&copy; 2024 EasyCook. Tous droits réservés.</p>
+      <p>&copy; 2024 <?= htmlspecialchars($siteName) ?>. Tous droits réservés.</p>
     </div>
   </div>
 </footer>

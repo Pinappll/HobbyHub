@@ -2,17 +2,33 @@ RewriteEngine On
 
 # Bloquer l'accès au fichier .env
 <Files .env>
-order allow,deny
-Deny from all
+Require all denied
 </Files>
 
 # Bloquer l'accès au fichier routes.yaml
 <Files routes.yaml>
-order allow,deny
-Deny from all
+Require all denied
 </Files>
 
-# Vos règles existantes pour rediriger vers index.php si le fichier/dossier demandé n'existe pas
+# Bloquer l'accès au fichier  config.php
+<Files config.php>
+Require all denied
+</Files>
+
+# Bloquer l'accès aux fichiers sensibles
+<FilesMatch "^composer\.(json|lock)">
+Require all denied
+</FilesMatch>
+
+<Files .htaccess>
+Require all denied
+</Files>
+
+# Rediriger les erreurs 403 vers la page 404
+ErrorDocument 403 /404
+
+# Rediriger vers index.php si le fichier/dossier demandé n'existe pas
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [L,QSA]
+
