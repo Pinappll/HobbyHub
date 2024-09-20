@@ -23,7 +23,7 @@ class RecipeInsert
                 "ingredients_recipe" => ["type" => "textarea", "class" => "input-form", "placeholder" => "Ingrédients", "required" => true, "error" => "Vos ingrédients doivent faire plus de 2 caractères"],
                 "instruction_recipe" => ["type" => "textarea", "class" => "input-form", "placeholder" => "Contenu", "required" => true, "error" => "Votre contenu doit faire plus de 2 caractères"],
                 "inputFileImage" => ["type" => "file", "class" => "input-form", "placeholder" => "Image", "required" => true, "error" => ["size" => "Votre image est trop lourde", "type" => "Votre image n'est pas au bon format"]],
-                "categories" => ["type" => "checkbox", "class" => "radio-categorie", "placeholder" => "Catégories", "value" => $data["id_categories"] ?? "", "required" => true, "error" => "Veuillez sélectionner au moins une catégorie", "flex-row" => true],
+                "categories" => ["type" => "checkbox", "class" => "radio-categorie", "placeholder" => "Catégories", "value" => $data["id_categories"] ?? "", "error" => "Veuillez sélectionner au moins une catégorie", "flex-row" => true],
             ]
         ];
     }

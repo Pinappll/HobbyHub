@@ -185,11 +185,12 @@ class Recipe
         $recipe = new RecipeModel();
         $myView = new View("Admin/recipes", "back");
         $myView->assign("configTable", $configTable);
-        
-        $dataRecipe = $recipe->select($recipe->getNameDb()."_recipe.*")
-        ->join($recipe->getNameDb()."_recipe_category", $recipe->getNameDb() . "_recipe.id =" . $recipe->getNameDb() . "_recipe_category.id_recipe_category")
-        ->join($recipe->getNameDb()."_category", $recipe->getNameDb()."_category.id = " . $recipe->getNameDb() . "_recipe_category.id_category")
-        ->where($recipe->getNameDb() . "_category.is_deleted=false")->execute();
+            
+        $dataRecipe = $recipe->select("DISTINCT " . $recipe->getNameDb() . "_recipe.*")
+        ->join($recipe->getNameDb() . "_recipe_category", $recipe->getNameDb() . "_recipe.id = " . $recipe->getNameDb() . "_recipe_category.id_recipe_category")
+        ->join($recipe->getNameDb() . "_category", $recipe->getNameDb() . "_category.id = " . $recipe->getNameDb() . "_recipe_category.id_category")
+        ->where($recipe->getNameDb() . "_category.is_deleted = false AND " . $recipe->getNameDb() . "_recipe.is_deleted = false")
+        ->execute();
         $myView->assign("data", $dataRecipe);
         $myView->assign("title", "Liste des recettes");
     }
