@@ -270,4 +270,25 @@ class DB
     {
         return $this->dbName;
     }
+
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    public function getCountByMonth(string $dateColumn = 'inserted_at'): array
+{
+    // La requête SQL pour compter les enregistrements par mois, en tronquant la date au mois
+    $sql = "SELECT DATE_TRUNC('month', $dateColumn) AS month, COUNT(*) AS count 
+            FROM " . $this->table . " 
+            GROUP BY month 
+            ORDER BY month ASC";
+
+    // Préparation et exécution de la requête
+    $queryPrepared = $this->pdo->prepare($sql);
+    $queryPrepared->execute();
+
+    // Récupérer les résultats
+    return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
+}
 }

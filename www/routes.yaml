@@ -224,6 +224,12 @@
   action: update
   roles: [admin]
 
+/admin/settings/updatefooter:
+  controller: Setting
+  action: updatefooter
+  roles: [admin]
+
+
 /admin/export:
   controller: Export
   action: export
