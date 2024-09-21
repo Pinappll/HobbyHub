@@ -33,8 +33,14 @@ class PageController
     {
         $form = new PageInsert();
         $configForm = $form->getConfig();
+        $navigation = new Navigation();
+        $navigations = $navigation->findAllBy(["id_page" => 0], "object");
+        $optionsNavigations = [];
+        foreach ($navigations as $nav) {
+            $optionsNavigations[] = ["id" => $nav->getId(), "name" => $nav->getName()];
+        }
+        $configForm["inputs"]["select_navigation"]["option"] = $navigations;
         $error = [];
-        $message = "";
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $verificator = new Verificator();

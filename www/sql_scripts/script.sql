@@ -139,7 +139,7 @@ CREATE TABLE {PREFIX}_recipe_menu (
 -- Navigation
 CREATE TABLE {PREFIX}_navigation (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     link VARCHAR(255) UNIQUE,
     position INT,
     parent_id INT,
