@@ -18,7 +18,7 @@ class User
         $table = new UserTable();
         $configTable = $table->getConfig();
         $user = new UserModel();
-        $users = $user->getList(["is_deleted" => false]);
+        $users = $user->getList();
         $myView = new View("Admin/users", "back");
         $myView->assign("data", $users);
         $myView->assign("configTable", $configTable);
