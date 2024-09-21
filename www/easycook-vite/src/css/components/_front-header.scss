@@ -1,11 +1,13 @@
-.section_header{
+.section_header {
     padding: rem(60) 0;
     text-align: center;
-    background-color: var(--yellow);
-    h1{
-        color: var(--red);
+    background-color: var(--couleur-jaune); // Utilisation de la variable CSS pour le jaune
+
+    h1 {
+        color: var(--couleur-rouge); // Utilisation de la variable CSS pour le rouge
     }
-    p{
-        color: var(--black);
+
+    p {
+        color: var(--couleur-noir); // Utilisation de la variable CSS pour le noir
     }
 }

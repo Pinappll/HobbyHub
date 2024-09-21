@@ -1,17 +1,18 @@
 .no-style-form {
   all: unset; // Réinitialise tous les styles par défaut
   display: block; // Assure que le formulaire conserve un comportement en bloc
-  
 }
-.radio-categorie{
+
+.radio-categorie {
   width: inherit !important;
 }
+
 form {
   width: 100%;
   max-width: rem(600); // Réduction de la largeur maximale du formulaire
   margin: rem(40) auto; // Espace en haut et en bas du formulaire, et centré horizontalement
   padding: rem(20);
-  background-color: $blanc; // Fond blanc pour le formulaire
+  background-color: var(--couleur-blanc); // Fond blanc pour le formulaire
   border-radius: rem(10); // Coins arrondis pour le formulaire
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Légère ombre pour la profondeur
 
@@ -21,7 +22,7 @@ form {
     font-size: rem(20); // Taille du titre légèrement réduite
     font-weight: 700;
     margin-bottom: rem(15); // Réduire l'espacement en dessous du titre
-    color: $gris-fonce;
+    color: var(--couleur-gris-fonce);
   }
 
   .container {
@@ -31,8 +32,8 @@ form {
 
     // Message d'erreur
     .error-message {
-      background-color: $rouge;
-      color: $blanc;
+      background-color: var(--couleur-rouge);
+      color: var(--couleur-blanc);
       padding: rem(8);
       border-radius: rem(5); // Coins arrondis pour les messages d'erreur
       margin-bottom: rem(10); // Réduction de l'espace sous les messages d'erreur
@@ -46,28 +47,28 @@ form {
       label {
         font-size: rem(14);
         font-weight: 600;
-        color: $gris-fonce;
+        color: var(--couleur-gris-fonce);
       }
 
       input, textarea, select {
         width: 100%;
         padding: rem(8) rem(16); // Réduction du padding pour une apparence plus compacte
-        border: 1px solid $gris-clair;
+        border: 1px solid var(--couleur-gris-clair);
         border-radius: rem(5); // Coins arrondis
-        background-color: $gris-clair;
-        color: $gris-fonce;
+        background-color: var(--couleur-gris-clair);
+        color: var(--couleur-gris-fonce);
         font-size: rem(16);
         transition: border-color 0.3s ease, background-color 0.3s ease;
 
         &:focus {
           outline: none;
-          border-color: $jaune; // Bordure colorée au focus
-          background-color: lighten($gris-clair, 10%);
+          border-color: var(--couleur-jaune); // Bordure colorée au focus
+          background-color: #dfdfdf; // Couleur claire pour remplacer `lighten($gris-clair, 10%)`
         }
       }
 
       input::placeholder, textarea::placeholder {
-        color: $gris;
+        color: var(--couleur-gris);
       }
 
       // Styles spécifiques pour les select
@@ -94,7 +95,7 @@ form {
 
         &:focus {
           outline: none;
-          box-shadow: 0 0 4px 2px $jaune; // Ombre jaune lors du focus
+          box-shadow: 0 0 4px 2px var(--couleur-jaune); // Ombre jaune lors du focus
         }
 
         &:hover {
@@ -107,8 +108,8 @@ form {
     input[type="submit"] {
       width: 100%;
       padding: rem(12) rem(20);
-      background-color: $jaune;
-      color: $gris-fonce;
+      background-color: var(--couleur-jaune);
+      color: var(--couleur-gris-fonce);
       font-size: rem(16);
       font-weight: 600;
       border: none;
@@ -117,7 +118,7 @@ form {
       transition: background-color 0.3s ease, transform 0.2s ease;
 
       &:hover {
-        background-color: darken($jaune, 10%);
+        background-color: #d1a500; // Couleur sombre pour remplacer `darken($jaune, 10%)`
         transform: translateY(-3px); // Légère élévation au hover
       }
     }

@@ -4,7 +4,7 @@
     left: 0;
     width: 250px; /* Largeur de la sidebar */
     height: 100vh; /* La sidebar prend toute la hauteur de l'écran */
-    background-color: var(--dark-grey); /* Utilise votre variable de couleur */
+    background-color: var(--couleur-gris-fonce); /* Utilise la variable CSS */
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -35,7 +35,7 @@
                 padding: 15px 0;
 
                 a {
-                    color: white;
+                    color: var(--couleur-blanc); /* Utilise la variable CSS pour le blanc */
                     text-decoration: none;
                     font-size: 1rem;
                     display: block;
@@ -44,7 +44,7 @@
                     transition: background-color 0.3s ease;
 
                     &:hover {
-                        background-color: var(--dark-grey); /* Couleur de survol */
+                        background-color: var(--couleur-gris); /* Couleur de survol */
                     }
                 }
             }
@@ -54,7 +54,7 @@
 
 /* Appliquer le décalage uniquement si has-sidebar est présent */
 .has-sidebar {
-    @media screen and (min-width: $md-size) {
+    @media screen and (min-width: 768px) { /* Remplacement de `$md-size` par une valeur fixe */
         margin-left: 250px; /* Décale le contenu uniquement si la sidebar est présente */
     }
 }
