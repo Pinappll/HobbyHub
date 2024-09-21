@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Core;
-
+use PDO;
 class DB
 {
     protected ?object $pdo = null;
@@ -114,26 +114,38 @@ class DB
 
     //$data = ["id"=>1] ou ["email"=>"y.skrzypczyk@gmail.com"]
     public function getOneBy(array $data, string $return = "array")
-    {
-        $sql = "SELECT * FROM " . $this->table . " WHERE ";
-        foreach ($data as $column => $value) {
-            $sql .= " " . $column . "=:" . $column . " AND";
-        }
-        $sql = substr($sql, 0, -3);  // Supprimer le dernier 'AND'
-
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($data);
-
-        if ($return == "object") {
-            // Retourner un objet de la classe appelée
-            $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
-        } else {
-            // Retourner uniquement les colonnes associatives
-            $queryPrepared->setFetchMode(\PDO::FETCH_ASSOC);
-        }
-
-        return $queryPrepared->fetch();
+{
+    // Construction de la requête SQL
+    $sql = "SELECT * FROM " . $this->table . " WHERE ";
+    foreach ($data as $column => $value) {
+        $sql .= " " . $column . "=:" . $column . " AND";
     }
+    $sql = rtrim($sql, ' AND');  // Supprimer le dernier 'AND'
+
+    // Préparation de la requête
+    $queryPrepared = $this->pdo->prepare($sql);
+    
+    // Liaison des valeurs en tenant compte des booléens
+    foreach ($data as $key => $value) {
+        if (is_bool($value)) {
+            $queryPrepared->bindValue(':' . $key, $value, PDO::PARAM_BOOL);
+        } else {
+            $queryPrepared->bindValue(':' . $key, $value);
+        }
+    }
+
+    // Exécution de la requête
+    $queryPrepared->execute();
+
+    // Définition du mode de récupération
+    if ($return === "object") {
+        $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+    } else {
+        $queryPrepared->setFetchMode(\PDO::FETCH_ASSOC);
+    }
+
+    return $queryPrepared->fetch();
+}
 
     public function delete()
     {

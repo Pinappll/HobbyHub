@@ -194,4 +194,76 @@ class Recipe
         $myView->assign("data", $dataRecipe);
         $myView->assign("title", "Liste des recettes");
     }
+
+    public function index(): void
+{
+    // Créer une instance de la vue
+    $myView = new View("Recipe/recipes", "front");
+
+    // Configuration de la pagination
+    $recipesPerPage = 6; // Nombre de recettes par page
+    $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $offset = ($currentPage - 1) * $recipesPerPage;
+
+    // Initialiser le modèle de recette
+    $recipeModel = new RecipeModel();
+
+    // Récupérer les recettes avec jointure (similaire à showRecipes)
+    $dataRecipe = $recipeModel->select("DISTINCT " . $recipeModel->getNameDb() . "_recipe.*")
+        ->join($recipeModel->getNameDb() . "_recipe_category", $recipeModel->getNameDb() . "_recipe.id = " . $recipeModel->getNameDb() . "_recipe_category.id_recipe_category")
+        ->join($recipeModel->getNameDb() . "_category", $recipeModel->getNameDb() . "_category.id = " . $recipeModel->getNameDb() . "_recipe_category.id_category")
+        ->where($recipeModel->getNameDb() . "_category.is_deleted = false AND " . $recipeModel->getNameDb() . "_recipe.is_deleted = false")
+        ->limit($recipesPerPage)
+        ->execute();
+
+    // Obtenir le nombre total de recettes pour la pagination
+    $totalRecipes = $recipeModel->select("COUNT(DISTINCT " . $recipeModel->getNameDb() . "_recipe.id) as total")
+        ->join($recipeModel->getNameDb() . "_recipe_category", $recipeModel->getNameDb() . "_recipe.id = " . $recipeModel->getNameDb() . "_recipe_category.id_recipe_category")
+        ->join($recipeModel->getNameDb() . "_category", $recipeModel->getNameDb() . "_category.id = " . $recipeModel->getNameDb() . "_recipe_category.id_category")
+        ->where($recipeModel->getNameDb() . "_category.is_deleted = false AND " . $recipeModel->getNameDb() . "_recipe.is_deleted = false")
+        ->execute();
+
+    $totalRecipes = $totalRecipes[0]['total'] ?? 0;
+    $totalPages = ceil($totalRecipes / $recipesPerPage);
+
+    // Utiliser myView->assign pour transmettre les variables à la vue
+    $myView->assign("data", $dataRecipe);
+    $myView->assign("currentPage", $currentPage);
+    $myView->assign("totalPages", $totalPages);
+    $myView->assign("recipesPerPage", $recipesPerPage);
+    $myView->assign("title", "Liste des recettes");
+}
+public function viewRecipe(): void
+{
+    // Récupérer l'ID de la recette depuis l'URL
+    if (!isset($_GET['id']) || empty($_GET['id'])) {
+        header("Location: /recipes");
+        exit;
+    }
+
+    $id = (int)$_GET['id'];
+    $recipeModel = new RecipeModel();
+
+    // Utilisation de la méthode `getOneBy` pour récupérer une recette spécifique
+    $recipe = $recipeModel->getOneBy(['id' => $id, 'is_deleted' => false], 'object');
+
+    if (!$recipe) {
+        header("Location: /recipes");
+        exit;
+    }
+
+    // Charger les catégories associées à la recette
+    $categories = (new Recipe_category())->findAllBy(['id_recipe_category' => $id]);
+
+    // Créer une instance de la vue
+    $myView = new View("Recipe/single-recipe", "front");
+
+    // Assigner les données à la vue
+    $myView->assign("recipe", $recipe);
+    $myView->assign("categories", $categories);
+    $myView->assign("title", "Détails de la recette: " . $recipe->getTitle_recipe());
+}
+
+
+
 }

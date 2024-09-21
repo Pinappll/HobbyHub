@@ -9,7 +9,7 @@
     flex-direction: row; // Affichage en ligne en desktop
     align-items: stretch; // Le texte et l'image ont la même hauteur
     width: 100%;
-    background-color: $blanc;
+    background-color: var(--couleur-blanc);
     border-radius: rem(10); // Coins arrondis pour l'ensemble du bloc
     overflow: hidden; // Pour éviter les débordements
     transition: background-color 0.3s ease;
@@ -24,12 +24,12 @@
 
     .hero__text-box {
       flex: 1; // Prend l'autre moitié de l'espace disponible
-      background-color: $jaune-clair; // Jaune transparent en mode clair
+      background-color: var(--couleur-jaune-clair); // Jaune clair en mode clair
       padding: rem(20); // Padding pour le texte
       display: flex;
       flex-direction: column;
       justify-content: center;
-      color: $gris; // Couleur du texte
+      color: var(--couleur-gris); // Couleur du texte
       text-align: left; // Aligner tout le texte à gauche en desktop
       transition: background-color 0.3s ease;
 
@@ -43,13 +43,13 @@
   // Version dark
   body.dark-mode & {
     &__content {
-      background-color: $dark-foreground; // Couleur de fond du bloc en mode dark
+      background-color: var(--dark-foreground); // Couleur de fond du bloc en mode dark
     }
 
     .hero__text-box {
-      background-color: $dark-background; // Fond pour la partie texte en mode dark
-      color: $dark-text; // Texte en blanc cassé
-      border-left: rem(2) solid $dark-border; // Bordure pour séparer image et texte
+      background-color: var(--dark-background); // Fond pour la partie texte en mode dark
+      color: var(--dark-text); // Texte en blanc cassé
+      border-left: rem(2) solid var(--dark-border); // Bordure pour séparer image et texte
     }
   }
 
@@ -70,7 +70,7 @@
 
         // Version dark
         body.dark-mode & {
-          background-color: $dark-background; // Fond en mode dark
+          background-color: var(--dark-background); // Fond en mode dark
         }
       }
 

@@ -30,6 +30,12 @@ class SitemapController
         $url->addChild('lastmod', date('Y-m-d')); // Vous pouvez personnaliser ceci avec la date réelle de mise à jour
         $url->addChild('priority', '0.9'); // Ajustez la priorité si nécessaire
 
+        // Recipes
+        $url = $sitemap->addChild('url');
+        $url->addChild('loc', 'http://www.easycook.ninja/recipes'); // Ajoutez ici votre URL de base
+        $url->addChild('lastmod', date('Y-m-d')); // Vous pouvez personnaliser ceci avec la date réelle de mise à jour
+        $url->addChild('priority', '0.9'); // Ajustez la priorité si nécessaire
+
         // design guide
         $url = $sitemap->addChild('url');
         $url->addChild('loc', 'http://www.easycook.ninja/design-guide'); // Ajoutez ici votre URL de base

@@ -42,14 +42,8 @@ class UserInsert
                     "type" => "select",
                     "class" => "input-form",
                     "placeholder" => "Type d'utilisateur",
-                    "options" => [
-                        "viewer" => "viewer",
-                        "chef" => "chef",
-                        "admin" => "admin"
-                    ],
                     "required" => true,
-                    "error" => "Vous devez sélectionner un type d'utilisateur",
-                    "value" => null, 
+                    "error" => "Vous devez sélectionner un type d'utilisateur"
                 ],
                 "is_verified_user" => [
                     "type" => "checkbox",

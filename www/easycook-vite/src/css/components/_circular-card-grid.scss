@@ -49,17 +49,17 @@
   &__title {
     font-size: rem(16);
     font-weight: 600;
-    color: $gris;
+    color: var(--couleur-gris);
   }
 }
 
 // Mode sombre
 body.dark-mode .circular-card {
-  background-color: $dark-background; // Fond sombre pour les cards
-  color: $dark-text; // Texte en mode sombre
+  background-color: var(--dark-background); // Fond sombre pour les cards
+  color: var(--dark-text); // Texte en mode sombre
 
   &__title {
-    color: $dark-text; // Couleur du texte en mode sombre
+    color: var(--dark-text); // Couleur du texte en mode sombre
   }
 
   &:hover {

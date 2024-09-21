@@ -13,8 +13,8 @@
 
 // Footer sticky
 .footer {
-  background-color: $gris-fonce;
-  color: $blanc;
+  background-color: var(--couleur-gris-fonce);
+  color: var(--couleur-blanc);
   padding: rem(40) 0;
   text-align: center;
   margin-top: auto; // Pousse le footer en bas si le contenu est insuffisant
@@ -50,13 +50,13 @@
 
       li {
         a {
-          color: $blanc;
+          color: var(--couleur-blanc);
           text-decoration: none;
           font-size: rem(16);
           transition: color 0.3s ease;
 
           &:hover {
-            color: $jaune; // Change de couleur au hover
+            color: var(--couleur-jaune); // Change de couleur au hover
           }
         }
       }
@@ -69,12 +69,12 @@
 
     a {
       font-size: rem(20);
-      color: $blanc;
+      color: var(--couleur-blanc);
       text-decoration: none;
       transition: color 0.3s ease;
 
       &:hover {
-        color: $jaune; // Change de couleur au hover
+        color: var(--couleur-jaune); // Change de couleur au hover
       }
 
       i {
@@ -89,7 +89,7 @@
 
   &__copyright {
     font-size: rem(14);
-    color: lighten($gris-fonce, 30%);
+    color: #a0a0a0; // Couleur plus claire pour remplacer `lighten($gris-fonce, 30%)`
     margin-top: rem(20);
 
     @include respond-to('desktop') {

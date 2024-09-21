@@ -2,53 +2,53 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  text-decoration: none; // Retirer le soulignement des liens
-  background-color: $blanc; // Fond blanc pour la card en version claire
-  border-radius: rem(10); // Coins arrondis pour la card
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); // Ombre par défaut
+  text-decoration: none;
+  background-color: var(--couleur-blanc);
+  border-radius: rem(10);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; // Animation douce pour le hover
-  height: 100%; // Assure que toutes les cards ont la même hauteur
-  color: $gris;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: rem(275); /* Fixe la largeur de toutes les cartes */
+  color: var(--couleur-gris);
 
   &:hover {
-    transform: translateY(rem(-5)); // Légère élévation lors du hover
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); // Ombre plus forte au hover
+    transform: translateY(rem(-5));
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   }
 
   &__image {
     width: 100%;
-    height: auto;
-    border-radius: rem(10) rem(10) 0 0; // Coins arrondis uniquement en haut
-    object-fit: cover; // Ajuste l'image à l'espace disponible
-    flex-grow: 1; // L'image prend tout l'espace restant
+    height: rem(150); /* Ajustez la hauteur de l'image */
+    border-radius: rem(10) rem(10) 0 0;
+    object-fit: cover;
+    flex-shrink: 0;
   }
 
   &__title {
     padding: rem(10);
     font-size: rem(18);
     font-weight: 600;
-    background-color: transparent; // Pas de fond pour le titre en version claire
+    background-color: transparent;
   }
 
   &__content {
     padding: rem(10);
     font-size: rem(14);
-    color: $gris;
+    color: var(--couleur-gris);
   }
 
   // Mode sombre
   body.dark-mode & {
-    background-color: $dark-background; // Fond sombre pour les cartes en mode sombre
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35); // Ombre plus marquée en dark mode
-    color: $dark-text; // Texte en couleur claire
+    background-color: var(--dark-background);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+    color: var(--dark-text);
 
     &__title {
-      color: $dark-text; // Le texte reste clair en dark mode
+      color: var(--dark-text);
     }
 
     &:hover {
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45); // Ombre plus forte au hover en mode sombre
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
     }
   }
 }

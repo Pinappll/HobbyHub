@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\DB;
+use PDO;
 
 class Recipe extends DB
 {
@@ -172,4 +173,27 @@ class Recipe extends DB
 
     //     return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
     // }
+
+    // Méthode pour récupérer les recettes avec pagination
+    public function getRecipesWithPagination(int $limit, int $offset): array
+    {
+        $sql = "SELECT * FROM easycook_recipe WHERE is_deleted = 0 LIMIT :limit OFFSET :offset";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // Méthode pour obtenir le nombre total de recettes
+    public function getTotalRecipesCount(): int
+    {
+        $sql = "SELECT COUNT(*) FROM easycook_recipe WHERE is_deleted = 0";
+        $stmt = $this->pdo->query($sql);
+
+        return (int) $stmt->fetchColumn();
+    }
+
+    
 }

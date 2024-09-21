@@ -1,20 +1,19 @@
 .navbar {
 	position: sticky;
-	
-	background-color: var(--brown);
+	background-color: var(--couleur-marron); // Remplacement de `--brown` par un nom plus clair
 	.container {
 		padding: 1rem;
 		@include flexbox(row, wrap, space-between, center, 0);
-		.navbar-desktop{
+		.navbar-desktop {
 			display: none;
 		}
 	}
 
-	&-admin{
-		background-color: var(--dark-grey);
+	&-admin {
+		background-color: var(--couleur-gris-fonce); // Remplacement de `--dark-grey`
 	}
 
-	img{
+	img {
 		padding-top: 1%;
 		width: 20%;
 	}
@@ -22,14 +21,12 @@
 	svg {
 		width: 7%;
 		height: 7%;
-		
 	}
-	
 
 	form {
 		@include flexbox(row, wrap, flex-start, stretch, rem(10));
 		.button {
-			--text-color: var(--grey);
+			--text-color: var(--couleur-gris); // Remplacement de `--grey`
 		}
 		input[type="text"] {
 			font-size: rem(18);
@@ -90,33 +87,26 @@
 	}
 	&_toggle_content {
 		z-index: 10;
-		//padding: rem(10) rem(16); // mieux vaut mettre du margin sur l'enfant (transition sur la height)
 		@include flexbox(column, nowrap, space-between, stretch, rem(30));
 		position: fixed;
-		
 		width: 100%;
 		height: 100%;
-		background-color: lightgrey;
-		
-		
+		background-color: var(--couleur-gris-clair); // Remplacement de `lightgrey`
 		overflow: hidden;
 		padding: 1rem;
 		translate: -100%;
 		transition: transform 0.3s;
-		
-		
 	}
 	ul {
 		@include resetList;
 		@include flexbox(column, wrap, flex-start, flex-start, rem(18));
 		
-		li{
+		li {
 			padding: 1rem;
 		}
-		.button-connexion{
-			background-color: #BE5A38;
-			
-			color: white;
+		.button-connexion {
+			background-color: var(--couleur-marron-clair); // Remplacement de `#BE5A38`
+			color: var(--couleur-blanc); 
 			border: none;
 			padding: 1rem;
 			border-radius: 5px;
@@ -125,10 +115,9 @@
 			width: 100%;
 			text-align: center;
 			transition: all 0.3s;
-			&:hover{
-				background-color: #E8A87C;
+			&:hover {
+				background-color: var(--couleur-peche); // Remplacement de `#E8A87C`
 			}
-			
 		}
 		a {
 			font-size: rem(18);
@@ -138,58 +127,50 @@
 
 	@media screen and (min-width: $md-size) {
 		.container {
-			img{
+			img {
 				width: 10%;
 			}
-			
 
-			.navbar-desktop{
+			.navbar-desktop {
 				display: flex;
 				justify-content: flex-end;
 				flex-direction: row;
 				align-items: center;
 				flex-grow: 1;
 				margin: rem(0);
-				li{
+				li {
 					color: var(--text-color);
 					
-					ul{
+					ul {
 						display: none;
-
 						li a {
 							display: block;
 							padding: 10px;
 							text-decoration: none;
-							color: black;
-							white-space: nowrap;	
+							color: var(--couleur-noir); // Remplacement de `black`
+							white-space: nowrap;
 						}
-
 					}
-					
-					
 				}
 
-				li:hover ul{
+				li:hover ul {
 					display: block;
 					position: absolute;
-					background-color: var(--brown);
+					background-color: var(--couleur-marron);
 					border-radius: 5px;
 					padding: 0;
 					margin: 0;
-					li a{
-						color: white;
+					li a {
+						color: var(--couleur-blanc);
 					}
-
 				}
-
-				
 			}
 		}
 		
-		svg{
+		svg {
 			display: none;
 		}
-		
+
 		&_toggle_button {
 			display: none;
 		}

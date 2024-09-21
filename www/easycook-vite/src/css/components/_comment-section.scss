@@ -2,7 +2,7 @@
   margin-bottom: rem(40); // Espacement sous la section
   padding: rem(20);
   border-radius: rem(15); // Coins arrondis
-  background-color: $jaune-clair; // Fond en mode clair
+  background-color: var(--couleur-jaune-clair); // Fond en mode clair
   transition: background-color 0.3s ease, border 0.3s ease;
 
   &__form {
@@ -19,7 +19,7 @@
   hr {
     margin: rem(20) 0;
     border: none;
-    border-top: 2px solid $blanc;
+    border-top: 2px solid var(--couleur-blanc);
   }
 
   &__field {
@@ -30,18 +30,18 @@
       font-size: rem(14);
       font-weight: 600;
       margin-bottom: rem(5);
-      color: $gris;
+      color: var(--couleur-gris);
     }
 
     input, textarea {
       padding: rem(10);
-      border: 1px solid $gris-clair;
+      border: 1px solid var(--couleur-gris-clair);
       border-radius: rem(5);
       font-size: rem(16);
       transition: border 0.3s ease;
 
       &:focus {
-        border-color: $jaune;
+        border-color: var(--couleur-jaune);
         outline: none;
       }
 
@@ -62,8 +62,8 @@
 
   &__submit {
     padding: rem(12) rem(20);
-    background-color: $rouge;
-    color: $blanc;
+    background-color: var(--couleur-rouge);
+    color: var(--couleur-blanc);
     border: none;
     border-radius: rem(5);
     cursor: pointer;
@@ -71,7 +71,7 @@
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: $rouge-fonce;
+      background-color: var(--couleur-rouge-fonce);
     }
   }
 
@@ -86,7 +86,7 @@
 
       &__text {
         font-size: rem(16);
-        color: $gris;
+        color: var(--couleur-gris);
 
         @include respond-to('phone') {
           font-size: rem(14); // Taille légèrement réduite en mobile
@@ -97,40 +97,40 @@
 
   // Version dark
   body.dark-mode & {
-    background-color: $dark-foreground; // Fond sombre en mode dark
-    border: 1px solid $dark-border; // Ajout d'une bordure en mode sombre
-    color: $dark-text; // Texte clair en mode sombre
+    background-color: var(--dark-foreground); // Fond sombre en mode dark
+    border: 1px solid var(--dark-border); // Ajout d'une bordure en mode sombre
+    color: var(--dark-text); // Texte clair en mode sombre
 
     hr {
-      border-top: 2px solid $dark-border; // Ligne de séparation plus subtile
+      border-top: 2px solid var(--dark-border); // Ligne de séparation plus subtile
     }
 
     &__field {
       label {
-        color: $dark-text; // Texte des labels en clair
+        color: var(--dark-text); // Texte des labels en clair
       }
 
       input, textarea {
-        background-color: $dark-background; // Fond des champs en mode sombre
-        border: 1px solid $dark-border; // Bordure plus sombre
-        color: $dark-text; // Texte en clair
+        background-color: var(--dark-background); // Fond des champs en mode sombre
+        border: 1px solid var(--dark-border); // Bordure plus sombre
+        color: var(--dark-text); // Texte en clair
 
         &:focus {
-          border-color: $dark-accent; // Accentuation de la bordure sur focus en dark mode
+          border-color: var(--dark-accent); // Accentuation de la bordure sur focus en dark mode
         }
       }
     }
 
     &__submit {
-      background-color: $dark-accent; // Bouton en accent dark
+      background-color: var(--dark-accent); // Bouton en accent dark
       &:hover {
-        background-color: darken($dark-accent, 10%); // Accentuation du bouton au hover
+        background-color: var(--dark-accent); // Accentuation du bouton au hover
       }
     }
 
     &__list {
       .comment__text {
-        color: lighten($dark-text, 20%); // Texte des commentaires plus clair en mode sombre
+        color: #d1d1d1; // Couleur de remplacement éclaircie pour le texte des commentaires
       }
     }
   }

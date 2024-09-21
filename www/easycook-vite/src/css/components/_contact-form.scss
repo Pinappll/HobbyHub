@@ -1,102 +1,99 @@
-// _contact-form.scss
-
 .contact-form {
-    max-width: rem(600); // Largeur maximale du formulaire
-    margin: 0 auto; // Centrer le formulaire
-    padding: rem(20);
-    background-color: $blanc; // Fond blanc
-    border-radius: rem(10); // Coins arrondis
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); // Ombre légère
-  
-    &__form {
-      display: flex;
-      flex-direction: column; // Disposer les champs en colonne
-      gap: rem(20); // Espace entre les champs
-    }
-  
-    &__field {
-      display: flex;
-      flex-direction: column; // Label au-dessus du champ
-      gap: rem(5);
-  
-      label {
-        font-size: rem(14);
-        font-weight: 600;
-        color: $gris;
-        display: inline-block;
-      }
-  
-      input, textarea {
-        padding: rem(10);
-        border: 1px solid $gris-clair;
-        border-radius: rem(5);
-        font-size: rem(16);
-        color: $gris;
-        transition: border 0.3s ease, box-shadow 0.3s ease;
-  
-        &:focus {
-          border-color: $jaune; // Couleur de la bordure au focus
-          box-shadow: 0 0 rem(5) rgba(248, 198, 48, 0.3); // Ombre au focus
-          outline: none; // Supprimer le contour par défaut
-        }
-      }
-  
-      textarea {
-        resize: vertical; // Permettre de redimensionner verticalement
-      }
-  
-      span {
-        color: $rouge; // Indication pour les champs obligatoires
-      }
-    }
-  
-    &__actions {
-      display: flex;
-      justify-content: flex-end; // Alignement du bouton à droite
-    }
-  
-    &__submit {
-      padding: rem(12) rem(20);
-      background-color: $jaune;
-      color: $blanc;
-      border: none;
-      border-radius: rem(5);
-      cursor: pointer;
-      font-size: rem(16);
+  max-width: rem(600); // Largeur maximale du formulaire
+  margin: 0 auto; // Centrer le formulaire
+  padding: rem(20);
+  background-color: var(--couleur-blanc); // Fond blanc
+  border-radius: rem(10); // Coins arrondis
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); // Ombre légère
+
+  &__form {
+    display: flex;
+    flex-direction: column; // Disposer les champs en colonne
+    gap: rem(20); // Espace entre les champs
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column; // Label au-dessus du champ
+    gap: rem(5);
+
+    label {
+      font-size: rem(14);
       font-weight: 600;
-      transition: background-color 0.3s ease;
-  
-      &:hover {
-        background-color: $rouge; // Changement de couleur au hover
+      color: var(--couleur-gris);
+      display: inline-block;
+    }
+
+    input, textarea {
+      padding: rem(10);
+      border: 1px solid var(--couleur-gris-clair);
+      border-radius: rem(5);
+      font-size: rem(16);
+      color: var(--couleur-gris);
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+
+      &:focus {
+        border-color: var(--couleur-jaune); // Couleur de la bordure au focus
+        box-shadow: 0 0 rem(5) rgba(248, 198, 48, 0.3); // Ombre au focus
+        outline: none; // Supprimer le contour par défaut
+      }
+    }
+
+    textarea {
+      resize: vertical; // Permettre de redimensionner verticalement
+    }
+
+    span {
+      color: var(--couleur-rouge); // Indication pour les champs obligatoires
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end; // Alignement du bouton à droite
+  }
+
+  &__submit {
+    padding: rem(12) rem(20);
+    background-color: var(--couleur-jaune);
+    color: var(--couleur-blanc);
+    border: none;
+    border-radius: rem(5);
+    cursor: pointer;
+    font-size: rem(16);
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--couleur-rouge); // Changement de couleur au hover
+    }
+  }
+}
+
+// Mode sombre
+body.dark-mode .contact-form {
+  background-color: var(--dark-background);
+  color: var(--dark-text);
+
+  &__field {
+    input, textarea {
+      background-color: var(--dark-background);
+      color: var(--dark-text);
+      border: 1px solid var(--dark-text);
+
+      &:focus {
+        border-color: var(--dark-accent);
+        box-shadow: 0 0 rem(5) rgba(255, 107, 107, 0.3);
       }
     }
   }
-  
-  // Mode sombre
-  body.dark-mode .contact-form {
-    background-color: $dark-background;
-    color: $dark-text;
-  
-    &__field {
-      input, textarea {
-        background-color: $dark-background;
-        color: $dark-text;
-        border: 1px solid $dark-text;
-  
-        &:focus {
-          border-color: $dark-accent;
-          box-shadow: 0 0 rem(5) rgba(255, 107, 107, 0.3);
-        }
-      }
-    }
-  
-    &__submit {
-      background-color: $dark-accent;
-      color: $dark-text;
-  
-      &:hover {
-        background-color: $rouge;
-      }
+
+  &__submit {
+    background-color: var(--dark-accent);
+    color: var(--dark-text);
+
+    &:hover {
+      background-color: var(--couleur-rouge);
     }
   }
-  
+}

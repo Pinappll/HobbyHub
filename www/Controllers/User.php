@@ -18,7 +18,7 @@ class User
         $table = new UserTable();
         $configTable = $table->getConfig();
         $user = new UserModel();
-        $users = $user->getList(["is_deleted" => false]);
+        $users = $user->getList();
         $myView = new View("Admin/users", "back");
         $myView->assign("data", $users);
         $myView->assign("configTable", $configTable);
@@ -33,6 +33,14 @@ class User
     $errors = [];
     $message = "";
 
+    // Créer la liste des rôles utilisateur (comme dans editUser)
+    $role = [
+        ["id" => "viewer", "name" => "viewer"], 
+        ["id" => "admin", "name" => "admin"], 
+        ["id" => "chef", "name" => "chef"]
+    ];
+    $config["inputs"]["type_user"]["option"] = $role;
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $verificator = new Verificator();
         if ($verificator->checkForm($config, $_REQUEST, $errors)) {
@@ -41,9 +49,10 @@ class User
             $user->setLastname_user($_REQUEST["lastname_user"]);
             $user->setFirstname_user($_REQUEST["firstname_user"]);
             $user->setEmail_user($_REQUEST["email_user"]);
-            $user->setIsverified_user(isset($_REQUEST["is_verified_user"])); 
+            $user->setIsverified_user(isset($_REQUEST["is_verified_user"]));
+            $user->setPassword_user($_REQUEST["password_user"]); 
             $user->setType_user($_REQUEST["type_user"]);
-            
+            $user->setToken_user(bin2hex(random_bytes(16)));
             
             $result = $user->save(); 
 
@@ -55,10 +64,12 @@ class User
         }
     }
 
+    // Assigner les valeurs du formulaire, erreurs et message à la vue
     $myView->assign("configForm", $config);
     $myView->assign("errorsForm", $errors);
     $myView->assign("message", $message);
 }
+
 
 public function editUser(): void
 {
