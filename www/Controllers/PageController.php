@@ -39,7 +39,7 @@ class PageController
         foreach ($navigations as $nav) {
             $optionsNavigations[] = ["id" => $nav->getId(), "name" => $nav->getName()];
         }
-        $configForm["inputs"]["select_navigation"]["option"] = $navigations;
+        $configForm["inputs"]["select_navigation"]["option"] = $optionsNavigations;
         $error = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

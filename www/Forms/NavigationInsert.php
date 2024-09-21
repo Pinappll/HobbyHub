@@ -17,30 +17,30 @@ class NavigationInsert
         // Générer les options pour les positions existantes, les ordonner et ajouter la prochaine position
         $positionOptions = [];
         $positionsInNavbar = array_unique($data['positionsInNavbar'] ?? []); // Assurer que les positions sont uniques
-        sort($positionsInNavbar); // Ordonner les positions
+        sort($positionsInNavbar);
 
         foreach ($positionsInNavbar as $position) {
             $positionOptions[] = [
-                "value" => $position,
-                "label" => "Position " . $position,
+                "id" => $position,
+                "name" => "Position " . $position,
                 "selected" => ($position == $selectedPosition)
             ];
         }
 
         // Ajouter l'option pour la prochaine position disponible
         $positionOptions[] = [
-            "value" => $nextPosition,
-            "label" => "Prochaine position " . $nextPosition,
+            "id" => $nextPosition,
+            "name" => "Prochaine position " . $nextPosition,
             "selected" => ($nextPosition == $selectedPosition)
         ];
 
         // Générer les options pour les parents présents dans la navbar
-        $parentOptions = [["value" => 0, "label" => "Aucun parent", "selected" => ($selectedParent === null || $selectedParent == 0)]];
+        //$parentOptions = [["id" => 0, "name" => "Aucun parent", "selected" => ($selectedParent === null || $selectedParent == 0)]];
 
         foreach ($parents as $parent) {
             $parentOptions[] = [
-                "value" => $parent['id'] ?? '',
-                "label" => $parent['name'] ?? '',
+                "id" => $parent['id'] ?? '',
+                "name" => $parent['name'] ?? '',
                 "selected" => ($parent['id'] == $selectedParent)
             ];
         }
@@ -69,7 +69,7 @@ class NavigationInsert
                     "placeholder" => "Position",
                     "required" => true,
                     "error" => "Veuillez sélectionner une position valide",
-                    "options" => $positionOptions
+                    "option" => $positionOptions
                 ],
                 "parent_id" => [
                     "type" => "select",
@@ -77,7 +77,7 @@ class NavigationInsert
                     "placeholder" => "Parent",
                     "required" => false,
                     "error" => "Veuillez sélectionner une navigation parent valide",
-                    "options" => $parentOptions
+                    "option" => $parentOptions
                 ],
                 "level" => [
                     "type" => "number",
@@ -92,9 +92,9 @@ class NavigationInsert
                     "class" => "input-form",
                     "placeholder" => "Afficher dans la navbar",
                     "required" => true,
-                    "options" => [
-                        ["value" => 1, "label" => "Oui", "selected" => ($isInNavbar == 1)],
-                        ["value" => 0, "label" => "Non", "selected" => ($isInNavbar == 0)]
+                    "option" => [
+                        ["id" => 1, "name" => "Oui", "selected" => ($isInNavbar == 1)],
+                        ["id" => 0, "name" => "Non", "selected" => ($isInNavbar == 0)]
                     ],
                     "error" => "Veuillez choisir si la navigation doit apparaître dans la navbar."
                 ]
