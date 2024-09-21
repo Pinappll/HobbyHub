@@ -12,7 +12,7 @@ class User extends DB
     protected string $email_user;
     protected string $password_user;
     protected string $type_user = "viewer";
-    protected string $token_user;
+    protected string $token_user = '';
     protected bool $is_deleted;
     protected bool $is_verified_user;
 
