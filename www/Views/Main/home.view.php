@@ -1,5 +1,5 @@
 <main>
-<div class="container hero">
+<!-- <div class="container hero">
   <div class="hero__content">
     <img src="../../dist/assets/images/restau.jpg" alt="Image du restaurant" class="hero__image">
     <div class="hero__text-box">
@@ -89,7 +89,7 @@
 
 </div>
 
-    <!-- <section class="section section-menu">
+<section class="section section-menu">
         <h1>menu</h1>
         <?php if (!empty($data["menu"])) : ?>
             <?php foreach ($data["menu"] as $menu) : ?>
@@ -100,5 +100,4 @@
             <?php endforeach; ?>
         <?php endif; ?>
     </section> -->
-
 </main>
