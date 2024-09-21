@@ -1,3 +1,10 @@
+<section class="section">
+
+    <h1>Ajout navigation</h1>
+    <br>
+    <a href="/admin/navigation" class="button button-primary">Retour</a>
+    <br>
+    <br>
 <?php 
 if (isset($configForm) && isset($errorsForm)) {
     // Inclusion du composant avec les valeurs pré-remplies
