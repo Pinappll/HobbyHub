@@ -28,6 +28,8 @@
                 ?>
                 <?php if ($user && $user->getType_user() === 'admin'): ?>
                     <a href="/admin" class="header__user-icon">Admin</a>
+                <?php elseif ($user && $user->getType_user() === 'chef'): ?>
+                    <a href="/admin/category" class="header__user-icon">Chef</a>
                 <?php endif; ?>
                 
                 <a href="/logout" class="header__user-icon">

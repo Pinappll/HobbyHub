@@ -77,42 +77,42 @@
 /admin/menus:
   controller: Menu
   action: showMenus
-  roles: [admin]
+  roles: [admin, chef]
 
 /admin/menus/add:
   controller: Menu
   action: addMenu
-  roles: [admin]
+  roles: [admin, chef]
 
 /admin/menus/delete:
   controller: Menu
   action: deleteMenu
-  roles: [admin]
+  roles: [admin, chef]
 
 /admin/menus/edit:
   controller: Menu
   action: updateMenu
-  roles: [admin]
+  roles: [admin, chef]
 
 /admin/recipes:
   controller: Recipe
   action: showRecipes
-  roles: [admin]
+  roles: [admin, chef]
 
 /admin/recipes/add:
   controller: Recipe
   action: addRecipe
-  roles: [admin]
+  roles: [admin, chef]
   
 /admin/recipes/delete:
   controller: Recipe
   action: deleteRecipe
-  roles: [admin]
+  roles: [admin, chef]
   
 /admin/recipes/edit:
   controller: Recipe
   action: editRecipe
-  roles: [admin]
+  roles: [admin, chef]
 
 /admin/users:
   controller: User
@@ -169,22 +169,22 @@
 /admin/category/add:
   controller: Category
   action: addCategorie
-  roles: [admin]
+  roles: [admin, chef]
 
 /admin/category:
   controller: Category
   action: showCategories
-  roles: [admin]
+  roles: [admin, chef]
 
 /admin/category/delete:
   controller: Category
   action: deleteCategory
-  roles: [admin]
+  roles: [admin, chef]
 
 /admin/category/edit:
   controller: Category
   action: editCategory
-  roles: [admin]
+  roles: [admin, chef]
 
 
 
