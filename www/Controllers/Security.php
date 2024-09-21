@@ -143,66 +143,89 @@ class Security
     }
 
     public function passwordForgot()
-    {
-        if (isset($_SESSION['user_id'])) {
-            header("Location: /");
-        }else{
+{
+    if (isset($_SESSION['user_id'])) {
+        header("Location: /");
+    } else {
         $form = new UserForgetPassword();
         $config = $form->getConfig();
-        $errors = array();
+        $errors = [];
         $message = "";
+
         if ($_SERVER["REQUEST_METHOD"] == $config["config"]["method"]) {
             $verificator = new Verificator();
             if ($verificator->checkForm($config, $_REQUEST, $errors)) {
                 $user = new User();
                 $user = $user->getOneBy(["email_user" => $_REQUEST["email"]], "object");
+
                 if ($user) {
-                    $token = $verificator->generateToken();
-                    $user->setToken_user($token);
+                    // Utiliser le token existant ou en générer un nouveau si nécessaire
+                    if (!$user->getToken_user()) {
+                        $token = $verificator->generateToken();
+                        $user->setToken_user($token);
+                    } else {
+                        // Si le token existe déjà, on l'utilise sans en créer un nouveau
+                        $token = $user->getToken_user();
+                    }
+
                     if ($user->save()) {
+                        // Envoyer un email avec le lien de réinitialisation
                         $mail = new Mail();
-                        $subject = "Vérification du compte";
-                        $content = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost/change-password?token=' . $token . '">Activer</a>';
+                        $subject = "Réinitialisation du mot de passe";
+                        $content = 'Cliquez sur le lien suivant pour réinitialiser votre mot de passe : 
+                                    <a href="http://localhost/change-password?token=' . $token . '">Réinitialiser le mot de passe</a>';
                         $message = $mail->sendMail([$user->getEmail_user()], $subject, $content);
                     } else {
-                        $errors = array("Email non envoyé");
+                        $errors[] = "Erreur lors de l'envoi de l'e-mail.";
                     }
                 } else {
-                    $errors = array("Email non enregistrer");
+                    $errors[] = "Adresse e-mail non enregistrée.";
                 }
             }
         }
+
         $myView = new View("Security/password-forgot", "front");
         $myView->assign("configForm", $config);
         $myView->assign("errorsForm", $errors);
         $myView->assign("message", $message);
         $myView->assign("title", "Mot de passe oublié");
+    }
+}
+
+
+
+
+public function changePassword()
+{
+    $token = $_GET["token"] ?? "";
+    $form = new UserChangePassword();
+    $config = $form->getConfig(["token" => $token]);
+    $errors = [];
+    $message = "";
+
+    $verificator = new Verificator();
+    if ($_SERVER["REQUEST_METHOD"] == $config["config"]["method"]) {
+        if ($verificator->checkForm($config, $_REQUEST, $errors)) {
+            $user = new User();
+            $user = $user->getOneBy(["token_user" => $_REQUEST["token"]], "object");
+            if ($user) {
+                // Met à jour le mot de passe
+                $user->setPassword_user($_REQUEST["password"]);
+                if ($user->save()) {
+                    $message = "Mot de passe modifié avec succès. Vous pouvez vous connecter.";
+                } else {
+                    $errors[] = "Erreur lors de la modification du mot de passe.";
+                }
+            } else {
+                $errors[] = "Le token est invalide ou l'utilisateur n'existe pas.";
+            }
         }
     }
 
-    public function changePassword()
-    {
-        $token = $_GET["token"] ?? "";
-        $form = new UserChangePassword();
-        $config = $form->getConfig(["token" => $token]);
-        $errors = array();
-        $message = "";
-        $verificator = new Verificator();
-        if ($_SERVER["REQUEST_METHOD"] == $config["config"]["method"]) {
-            if ($verificator->checkForm($config, $_REQUEST, $errors)) {
-                $user = new User();
-                $user = $user->getOneBy(["token_user" => $_REQUEST["token"]], "object");
-                if ($user) {
-                    $user->setPassword_user($_REQUEST["password"]);
-                    $user->save() && $message = "Mot de passe modifié";
-                } else {
-                    $errors = ("Votre compte n'a pas pu être trouver");
-                }
-            }
-        }
-        $myView = new View("Security/login", "front");
-        $myView->assign("configForm", $config);
-        $myView->assign("errorsForm", $errors);
-        $myView->assign("message", $message);
-    }
+    $myView = new View("Security/change-password", "front");
+    $myView->assign("configForm", $config);
+    $myView->assign("errorsForm", $errors);
+    $myView->assign("message", $message);
+}
+
 }
