@@ -23,6 +23,16 @@
 #   action: contact
 #   roles: []
 
+/recipes:
+  controller: Recipe
+  action: index
+  roles: []
+
+/recipes/single-recipe:
+  controller: Recipe
+  action: viewRecipe
+  roles: []
+
 /login:
   controller: Security
   action: login
