@@ -50,35 +50,50 @@ class DB
     }
 
     public function save()
-    {
-        $data = $this->getDataObject();
-
-        if (empty($this->getId())) {
-            $sql = "INSERT INTO " . $this->table . "(" . implode(",", array_keys($data)) . ") 
-            VALUES (:" . implode(",:", array_keys($data)) . ")";
-        } else {
-            $sql = "UPDATE " . $this->table . " SET ";
-            foreach ($data as $column => $value) {
-                if (substr($column, 0, 2) === 'is') {
-                    $data[$column] = ($value === true) ? "true" : "false";
-                }
-                $sql .= $column . "=:" . $column . ",";
-            }
-            $sql = substr($sql, 0, -1);
-            $sql .= " WHERE id = " . $this->getId();
-        };
-
-        $queryPrepared = $this->pdo->prepare($sql);
-        $success = $queryPrepared->execute($data);
-
-
-        if (empty($this->getId())) {
-            $lastInsertId = $this->pdo->lastInsertId();
-            $this->setId($lastInsertId);
+{
+    $data = $this->getDataObject();
+    
+    // Détecter si c'est un INSERT ou un UPDATE
+    if (empty($this->getId())) {
+        // Construction de la requête d'insertion
+        $sql = "INSERT INTO " . $this->table . "(" . implode(",", array_keys($data)) . ") 
+                VALUES (:" . implode(",:", array_keys($data)) . ")";
+    } else {
+        // Construction de la requête de mise à jour
+        $sql = "UPDATE " . $this->table . " SET ";
+        foreach ($data as $column => $value) {
+            $sql .= $column . "=:" . $column . ",";
         }
-
-        return $success;
+        
+        // Enlever la dernière virgule
+        $sql = rtrim($sql, ',');
+        $sql .= " WHERE id = " . $this->getId();
     }
+
+    // Préparation de la requête
+    $queryPrepared = $this->pdo->prepare($sql);
+    
+    // Conversion correcte des booléens pour PostgreSQL (utilisation directe de booléens)
+    foreach ($data as $key => $value) {
+        if (is_bool($value)) {
+            // PostgreSQL attend des booléens directs, donc on ne touche pas à la valeur
+            $queryPrepared->bindValue(':' . $key, $value, \PDO::PARAM_BOOL);
+        } else {
+            $queryPrepared->bindValue(':' . $key, $value);
+        }
+    }
+    
+    // Exécuter la requête
+    $success = $queryPrepared->execute();
+
+    // Si c'est un INSERT, récupérer l'ID
+    if (empty($this->getId())) {
+        $lastInsertId = $this->pdo->lastInsertId();
+        $this->setId($lastInsertId);
+    }
+
+    return $success;
+}
 
     public function findAll(): array
     {

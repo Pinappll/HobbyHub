@@ -187,41 +187,41 @@ class Navigation extends DB
         return $query->fetchAll(\PDO::FETCH_COLUMN);
     }
 
-    public function save()
-{
-    $data = $this->getDataObject();
+//     public function save()
+// {
+//     $data = $this->getDataObject();
 
-    // Forcer la conversion de is_in_navbar en entier avant la sauvegarde
-    if (isset($data['is_in_navbar'])) {
-        $data['is_in_navbar'] = (int)$data['is_in_navbar']; // Assurer que c'est un entier
-    }
+//     // Forcer la conversion de is_in_navbar en entier avant la sauvegarde
+//     if (isset($data['is_in_navbar'])) {
+//         $data['is_in_navbar'] = (int)$data['is_in_navbar']; // Assurer que c'est un entier
+//     }
 
-    // Si l'ID n'existe pas, on fait un INSERT
-    if (empty($this->getId())) {
-        $sql = "INSERT INTO " . $this->table . "(" . implode(",", array_keys($data)) . ") 
-        VALUES (:" . implode(",:", array_keys($data)) . ")";
-    } else {
-        // Sinon, on fait un UPDATE
-        $sql = "UPDATE " . $this->table . " SET ";
-        foreach ($data as $column => $value) {
-            $sql .= $column . "=:" . $column . ",";
-        }
-        $sql = substr($sql, 0, -1); // Retirer la dernière virgule
-        $sql .= " WHERE id = :id"; // Mise à jour où l'ID correspond
-        $data['id'] = $this->getId(); // Ajouter l'ID pour la condition WHERE
-    }
+//     // Si l'ID n'existe pas, on fait un INSERT
+//     if (empty($this->getId())) {
+//         $sql = "INSERT INTO " . $this->table . "(" . implode(",", array_keys($data)) . ") 
+//         VALUES (:" . implode(",:", array_keys($data)) . ")";
+//     } else {
+//         // Sinon, on fait un UPDATE
+//         $sql = "UPDATE " . $this->table . " SET ";
+//         foreach ($data as $column => $value) {
+//             $sql .= $column . "=:" . $column . ",";
+//         }
+//         $sql = substr($sql, 0, -1); // Retirer la dernière virgule
+//         $sql .= " WHERE id = :id"; // Mise à jour où l'ID correspond
+//         $data['id'] = $this->getId(); // Ajouter l'ID pour la condition WHERE
+//     }
 
-    $queryPrepared = $this->pdo->prepare($sql);
-    $success = $queryPrepared->execute($data);
+//     $queryPrepared = $this->pdo->prepare($sql);
+//     $success = $queryPrepared->execute($data);
 
-    // Si c'est un INSERT, on récupère l'ID de la nouvelle ligne
-    if (empty($this->getId())) {
-        $lastInsertId = $this->pdo->lastInsertId();
-        $this->setId($lastInsertId);
-    }
+//     // Si c'est un INSERT, on récupère l'ID de la nouvelle ligne
+//     if (empty($this->getId())) {
+//         $lastInsertId = $this->pdo->lastInsertId();
+//         $this->setId($lastInsertId);
+//     }
 
-    return $success;
-}
+//     return $success;
+// }
 
 
     

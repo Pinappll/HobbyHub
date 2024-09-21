@@ -24,7 +24,6 @@ class Navigation
         $parents = $navigationModel->getParentNavigations(); // Récupérer les parents
         $nextPosition = $navigationModel->getNextPosition(); // Prochaine position
         $positionsInNavbar = $navigationModel->getNavbarPositions(); // Positions des éléments dans la navbar
-        
         $config = $form->getConfig([
             "parents" => $parents,
             "nextPosition" => $nextPosition,
@@ -34,7 +33,6 @@ class Navigation
 
         $errors = [];
         $message = "";
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $verificator = new Verificator();
 
@@ -59,7 +57,6 @@ class Navigation
                         ->setParentId($_POST["parent_id"] ? intval($_POST["parent_id"]) : null)
                         ->setLevel(intval($_POST["level"]))
                         ->setIsInNavbar($isInNavbar);
-
                     if ($navigation->save()) {
                         $message = "Navigation ajoutée/modifiée avec succès.";
                         header("Location: /admin/navigation");
@@ -67,7 +64,13 @@ class Navigation
                         $errors[] = "Erreur lors de l'ajout/modification de la navigation.";
                     }
                 } catch (\Exception $e) {
-                    $errors[] = "Une erreur est survenue : " . $e->getMessage();
+                    $config["inputs"]["name"]["value"] = $_POST["name"];;
+                    
+                    if ($e->getCode() == 23505) {
+                        $errors[] = "Une erreur est survenue : Le nom de navigation \"" . $name . "\" existe déjà. Veuillez choisir un autre nom.";
+                    } else {
+                        $errors[] = "Une erreur est survenue : " . $e->getMessage();
+                    }
                 }
             }
         }
@@ -90,42 +93,94 @@ class Navigation
 
         // Gestion du formulaire en POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!isset($_POST['id']) || empty($_POST['id'])) {
+            if (!isset($_GET['id_navigation']) || empty($_GET['id_navigation'])) {
                 header("Location: /admin/navigation");
                 exit;
             }
 
-            $id = intval($_POST['id']);
+            $id = intval($_GET['id_navigation']);
             $navigationModel = new NavigationModel();
             $navigation = $navigationModel->getNavigationById($id);
 
             if (!$navigation) {
                 $errors[] = "La navigation n'a pas été trouvée.";
             } else {
+                
                 // Récupérer et valider les données
-                $name = htmlspecialchars($_POST["name"]);
-                $link = $this->slugify($name);
-                $isInNavbar = (isset($_POST["is_in_navbar"]) && $_POST["is_in_navbar"] == '1') ? 1 : 0;
-                $selectedPosition = intval($_POST["position"]);
+                try{
+                    $name = htmlspecialchars($_POST["name"]);
+                    $link = $this->slugify($name);
+                    $isInNavbar = (isset($_POST["is_in_navbar"]) && $_POST["is_in_navbar"] == '1') ? 1 : 0;
+                    $selectedPosition = intval($_POST["position"]);
 
-                // Si parent_id est vide, définissez-le à NULL
-                $parentId = !empty($_POST["parent_id"]) ? intval($_POST["parent_id"]) : null;
-                $level = intval($_POST["level"]);
+                    // Si parent_id est vide, définissez-le à NULL
+                    $parentId = !empty($_POST["parent_id"]) ? intval($_POST["parent_id"]) : null;
+                    $level = intval($_POST["level"]);
 
-                // Mettre à jour la navigation
-                $navigation->setName($name)
-                        ->setLink($link)
-                        ->setPosition($selectedPosition)
-                        ->setParentId($parentId) // NULL si pas de parent
-                        ->setLevel($level)
-                        ->setIsInNavbar($isInNavbar);
+                    // Mettre à jour la navigation
+                    $navigation->setName($name)
+                            ->setLink($link)
+                            ->setPosition($selectedPosition)
+                            ->setParentId($parentId) // NULL si pas de parent
+                            ->setLevel($level)
+                            ->setIsInNavbar($isInNavbar);
 
-                if ($navigation->save()) {
-                    $message = "Navigation modifiée avec succès.";
-                } else {
-                    $errors[] = "Erreur lors de la modification de la navigation.";
+                    if ($navigation->save()) {
+                        $message = "Navigation modifiée avec succès.";
+                    } else {
+                        $errors[] = "Erreur lors de la modification de la navigation.";
+                    }
+                } catch (\Exception $e) {
+                    $config["inputs"]["name"]["value"] = $_POST["name"];
+                    
+                    if ($e->getCode() == 23505) {
+                        $errors[] = "Une erreur est survenue : Le nom de navigation \"" . $name . "\" existe déjà. Veuillez choisir un autre nom.";
+                    } else {
+                        $errors[] = "Une erreur est survenue : " . $e->getMessage();
+                    }
                 }
+                
+                if (!isset($_GET['id_navigation']) || empty($_GET['id_navigation'])) {
+                    header("Location: /admin/navigation");
+                    exit;
+                }
+    
+                $id = intval($_GET['id_navigation']);
+                $navigationModel = new NavigationModel();
+                $navigation = $navigationModel->getNavigationById($id);
+    
+                if (!$navigation) {
+                    header("Location: /admin/navigation");
+                    exit;
+                }
+    
+                // Récupérer les parents et les positions
+                $parents = $navigationModel->getParentNavigations();
+                $nextPosition = $navigationModel->getNextPosition();
+                $positionsInNavbar = $navigationModel->getNavbarPositions();
+    
+                // Pré-remplir le formulaire
+                $form = new NavigationUpdate();
+                $config = $form->getConfig([
+                    "id" => $navigation->getId(),
+                    "name" => $navigation->getName(),
+                    "selectedPosition" => $navigation->getPosition(),
+                    "selectedParent" => $navigation->getParentId(),
+                    "level" => $navigation->getLevel(),
+                    "is_in_navbar" => $navigation->getIsInNavbar(),
+                    "parents" => $parents,
+                    "nextPosition" => $nextPosition,
+                    "positionsInNavbar" => $positionsInNavbar
+                ]);
+                
+                $myView = new View("Admin/edit-navigation", "back");
+                $myView->assign("configForm", $config);
+                $myView->assign("errorsForm", $errors);
+                $myView->assign("message", $message);
+
             }
+            header("Location: /admin/navigation");
+            exit;
         } 
         // Gestion du formulaire en GET (pré-remplissage)
         else {
@@ -161,7 +216,7 @@ class Navigation
                 "nextPosition" => $nextPosition,
                 "positionsInNavbar" => $positionsInNavbar
             ]);
-
+            
             $myView = new View("Admin/edit-navigation", "back");
             $myView->assign("configForm", $config);
             $myView->assign("errorsForm", $errors);
