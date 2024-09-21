@@ -33,7 +33,6 @@ class Navigation
 
         $errors = [];
         $message = "";
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $verificator = new Verificator();
 
@@ -58,7 +57,6 @@ class Navigation
                         ->setParentId($_POST["parent_id"] ? intval($_POST["parent_id"]) : null)
                         ->setLevel(intval($_POST["level"]))
                         ->setIsInNavbar($isInNavbar);
-
                     if ($navigation->save()) {
                         $message = "Navigation ajoutée/modifiée avec succès.";
                         header("Location: /admin/navigation");
@@ -66,7 +64,7 @@ class Navigation
                         $errors[] = "Erreur lors de l'ajout/modification de la navigation.";
                     }
                 } catch (\Exception $e) {
-                    $config["inputs"]["name"]["value"] = $_POST["name"];
+                    $config["inputs"]["name"]["value"] = $_POST["name"];;
                     
                     if ($e->getCode() == 23505) {
                         $errors[] = "Une erreur est survenue : Le nom de navigation \"" . $name . "\" existe déjà. Veuillez choisir un autre nom.";

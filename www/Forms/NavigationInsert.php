@@ -77,7 +77,7 @@ class NavigationInsert
                     "placeholder" => "Parent",
                     "required" => false,
                     "error" => "Veuillez sélectionner une navigation parent valide",
-                    "option" => $parentOptions
+                    "option" => $parentOptions ?? []
                 ],
                 "level" => [
                     "type" => "number",

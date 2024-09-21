@@ -36,9 +36,14 @@ class PageController
         $navigation = new Navigation();
         $navigations = $navigation->findAllBy(["id_page" => 0], "object");
         $optionsNavigations = [];
-        foreach ($navigations as $nav) {
-            $optionsNavigations[] = ["id" => $nav->getId(), "name" => $nav->getName()];
+        if($navigations){
+            
+            foreach ($navigations as $nav) {
+                
+                $optionsNavigations[] = ["id" => $nav->getId(), "name" => $nav->getName()];
+            }
         }
+        
         $configForm["inputs"]["select_navigation"]["option"] = $optionsNavigations;
         $error = [];
 
@@ -46,7 +51,7 @@ class PageController
             $verificator = new Verificator();
             if ($verificator->checkForm($configForm, $_REQUEST, $error)) {
                 $pdo = DB::getPDO();
-                try {
+                // try {
                     $pdo->beginTransaction();
                     $page = new PageModel();
                     $page->setTitle_page($_POST['title_page']);
@@ -54,24 +59,19 @@ class PageController
                     if (!$page->save()) {
                         throw new Exception("Échec de l'insertion de la page");
                     }
-                    $navigation = new Navigation();
-                    $navigation->setName($_REQUEST["name"]);
-                    $navigation->setLink($_REQUEST["link"]);
-                    $navigation->setPosition($_REQUEST["position"]);
-                    $navigation->setParentId($_REQUEST["parent_id"]);
-                    $navigation->setLevel($_REQUEST["level"]);
-
-                    $navigation->save();
-
                     
-                    if (!$navigation) {
-                        throw new Exception("Navigation introuvable");
+                    $navigation = new Navigation();
+                    $navigation  = $navigation->populate($_REQUEST["select_navigation"]);
+                    var_dump($navigation);
+                    
+                    if($navigation){
+                        $navigation ->setIdPage($page->getId());
                     }
-    
-                    $navigation->setIdPage($page->getId());
-    
+                    
                     // Sauvegarde de la mise à jour de la navigation
+
                     if (!$navigation->save()) {
+                        
                         throw new Exception("Échec de la mise à jour de la navigation");
                     }
     
@@ -82,11 +82,11 @@ class PageController
                     header('Location: /admin/pages');
                     exit;
 
-                } catch (\Exception $e) {
-                    $pdo->rollBack();
-                    $error[] = $e->getMessage();
+                // } catch (\Exception $e) {
+                //     $pdo->rollBack();
+                //     $error[] ="dadadhzjbada". $e->getMessage();
                     
-                }
+                // }
 
             }
         }
@@ -99,59 +99,89 @@ class PageController
     }
 
     public function editPage(): void
-    {
-        if (!isset($_GET['id']) || empty($_GET['id'])) {
-            header('Location: /admin/pages');
-            exit;
-        } else {
-            $id = $_GET['id'];
-            $page = (new PageModel())->getOneBy(['id' => $id], "object");
-            $navigation = new Navigation();
-            $navigation = $navigation->getOneBy(["id_page" => $id], "object");
-            $form = new PageEdit();
-            $configForm = $form->getConfig(["page" => $page,"navigation"=>$navigation]);
-            $error = [];
-            $message = "";
+{
+    if (!isset($_GET['id']) || empty($_GET['id'])) {
+        header('Location: /admin/pages');
+        exit;
+    } else {
+        $id = $_GET['id'];
+        $page = (new PageModel())->getOneBy(['id' => $id], "object");
 
-            if ($page) {
-                $myView = new View("Admin/page-edit", "back");
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {    
-                    $verificator = new Verificator();
-                    if ($verificator->checkForm($configForm, $_REQUEST, $error)) {
-                        $pdo = DB::getPDO();
-                        try {
-                            $pdo->beginTransaction();
-                            $page->setTitle_page($_POST['title_page']);
-                            $page->setContent_page($_POST['content_page']);
-                            $page->save();
-                            $navigation->setName($_REQUEST["name"]);
-                            $navigation->setLink($_REQUEST["link"]);
-                            $navigation->setPosition($_REQUEST["position"]);
-                            $navigation->setParent_id($_REQUEST["parent_id"]);
-                            $navigation->setLevel($_REQUEST["level"]);
-                            $navigation->save();
-                            $pdo->commit();
-                            header('Location: /admin/pages');
-                            exit;
-                        } catch (\Exception $e) {
-                            $pdo->rollBack();
-                            $error[] = $e->getMessage();
-                        
+        $navigation = new Navigation();
+        $navigations = $navigation->findAllBy(["id_page" => 0], "object");
+        $navigationSelect = $navigation->getOneBy(["id_page" => $id], "object");
+
+        $optionsNavigations = [];
+        foreach ($navigations as $nav) {
+            $optionsNavigations[] = ["id" => $nav->getId(), "name" => $nav->getName()];
+        }
+
+        if ($navigationSelect) {
+            $optionsNavigations[] = [
+                "id" => $navigationSelect->getId(),
+                "name" => $navigationSelect->getName(),
+                "selected" => true
+            ];
+        }
+        $form = new PageEdit();
+        $configForm = $form->getConfig(["page" => $page]);
+        $configForm["inputs"]["name"]["update"] = true;
+        $configForm["inputs"]["name"]["option"] = $optionsNavigations ?? [];
+        $error = [];
+        $message = "";
+
+        if ($page) {
+            $myView = new View("Admin/page-edit", "back");
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $verificator = new Verificator();
+                if ($verificator->checkForm($configForm, $_REQUEST, $error)) {
+                    $pdo = DB::getPDO();
+                    try {
+                        $pdo->beginTransaction();
+
+                        // Mise à jour des informations de la page
+                        $page->setTitle_page($_POST['title_page']);
+                        $page->setContent_page($_POST['content_page']);
+
+                        // Vérification de la navigation
+                        $newNavigationId = $_POST['name'] ?? null; // Remplacez par le bon champ de votre formulaire
+                        if ($navigationSelect && $newNavigationId !== $navigationSelect->getId()) {
+                            // Supprimer l'ancienne navigation
+                            $navigationSelect->setIdPage(0); // Enlève l'association
+                            $navigationSelect->save();
+                        }
+
+                        // Si une nouvelle navigation est sélectionnée
+                        if ($newNavigationId) {
+                            $newNavigation = (new Navigation())->getOneBy(['id' => $newNavigationId], "object");
+                            if ($newNavigation) {
+                                $newNavigation->setIdPage($page->getId()); // Associer la nouvelle navigation à la page
+                                $newNavigation->save();
+                            }
+                        }
+
+                        // Enregistrer la page
+                        $page->save();
+                        $pdo->commit();
+                        header('Location: /admin/pages');
+                        exit;
+                    } catch (\Exception $e) {
+                        $pdo->rollBack();
+                        $error[] = $e->getMessage();
                     }
                 }
-                }
-                $myView->assign("configForm", $configForm);
-                $myView->assign("errorsForm", $error);
-                $myView->assign("title", "Éditer une page");
-                $myView->assign("page", $page);
-            } else {
-
-                header('Location: /admin/pages');
-                exit;
             }
-           
+            $myView->assign("configForm", $configForm);
+            $myView->assign("errorsForm", $error);
+            $myView->assign("title", "Éditer une page");
+            $myView->assign("page", $page);
+        } else {
+            header('Location: /admin/pages');
+            exit;
         }
     }
+}
+
 
     public function deletePage(): void
     {

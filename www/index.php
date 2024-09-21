@@ -122,12 +122,16 @@ if (!empty($listOfRoutes[$uri])) {
     }
 } else {
     include "Models/Navigation.php";
+    
     $navigation = new Navigation();
+    $uri = ltrim($uri, '/');
     $navigation = $navigation->getOneBy(["link" => $uri], "object");
+
     if ($navigation) {
+        
         include "Controllers/PageController.php";
         $controller = new \App\Controllers\PageController();
-        $controller->readPage($navigation->getId_page());
+        $controller->readPage($navigation->getIdPage());
     } else {
         show404(); // URI non trouvée
     }
