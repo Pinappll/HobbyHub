@@ -63,6 +63,7 @@ $roleCounts = array_map(function($entry) {
 ?>
 <script>
     // Graphique des rôles des utilisateurs (Pie Chart)
+    
     const userRolesCtx = document.getElementById('userRolesPieChart').getContext('2d');
     new Chart(userRolesCtx, {
         type: 'pie',

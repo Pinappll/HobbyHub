@@ -6,7 +6,8 @@
   background-color: $blanc; // Fond blanc par défaut
   border-radius: rem(10);
   transition: background-color 0.3s ease, color 0.3s ease;
-
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  
   .form-wrapper {
     display: none;
 
@@ -103,7 +104,13 @@
   body.dark-mode & {
     background-color: $dark-foreground; // Fond sombre
     color: $dark-text; // Couleur de texte claire
-
+    .form{
+      background-color: $dark-foreground; // Fond sombre
+      box-shadow: none;
+      &-title{
+        color: $dark-text; // Titre en blanc cassé
+      }
+    }
     .form-wrapper {
       h2 {
         color: $dark-text; // Titre en blanc cassé
@@ -115,7 +122,7 @@
         }
 
         input {
-          background-color: $dark-background; // Champ de saisie sombre
+          background-color: $dark-text; // Champ de saisie sombre
           border: 1px solid $dark-border; // Bordure sombre
           color: $dark-text; // Texte clair
 
