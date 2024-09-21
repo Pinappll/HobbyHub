@@ -108,7 +108,7 @@ class Security
                     $user->save();
                     $mail = new Mail();
                     $subject = "Vérification du compte";
-                    $content = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost/enable-account?token=' . $activation_token . '">Activer</a>';
+                    $content = 'Cliquez sur le lien suivant pour activer votre compte : <a href="http://www.easycook.ninja/enable-account?token=' . $activation_token . '">Activer</a>';
                     $message = $mail->sendMail([$user->getEmail_user()], $subject, $content);
                 }
             }
@@ -173,7 +173,7 @@ class Security
                         $mail = new Mail();
                         $subject = "Réinitialisation du mot de passe";
                         $content = 'Cliquez sur le lien suivant pour réinitialiser votre mot de passe : 
-                                    <a href="http://localhost/change-password?token=' . $token . '">Réinitialiser le mot de passe</a>';
+                                    <a href="http://www.easycook.ninja/change-password?token=' . $token . '">Réinitialiser le mot de passe</a>';
                         $message = $mail->sendMail([$user->getEmail_user()], $subject, $content);
                     } else {
                         $errors[] = "Erreur lors de l'envoi de l'e-mail.";

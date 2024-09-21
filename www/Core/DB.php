@@ -14,35 +14,57 @@ class DB
 {
     // connexion à la bdd via pdo
     include 'config.php';  // Configuration de la base de données (doit définir $dbHost, $dbName, $dbUser, $dbPassword)
-    try {
-        $this->pdo = new \PDO('pgsql:host=' . $dbHost . ';dbname=' . $dbName . ';user=' . $dbUser . ';password=' . $dbPassword);
-    } catch (\PDOException $e) {
-        echo "Erreur SQL : " . $e->getMessage();
-    }
-
-    // Obtenir le nom de la table dynamiquement : "dbnam_settings" où "dbnam" est le nom de la base de données
-    $table = get_called_class();
-    $table = explode("\\", $table);
-    $table = array_pop($table);
-    
-    // Créer le nom de la table en fonction du nom de la base de données et du modèle
-    $this->table = strtolower($dbName) . "_" . strtolower($table);
-    $this->dbName = $dbName;
+    // Assurez-vous que toutes les variables nécessaires sont définies dans config.php
+if (!isset($dbHost, $dbPort, $dbName, $dbUser, $dbPassword, $sslMode)) {
+    die("Les informations de connexion à la base de données ne sont pas correctement définies.");
 }
 
-    
-    public static function getPDO(): ?\PDO
-    {
-        if (self::$instance === null) {
-            include 'config.php';
-            try {
-                self::$instance = new \PDO('pgsql:host=' . $dbHost . ';dbname=' . $dbName . ';user=' . $dbUser . ';password=' . $dbPassword);
-            } catch (\PDOException $e) {
-                echo "Erreur SQL : " . $e->getMessage();
-            }
+try {
+    // Initialiser PDO avec les informations du fichier config.php
+    $this->pdo = new \PDO(
+        'pgsql:host=' . $dbHost . ';port=' . $dbPort . ';dbname=' . $dbName . ';sslmode=' . $sslMode,
+        $dbUser,
+        $dbPassword
+    );
+} catch (\PDOException $e) {
+    // Utiliser un message d'erreur détaillé en cas de problème de connexion
+    die("Erreur SQL : " . $e->getMessage());
+}
+
+// Obtenir le nom de la table dynamiquement à partir de la classe appelée
+$table = get_called_class();
+$table = explode("\\", $table);
+$table = array_pop($table);
+
+// Créer le nom de la table en fonction du nom de la base de données et du modèle
+$this->table = strtolower($dbName) . "_" . strtolower($table);
+$this->dbName = $dbName;
+}
+
+// Méthode statique pour obtenir une instance PDO
+public static function getPDO(): ?\PDO
+{
+    if (self::$instance === null) {
+        include 'config.php';
+        
+        // Vérification des variables de configuration
+        if (!isset($dbHost, $dbPort, $dbName, $dbUser, $dbPassword, $sslMode)) {
+            die("Les informations de connexion à la base de données ne sont pas correctement définies.");
         }
-        return self::$instance;
+
+        try {
+            // Initialiser PDO avec les informations du fichier config.php
+            self::$instance = new \PDO(
+                'pgsql:host=' . $dbHost . ';port=' . $dbPort . ';dbname=' . $dbName . ';sslmode=' . $sslMode,
+                $dbUser,
+                $dbPassword
+            );
+        } catch (\PDOException $e) {
+            die("Erreur SQL : " . $e->getMessage());
+        }
     }
+    return self::$instance;
+}
 
     public function getDataObject(): array
     {
