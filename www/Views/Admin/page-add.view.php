@@ -410,6 +410,47 @@ const editor = grapesjs.init({
         },
         category: "Recettes",
       },
+      {
+        id: "recipe-detail",
+        label: "Recipe Detail",
+        content: {
+          tagName: 'div',
+          classes: ['recipe-detail'],
+          components: `
+            <div class="recipe-detail">
+              <h1 class="recipe-detail__title">Titre de la Recette</h1>
+              <div class="recipe-detail__info">
+                <div class="recipe-detail__image">
+                  <img src="../../dist/assets/images/recette-detail.jpg" alt="Recette Image">
+                </div>
+                <div class="recipe-detail__description">
+                  <p>Voici une description détaillée de la recette. Elle donne un aperçu de ce que cette recette offre et pourquoi elle est délicieuse.</p>
+                </div>
+              </div>
+              <div class="recipe-detail__ingredients">
+                <h2>Ingrédients</h2>
+                <ul>
+                  <li>1 tasse de farine</li>
+                  <li>2 œufs</li>
+                  <li>1/2 tasse de lait</li>
+                  <li>Une pincée de sel</li>
+                </ul>
+              </div>
+              <div class="recipe-detail__instructions">
+                <h2>Instructions</h2>
+                <ol>
+                  <li>Mélanger les ingrédients secs.</li>
+                  <li>Ajouter les œufs et le lait, puis bien mélanger.</li>
+                  <li>Cuire dans une poêle chaude pendant 2 à 3 minutes de chaque côté.</li>
+                  <li>Servir chaud.</li>
+                </ol>
+              </div>
+            </div>
+          `,
+        },
+        category: "Recettes",
+      },
+
 
 
 

@@ -25,7 +25,7 @@
                 $user = new \App\Models\User();
                 $user = $user->getOneBy(['id' => $_SESSION['user_id']], 'object');
                 ?>
-                
+                <a href="/recipes" class="header__user-icon">Recettes</a>
                 <?php if ($user && $user->getType_user() === 'admin'): ?>
                     <a href="/admin" class="header__user-icon">Admin</a>
                 <?php endif; ?>

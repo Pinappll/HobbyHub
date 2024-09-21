@@ -1,5 +1,5 @@
 <?php
 $dbHost = 'db';
-$dbName = 'easycook';
+$dbName = 'ludo';
 $dbUser = 'test';
 $dbPassword = 'test1234';
