@@ -2,10 +2,13 @@
 
 namespace App\Forms\User;
 
+use App\Models\User;
+
 class UserUpdate
 {
     public function getConfig(object $data = null): array
     {
+
         return [
             "config" => [
                 "method" => "POST",
@@ -56,14 +59,8 @@ class UserUpdate
                     "type" => "select",
                     "class" => "input-form",
                     "placeholder" => "Type d'utilisateur",
-                    "options" => [
-                        "viewer" => "Viewer",
-                        "chef" => "Chef",
-                        "admin" => "Admin"
-                    ],
                     "required" => true,
-                    "error" => "Vous devez sélectionner un type d'utilisateur",
-                    "value" => $data->getType_user() ?? null  // Valeur dynamique pour le type d'utilisateur
+                    "error" => "Vous devez sélectionner un type d'utilisateur"
                 ],
                 "is_verified_user" => [
                     "type" => "checkbox",
