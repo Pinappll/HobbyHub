@@ -43,7 +43,7 @@
 
       span {
         display: block;
-        background: $gris;
+        background: var(--couleur-gris);
         width: rem(30);
         height: rem(4);
         margin: rem(3) 0;
@@ -78,7 +78,7 @@
       position: absolute;
       top: 100%;
       left: 0;
-      background-color: $blanc;
+      background-color: var(--couleur-blanc);
       padding: rem(10);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       z-index: 10;
@@ -91,13 +91,13 @@
         }
 
         a {
-          color: $gris;
+          color: var(--couleur-gris);
           text-decoration: none;
           font-size: rem(14);
           transition: color 0.3s ease;
 
           &:hover {
-            color: $rouge;
+            color: var(--couleur-rouge);
           }
         }
       }
@@ -136,9 +136,9 @@
       top: rem(70); // Les éléments s'affichent sous le topbar
       left: 0;
       right: 0;
-      background-color: $blanc;
+      background-color: var(--couleur-blanc);
       padding: rem(16);
-      border-top: rem(1) solid $gris-clair;
+      border-top: rem(1) solid var(--couleur-gris-clair);
       flex-direction: column;
       align-items: flex-start;
       z-index: 100;
@@ -182,7 +182,7 @@
       li {
         a {
           text-decoration: none;
-          color: $gris;
+          color: var(--couleur-gris);
           font-size: rem(16);
           font-weight: 600;
           text-transform: uppercase;
@@ -190,7 +190,7 @@
           transition: all 0.3s ease;
 
           &:hover {
-            color: $rouge;
+            color: var(--couleur-rouge);
           }
         }
       }
@@ -204,32 +204,32 @@
 
   // Mode sombre
   body.dark-mode & {
-    background-color: $dark-foreground;
-    color: $dark-text;
+    background-color: var(--dark-foreground);
+    color: var(--dark-text);
 
     .header__menu a {
-      color: $dark-text;
+      color: var(--dark-text);
 
       &:hover {
-        color: $dark-accent;
+        color: var(--dark-accent);
       }
     }
 
     .dropdown {
-      background-color: $dark-foreground;
-      color: $dark-text;
+      background-color: var(--dark-foreground);
+      color: var(--dark-text);
 
       li a {
-        color: $dark-text;
+        color: var(--dark-text);
 
         &:hover {
-          color: $dark-accent;
+          color: var(--dark-accent);
         }
       }
     }
 
     .header__burger span {
-      background-color: $dark-text;
+      background-color: var(--dark-text);
     }
   }
 }

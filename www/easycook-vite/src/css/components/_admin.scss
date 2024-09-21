@@ -1,199 +1,196 @@
 .admin-container {
-    display: flex; // Utiliser Flexbox pour la mise en page
-    height: 100vh;
-  
-    .sidebar-admin {
-      width: 250px;
-      background-color: $gris;
-      padding: rem(20);
-      display: flex;
-      flex-direction: column;
-      gap: rem(20);
-      height: 100%;
-  
-      @include respond-to('phone') {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 200px;
-        transform: translateX(-100%); // Sidebar cachée par défaut en mobile
-        transition: transform 0.3s ease;
-        z-index: 1000; // Assurer que la sidebar est au-dessus du contenu
-  
-        &.active {
-          transform: translateX(0); // Sidebar visible lorsqu'elle est active
-        }
-      }
-  
-      &__menu {
-        list-style: none;
-        padding: 0;
-  
-        li {
-          margin-bottom: rem(15);
-  
-          a {
-            text-decoration: none;
-            color: $blanc;
-            font-size: rem(16);
-            padding: rem(10);
-            display: block;
-            transition: background-color 0.3s ease;
-  
-            &:hover {
-              background-color: $rouge;
-            }
-          }
-        }
-      }
-    }
-  
-    .admin-content {
-      flex: 1;
-      padding: rem(20);
-      background-color: $blanc;
-      color: $gris;
-  
-      h2 {
-        font-size: rem(24);
-        margin-bottom: rem(20);
-      }
-  
-      p {
-        font-size: rem(16);
-      }
-  
-      @include respond-to('phone') {
-        padding: rem(15);
-      }
-    }
-  
-    // Version dark mode
-    body.dark-mode & {
-      .sidebar-admin {
-        background-color: $dark-foreground;
-  
-        &__menu {
-          li a {
-            color: $dark-text;
-  
-            &:hover {
-              background-color: $dark-accent;
-            }
-          }
-        }
-      }
-  
-      .admin-content {
-        background-color: $dark-background;
-        color: $dark-text;
-  
-        h2 {
-          color: $dark-text;
-        }
-  
-        p {
-          color: lighten($dark-text, 20%);
-        }
-      }
-    }
-  }
-  
-  .header-admin {
-    background-color: $jaune;
-    padding: rem(10) rem(20);
+  display: flex; // Utiliser Flexbox pour la mise en page
+  height: 100vh;
+
+  .sidebar-admin {
+    width: 250px;
+    background-color: var(--couleur-gris);
+    padding: rem(20);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-  
-    &__logo {
-      img {
-        width: rem(120);
-        height: auto;
+    flex-direction: column;
+    gap: rem(20);
+    height: 100%;
+
+    @include respond-to('phone') {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 200px;
+      transform: translateX(-100%); // Sidebar cachée par défaut en mobile
+      transition: transform 0.3s ease;
+      z-index: 1000; // Assurer que la sidebar est au-dessus du contenu
+
+      &.active {
+        transform: translateX(0); // Sidebar visible lorsqu'elle est active
       }
     }
-  
-    &__logout a {
-      font-size: rem(16);
-      color: $rouge;
-      text-decoration: none;
-  
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  
-    &__switch {
-      button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        
-        img {
-          width: rem(24); // Taille des icônes
-          height: auto;
-          transition: transform 0.3s ease;
+
+    &__menu {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: rem(15);
+
+        a {
+          text-decoration: none;
+          color: var(--couleur-blanc);
+          font-size: rem(16);
+          padding: rem(10);
+          display: block;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: var(--couleur-rouge);
+          }
         }
-  
-        &:hover img {
-          transform: rotate(15deg); // Légère rotation au survol
-        }
-      }
-    }
-  
-    &__burger {
-      display: none;
-      cursor: pointer;
-      flex-direction: column;
-      justify-content: space-between;
-      width: rem(30);
-      height: rem(20);
-  
-      span {
-        display: block;
-        width: 100%;
-        height: rem(3);
-        background-color: $gris;
-        border-radius: rem(2);
-        transition: transform 0.3s ease, opacity 0.3s ease;
-      }
-  
-      &.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-      }
-  
-      &.active span:nth-child(2) {
-        opacity: 0;
-      }
-  
-      &.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px);
-      }
-  
-      @include respond-to('phone') {
-        display: flex;
-      }
-    }
-  
-    // Version dark mode
-    body.dark-mode & {
-      background-color: $dark-foreground;
-  
-     
-  
-      &__logout a {
-        color: $dark-accent;
-      }
-  
-      &__burger span {
-        background-color: $dark-text;
-      }
-  
-      &__switch img {
-        filter: brightness(0) invert(1); // Ajuster l'icône en mode sombre
       }
     }
   }
-  
+
+  .admin-content {
+    flex: 1;
+    padding: rem(20);
+    background-color: var(--couleur-blanc);
+    color: var(--couleur-gris);
+
+    h2 {
+      font-size: rem(24);
+      margin-bottom: rem(20);
+    }
+
+    p {
+      font-size: rem(16);
+    }
+
+    @include respond-to('phone') {
+      padding: rem(15);
+    }
+  }
+
+  // Version dark mode
+  body.dark-mode & {
+    .sidebar-admin {
+      background-color: var(--dark-foreground);
+
+      &__menu {
+        li a {
+          color: var(--dark-text);
+
+          &:hover {
+            background-color: var(--dark-accent);
+          }
+        }
+      }
+    }
+
+    .admin-content {
+      background-color: var(--dark-background);
+      color: var(--dark-text);
+
+      h2 {
+        color: var(--dark-text);
+      }
+
+      p {
+        color: rgba(var(--dark-text-light) , $alpha: 0.8);
+      }
+    }
+  }
+}
+
+.header-admin {
+  background-color: var(--couleur-jaune);
+  padding: rem(10) rem(20);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__logo {
+    img {
+      width: rem(120);
+      height: auto;
+    }
+  }
+
+  &__logout a {
+    font-size: rem(16);
+    color: var(--couleur-rouge);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__switch {
+    button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      
+      img {
+        width: rem(24); // Taille des icônes
+        height: auto;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover img {
+        transform: rotate(15deg); // Légère rotation au survol
+      }
+    }
+  }
+
+  &__burger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    width: rem(30);
+    height: rem(20);
+
+    span {
+      display: block;
+      width: 100%;
+      height: rem(3);
+      background-color: var(--couleur-gris);
+      border-radius: rem(2);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    &.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    &.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    &.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @include respond-to('phone') {
+      display: flex;
+    }
+  }
+
+  // Version dark mode
+  body.dark-mode & {
+    background-color: var(--dark-foreground);
+
+    &__logout a {
+      color: var(--dark-accent);
+    }
+
+    &__burger span {
+      background-color: var(--dark-text);
+    }
+
+    &__switch img {
+      filter: brightness(0) invert(1); // Ajuster l'icône en mode sombre
+    }
+  }
+}

@@ -1,4 +1,3 @@
-// _table.scss
 .content-recipe, .recipe {
   table {
     td {
@@ -9,7 +8,8 @@
       text-align: center; /* Centre le texte dans la cellule */
       vertical-align: middle; /* Centre le contenu verticalement */
       width: rem(100);
-      img{
+
+      img {
         width: rem(80); // Taille de l'image
         height: auto;
         border-radius: rem(5); // Coins arrondis pour l'image
@@ -35,37 +35,37 @@
     margin: rem(20) 0;
     font-size: rem(16);
     text-align: left;
-    background-color: $blanc;
+    background-color: var(--couleur-blanc);
     border-radius: rem(8);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
   
     thead tr {
-      background-color: $gris;
-      color: $blanc;
+      background-color: var(--couleur-gris);
+      color: var(--couleur-blanc);
       text-align: left;
       font-weight: bold;
     }
   
     th, td {
       padding: rem(12) rem(15);
-      border-bottom: 1px solid $gris-clair;
+      border-bottom: 1px solid var(--couleur-gris-clair);
     }
   
     tbody tr {
       .td-validation-review {
         display: flex;
-       flex-direction: row;
-       gap: rem(10);
+        flex-direction: row;
+        gap: rem(10);
       }
       transition: background-color 0.3s ease;
   
       &:nth-child(even) {
-        background-color: $gris-clair; // Couleur pour les lignes paires
+        background-color: var(--couleur-gris-clair); // Couleur pour les lignes paires
       }
   
       &:hover {
-        background-color: $jaune-clair; // Changement de couleur au survol
+        background-color: var(--couleur-jaune-clair); // Changement de couleur au survol
       }
     }
   
@@ -86,59 +86,58 @@
       cursor: pointer;
   
       &-secondary {
-        background-color: $jaune;
-        color: $gris-fonce;
+        background-color: var(--couleur-jaune);
+        color: var(--couleur-gris-fonce);
         &:hover {
-          background-color: darken($jaune, 10%);
+          background-color: #e5b23e; // Remplace `darken($jaune, 10%)`
         }
       }
   
       &-danger {
-        background-color: $rouge;
-        color: $blanc;
+        background-color: var(--couleur-rouge);
+        color: var(--couleur-blanc);
         &:hover {
-          background-color: $rouge-fonce;
+          background-color: var(--couleur-rouge-fonce);
         }
       }
     }
   
     // Mode sombre
     body.dark-mode & {
-      background-color: $dark-foreground;
-      color: $dark-text;
+      background-color: var(--dark-foreground);
+      color: var(--dark-text);
   
       thead tr {
-        background-color: $dark-background;
+        background-color: var(--dark-background);
       }
   
       tbody tr {
         &:nth-child(even) {
-          background-color: $dark-border; // Couleur alternée en mode sombre
+          background-color: var(--dark-border); // Couleur alternée en mode sombre
         }
   
         &:hover {
-          background-color: $dark-accent; // Changement de couleur au survol
+          background-color: var(--dark-accent); // Changement de couleur au survol
         }
       }
   
       th, td {
-        border-color: $dark-border;
+        border-color: var(--dark-border);
       }
   
       .button-secondary {
-        background-color: $dark-accent;
-        color: $dark-text;
+        background-color: var(--dark-accent);
+        color: var(--dark-text);
         &:hover {
-          background-color: lighten($dark-accent, 10%);
+          background-color: #ffa3a3; // Remplace `lighten($dark-accent, 10%)`
         }
       }
   
       .button-danger {
-        background-color: $rouge-fonce;
+        background-color: var(--couleur-rouge-fonce);
         &:hover {
-          background-color: lighten($rouge-fonce, 10%);
+          background-color: #ff726e; // Remplace `lighten($rouge-fonce, 10%)`
         }
       }
     }
-  }
-  
+}

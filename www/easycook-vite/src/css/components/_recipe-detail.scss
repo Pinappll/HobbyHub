@@ -6,7 +6,7 @@
     font-weight: 700;
     text-align: center;
     margin-bottom: rem(20);
-    color: $gris; // Couleur du texte par défaut
+    color: var(--couleur-gris); // Couleur du texte par défaut
     transition: color 0.3s ease;
   }
 
@@ -39,7 +39,7 @@
   &__description {
     flex: 1;
     font-size: rem(16);
-    color: $gris; // Couleur par défaut du texte
+    color: var(--couleur-gris); // Couleur par défaut du texte
     transition: color 0.3s ease;
 
     @include respond-to('phone') {
@@ -53,7 +53,7 @@
     h2 {
       font-size: rem(24);
       margin-bottom: rem(10);
-      color: $gris; // Couleur des titres par défaut
+      color: var(--couleur-gris); // Couleur des titres par défaut
       transition: color 0.3s ease;
 
       @include respond-to('phone') {
@@ -63,7 +63,7 @@
 
     ul, ol {
       font-size: rem(16);
-      color: $gris;
+      color: var(--couleur-gris);
       line-height: 1.6;
       transition: color 0.3s ease;
 
@@ -76,15 +76,15 @@
   // Version dark
   body.dark-mode & {
     &__title, &__description, &__ingredients h2, &__instructions h2, ul, ol {
-      color: $dark-text; // Couleur du texte en mode sombre
+      color: var(--dark-text); // Couleur du texte en mode sombre
     }
 
     &__description {
-      color: $dark-text; // Couleur du texte pour la description
+      color: var(--dark-text); // Couleur du texte pour la description
     }
 
     &__ingredients ul, &__instructions ol {
-      color: lighten($dark-text, 20%); // Couleur légèrement plus claire pour les listes
+      color: #c7c7c7; // Remplacement de `lighten($dark-text, 20%)` par une couleur plus claire
     }
   }
 }

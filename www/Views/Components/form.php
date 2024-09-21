@@ -50,7 +50,7 @@
                 <h2><?= $config["div"]["titre"] ?? "" ?></h2>
             </div>
         <?php endif; ?>
-        
+
         <input type="submit" class="button button-primary" value="<?= $config["config"]["submit"] ?? "Envoyer" ?>">
     </div>
 </form>

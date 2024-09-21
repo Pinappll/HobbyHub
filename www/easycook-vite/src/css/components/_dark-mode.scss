@@ -15,11 +15,11 @@
   }
 
   svg:hover {
-    fill: $dark-accent; // L'icône changera de couleur au survol
+    fill: var(--dark-accent); // L'icône changera de couleur au survol
   }
 
   &:hover {
-    color: $dark-accent; // L'icône changera de couleur au survol
+    color: var(--dark-accent); // L'icône changera de couleur au survol
   }
 
   &:focus {
@@ -28,7 +28,7 @@
 
   // Mode sombre
   body.dark-mode & {
-    color: $dark-text; // Couleur des icônes en mode sombre
+    color: var(--dark-text); // Couleur des icônes en mode sombre
   }
 }
 
@@ -45,9 +45,6 @@
   }
 
   &:hover svg {
-    fill: $dark-accent; // Changer la couleur de l'icône user au survol
+    fill: var(--dark-accent); // Changer la couleur de l'icône user au survol
   }
-   
- 
 }
-

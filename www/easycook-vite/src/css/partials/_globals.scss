@@ -1,6 +1,7 @@
 // _globals.scss
 
 // Variables pour le mode clair et sombre
+// Variables Sass
 $blanc: #ffffff;
 $gris: #353238;
 $gris-clair: #cccccc;
@@ -13,13 +14,41 @@ $jaune-clair: #fbdd92;
 $dark-background: #1e1e1e;
 $dark-foreground: #2d2d2d;
 $dark-text: #f8f8f8;
+$dark-text-light:#bfbfbf;
 $dark-accent: #ff6b6b;
 $dark-border: #444;
 
-// Variables de typographie
+// _globals.scss
+
+// Variables pour le mode clair et sombre
+// Variables Sass
 $font-size-base: 16px;
 $font-family-base: "Montserrat", sans-serif;
 $line-height-base: 1.6;
+
+// Conversion en variables CSS
+:root {
+  --couleur-blanc: #{$blanc};
+  --couleur-gris: #{$gris};
+  --couleur-gris-clair: #{$gris-clair};
+  --couleur-gris-fonce: #{$gris-fonce};
+  --couleur-rouge: #{$rouge};
+  --couleur-rouge-fonce: #{$rouge-fonce};
+  --couleur-jaune: #{$jaune};
+  --couleur-jaune-clair:#{ $jaune-clair};
+
+  --dark-background: #{$dark-background};
+  --dark-foreground: #{$dark-foreground};
+  --dark-text-light: #{$dark-text-light};
+  --dark-text: #{$dark-text};
+  --dark-accent: #{$dark-accent};
+  --dark-border: #{$dark-border};
+
+
+  --font-size-base: 16px;
+  --font-family-base: "Montserrat", sans-serif;
+  --line-height-base: 1.6;
+}
 
 // Styles globaux sans max-width appliqué à tous les éléments
 * {
@@ -42,18 +71,18 @@ $line-height-base: 1.6;
 
 // Styles pour les titres
 h1, h2, h3, h4, h5, h6 {
-  font-family: $font-family-base;
+  font-family: var(--font-family-base);
   font-weight: 700; // Appliquer une police plus grasse pour les titres
   
   margin-bottom: rem(10); // Ajouter un espace en-dessous
 }
 
 body {
-  font-size: rem(16);
-  font-family: $font-family-base;
-  line-height: $line-height-base;
-  color: $gris;
-  background-color: $blanc;
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  line-height: var(--line-height-base);
+  color: var(--couleur-gris);
+  background-color: var(--couleur-blanc);
 
   // Styles pour les icônes
   .icon-moon, .icon-sun, .header__user-icon svg {
@@ -63,40 +92,40 @@ body {
 
 // Mode sombre
 body.dark-mode {
-  background-color: $dark-background;
-  color: $dark-text;
+  background-color: var(--dark-background);
+  color: var(--dark-text);
 
   // Liens en mode sombre
   a {
-    color: $dark-text;
+    color: var(--dark-text);
 
     &:hover {
-      color: $dark-accent; // Accent rouge sombre pour le hover
+      color: var(--dark-accent); // Accent rouge sombre pour le hover
     }
   }
 
   // Icônes en mode sombre
   .icon-moon, .icon-sun, .header__user-icon svg {
-    fill: $dark-text;
+    fill: var(--dark-text);
   }
 
   // Menu et navigation en mode sombre
   .header__nav ul {
-    background-color: $dark-background;
+    background-color: var(--dark-background);
   }
 
   .header__nav ul li a {
-    color: $dark-text;
+    color: var(--dark-text);
 
     &:hover {
-      color: $dark-accent; // Accentuation des liens au survol
+      color: var(--dark-accent); // Accentuation des liens au survol
     }
   }
 }
 
 // Styles pour les liens
 a {
-  font-family: $font-family-base;
+  font-family: var(--font-family-base);
   text-decoration: none;
   color: inherit;
 }
@@ -105,3 +134,4 @@ a {
 ul, ol {
   list-style: none;
 }
+
