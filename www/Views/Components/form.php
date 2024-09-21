@@ -1,3 +1,4 @@
+
 <form method="<?= $config["config"]["method"] ?? "GET" ?>" action="<?= $config["config"]["action"] ?? "" ?>" class="<?= $config["config"]["class"] ?? "" ?>" id="<?= $config["config"]["id"] ?? "" ?>" <?= (!empty($config["config"]["enctype"])) ? 'enctype="' . $config["config"]["enctype"] . '"' : "" ?>>
     <?php if (!empty($config["config"]["title"])) : ?>
         <h1 class="form-title"><?= $config["config"]["title"] ?></h1>
@@ -10,7 +11,7 @@
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
- 
+
         <?php foreach ($config["inputs"] as $name => $configInput) : ?>
             <div class="form-group<?= !empty($configInput["flex-row"]) && $configInput["flex-row"] === true ? ' flex-row' : '' ?>">
                 <?php if ($configInput["type"] === "checkbox") : ?>
@@ -43,13 +44,13 @@
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
- 
+
         <?php if (!empty($config["div"])) : ?>
             <div class="<?= $config["div"]["class"] ?? "" ?>">
                 <h2><?= $config["div"]["titre"] ?? "" ?></h2>
             </div>
         <?php endif; ?>
-       
+
         <input type="submit" class="button button-primary" value="<?= $config["config"]["submit"] ?? "Envoyer" ?>">
     </div>
 </form>

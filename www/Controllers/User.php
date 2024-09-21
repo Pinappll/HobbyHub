@@ -84,17 +84,20 @@ public function editUser(): void
     $config = $form->getConfig($user);  // Passer les données utilisateur au formulaire
     $errors = [];
     $message = "";
-
+    $role = [             ["id" => "viewer", "name" => "viewer"],             ["id" => "admin", "name" => "admin"],             ["id" => "chef", "name" => "chef"] ];
+    $config["inputs"]["type_user"]["option"] = $role;
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!isset($_REQUEST["type_user"])) {
+            $_REQUEST["type_user"] = [];
+        }
         $verificator = new Verificator();
         if ($verificator->checkForm($config, $_POST, $errors)) {
             // Mettre à jour les champs avec les nouvelles données soumises
             $user->setLastname_user($_POST["lastname_user"]);
             $user->setFirstname_user($_POST["firstname_user"]);
             $user->setEmail_user($_POST["email_user"]);
-            $user->setType_user($_POST["type_user"]);
+            $user->setType_user($_REQUEST["type_user"] == [] ? "admin" : $_REQUEST["type_user"]);
             $user->setIsverified_user(isset($_POST["is_verified_user"]));
-            var_dump($user);
             // Vérifier si un mot de passe a été soumis
             if (!empty($_POST["password_user"])) {
                 $user->setPassword_user($_POST["password_user"]);

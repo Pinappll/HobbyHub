@@ -87,133 +87,6 @@
   blockManager: {
     appendTo: "#blocks",
     blocks: [
-      // Card Block
-      {
-        id: "responsive-card",
-        label: "Card",
-        content: `
-          <div class="card">
-          <a href="#">
-            <img src="../../dist/assets/images/recettes/cake.jpg" class="card__image" alt="Card Image">
-            <h3 class="card__title">Card Title</h3>
-          </a>
-          </div>
-        `,
-        category: "Cards",
-      },
-      
-      // Circular Card Block
-      {
-        id: "circular-card",
-        label: "Circular Card",
-        content: `
-          <div class="circular-card">
-            <a href="#" class="circular-card__link">
-              <img src="../../dist/assets/images/recettes/cake.jpg" class="circular-card__image" alt="Circular Card Image">
-              <h3 class="circular-card__title">Card Title</h3>
-            </a>
-          </div>
-        `,
-        category: "Cards",
-      },
-
-      // Block de texte (Titre et texte avec fond en couleur et coins arrondis)
-      {
-        id: "block-texte",
-        label: "Block de Texte",
-        content: {
-          tagName: 'div',
-          classes: ['text-block'],
-          components: `
-            <div class="text-block" style="background-color: #f8c630; padding: 20px; border-radius: 10px;">
-              <h2>Titre du bloc</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>`,
-        },
-        category: "Text",
-      },
-
-      // Commentaire (Formulaire)
-      {
-        id: "commentaire",
-        label: "Formulaire de Commentaire",
-        content: {
-          tagName: 'div',
-          classes: ['comment-form'],
-          components: `
-            <form id="commentForm" class="comment-form">
-              <textarea name="content_review" placeholder="Laissez un commentaire..." required></textarea>
-              <button type="submit">Poster le commentaire</button>
-            </form>
-            <div id="commentsList"></div>`,
-        },
-        category: "Forms",
-      },
-
-      // Contact Form (Formulaire de Contact)
-      {
-        id: "contact-form",
-        label: "Contact Form",
-        content: {
-          tagName: 'form',
-          classes: ['contact-form'],
-          components: `
-            <form class="contact-form">
-              <label for="name">Nom:</label>
-              <input type="text" id="name" name="name" required>
-              
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required>
-              
-              <label for="message">Message:</label>
-              <textarea id="message" name="message" required></textarea>
-              
-              <button type="submit">Envoyer</button>
-            </form>`,
-        },
-        category: "Forms",
-      },
-
-      
-      // Hero Image Left
-      {
-        id: "hero-image-left",
-        label: "Hero Image Left",
-        content: {
-          tagName: 'div',
-          classes: ['hero', 'hero-left'],
-          components: `
-            <div class="hero hero-left" style="display: flex; align-items: center;">
-              <img src="../../dist/assets/images/recettes/cake.jpg" alt="Hero Image" style="width: 50%; border-radius: 10px;">
-              <div style="padding: 20px;">
-                <h2>Titre Hero</h2>
-                <p>Texte descriptif du bloc hero avec l'image à gauche.</p>
-              </div>
-            </div>`,
-        },
-        category: "Hero",
-      },
-
-      // Hero Image Right
-      {
-        id: "hero-image-right",
-        label: "Hero Image Right",
-        content: {
-          tagName: 'div',
-          classes: ['hero', 'hero-right'],
-          components: `
-            <div class="hero hero-right" style="display: flex; align-items: center; flex-direction: row-reverse;">
-              <img src="../../dist/assets/images/recettes/cake.jpg" alt="Hero Image" style="width: 50%; border-radius: 10px;">
-              <div style="padding: 20px;">
-                <h2>Titre Hero</h2>
-                <p>Texte descriptif du bloc hero avec l'image à droite.</p>
-              </div>
-            </div>`,
-        },
-        category: "Hero",
-      },
-
-      
       {
         id: "text",
         label: "Text",
@@ -245,65 +118,249 @@
         },
         category: "Basic",
       },
+      
+      // Card Block
       {
-        id: "my-section2",
-        label: "Section 2",
-        content: {
-          tagName: 'div',
-          classes: ['section', 'section-menu'],
-          components: `<section class="section section-menu">
-              <h1>Menu</h1>
-              <div class="menu">
-                  <h2>Titre du Menu 1</h2>
-                  <p>Description du Menu 1, avec des détails sur les plats disponibles.</p>
-              </div>
-          </section>`,
-        },
-        category: "Basic",
-      },
-      {
-        id: "my-map",
-        label: "Map",
-        content: {
-          tagName: 'div',
-          classes: ['map'],
-          components: `<div class="map">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.474052163265!2d2.38715937612803!3d48.849170101355796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6720d9c7af387%3A0x5891d8d62e8535c7!2sESGI%2C%20%C3%89cole%20Sup%C3%A9rieure%20de%20G%C3%A9nie%20Informatique!5e0!3m2!1sfr!2sfr!4v1706276679727!5m2!1sfr!2sfr" width="600" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>`,
-        },
-        category: "Basic",
-      },
-      {
-        id: "my-card",
+        id: "responsive-card",
         label: "Card",
+        content: `
+          <div class="card">
+          <a href="#">
+            <img src="../../dist/assets/images/imageParDefaut.jpg" class="card__image" alt="Card Image">
+            <h3 class="card__title">Card Title</h3>
+          </a>
+          </div>
+        `,
+        category: "Cards",
+      },
+      
+      // Circular Card Block
+      {
+        id: "circular-card",
+        label: "Circular Card",
+        content: `
+          <div class="circular-card">
+            <a href="#" class="circular-card__link">
+              <img src="../../dist/assets/images/imageParDefaut.jpg" class="circular-card__image" alt="Circular Card Image">
+              <h3 class="circular-card__title">Card Title</h3>
+            </a>
+          </div>
+        `,
+        category: "Cards",
+      },
+
+      // Block de texte (Titre et texte avec fond en couleur et coins arrondis)
+      {
+        id: "block-texte",
+        label: "Block de Texte",
         content: {
           tagName: 'div',
-          classes: ['card'],
+          classes: ['text-block'],
           components: `
-            <article class="card">
-              <img src="../../dist/assets/images/recettes/cake.jpg">
-              <h1>Card title</h1>
-              <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="button button-primary button-sm">Button</a>
-            </article>`,
+            <div class="text-block" style="background-color: #f8c630; padding: 20px; border-radius: 10px;">
+              <h2>Titre du bloc</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>`,
         },
-        category: "Basic",
+        category: "Text",
+      },
+
+      // Commentaire (Formulaire)
+      {
+        id: "commentaire",
+        label: "Formulaire de Commentaire",
+        content: {
+          tagName: 'div',
+          classes: ['comment-section'], // Utilisation de la classe principale définie dans le CSS
+          components: `
+            <form id="commentForm" class="comment-section__form">
+              <div class="comment-section__field">
+                <label for="content_review">Laissez un commentaire</label>
+                <textarea name="content_review" placeholder="Laissez un commentaire..." required></textarea>
+              </div>
+              <div class="comment-section__actions">
+                <button type="submit" class="comment-section__submit">Poster le commentaire</button>
+              </div>
+            </form>
+            <div id="commentsList" class="comment-section__list"></div>`,
+        },
+        category: "Forms",
+      },
+
+
+      // Contact Form (Formulaire de Contact)
+      {
+        id: "contact-form",
+        label: "Contact Form",
+        content: {
+          tagName: 'form',
+          classes: ['no-style-form', 'contact-form'], // Appliquer les classes pour réinitialiser et styliser le formulaire
+          components: `
+            <form class="contact-form">
+              <div class="container">
+                <div class="form-group">
+                  <label for="name">Nom:</label>
+                  <input type="text" id="name" name="name" placeholder="Votre nom" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" id="email" name="email" placeholder="Votre email" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="message">Message:</label>
+                  <textarea id="message" name="message" placeholder="Votre message" required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <input type="submit" value="Envoyer">
+                </div>
+              </div>
+            </form>`,
+        },
+        category: "Forms",
+      },
+
+
+      
+      {
+        id: "hero-image-left",
+        label: "Hero Image Left",
+        content: {
+          tagName: 'div',
+          classes: ['hero', 'hero-left'],
+          components: `
+            <div class="hero__content">
+              <img class="hero__image" src="../../dist/assets/images/imageParDefaut.jpg" alt="Hero Image">
+              <div class="hero__text-box">
+                <h2>Titre Hero</h2>
+                <p>Texte descriptif du bloc hero avec l'image à gauche.</p>
+              </div>
+            </div>`,
+        },
+        category: "Hero",
+      },
+
+
+      // Hero Image Right
+      {
+        id: "hero-image-right",
+        label: "Hero Image Right",
+        content: {
+          tagName: 'div',
+          classes: ['hero', 'hero-right'],
+          components: `
+            <div class="hero__content" style="flex-direction: row-reverse;">
+              <img class="hero__image" src="../../dist/assets/images/imageParDefaut.jpg" alt="Hero Image">
+              <div class="hero__text-box">
+                <h2>Titre Hero</h2>
+                <p>Texte descriptif du bloc hero avec l'image à droite.</p>
+              </div>
+            </div>`,
+        },
+        category: "Hero",
       },
       {
-        id: "commentForm",
-        label: "Comment",
+        id: "recettes-section",
+        label: "Recettes Section",
+        content: {
+          tagName: 'section',
+          classes: ['recettes'],
+          components: `
+            <div class="recettes">
+              <h1>Nos Recettes</h1>
+              <div class="recettes__grid">
+                <div class="card">
+                  <a href="/recette1" class="card__link">
+                    <img src="../../dist/assets/images/recette1.jpg" alt="Recette 1" class="card__image">
+                    <h2 class="card__title">Recette 1</h2>
+                    <p class="card__description">Description courte de la recette 1.</p>
+                  </a>
+                </div>
+                <div class="card">
+                  <a href="/recette2" class="card__link">
+                    <img src="../../dist/assets/images/recette2.jpg" alt="Recette 2" class="card__image">
+                    <h2 class="card__title">Recette 2</h2>
+                    <p class="card__description">Description courte de la recette 2.</p>
+                  </a>
+                </div>
+                <div class="card">
+                  <a href="/recette3" class="card__link">
+                    <img src="../../dist/assets/images/recette3.jpg" alt="Recette 3" class="card__image">
+                    <h2 class="card__title">Recette 3</h2>
+                    <p class="card__description">Description courte de la recette 3.</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          `,
+        },
+        category: "Recettes",
+      },
+      {
+        id: "circular-card-grid",
+        label: "Circular Card Grid",
         content: {
           tagName: 'div',
-          classes: ['commentFormDiv'],
+          classes: ['circular-card-grid'],
           components: `
-            <form id="commentForm">
-              <textarea name="content_review" placeholder="Laissez un commentaire..." required></textarea>
-              <button type="submit">Poster le commentaire</button>
-            </form>
-            <div id="commentsList"></div>`,
+            <div class="circular-card">
+              <a href="/link1" class="circular-card__link">
+                <div class="circular-card__image">
+                  <img src="../../dist/assets/images/card1.jpg" alt="Card 1">
+                </div>
+                <h2 class="circular-card__title">Card 1</h2>
+              </a>
+            </div>
+            <div class="circular-card">
+              <a href="/link2" class="circular-card__link">
+                <div class="circular-card__image">
+                  <img src="../../dist/assets/images/card2.jpg" alt="Card 2">
+                </div>
+                <h2 class="circular-card__title">Card 2</h2>
+              </a>
+            </div>
+            <div class="circular-card">
+              <a href="/link3" class="circular-card__link">
+                <div class="circular-card__image">
+                  <img src="../../dist/assets/images/card3.jpg" alt="Card 3">
+                </div>
+                <h2 class="circular-card__title">Card 3</h2>
+              </a>
+            </div>
+            <div class="circular-card">
+              <a href="/link4" class="circular-card__link">
+                <div class="circular-card__image">
+                  <img src="../../dist/assets/images/card4.jpg" alt="Card 4">
+                </div>
+                <h2 class="circular-card__title">Card 4</h2>
+              </a>
+            </div>
+            <div class="circular-card">
+              <a href="/link5" class="circular-card__link">
+                <div class="circular-card__image">
+                  <img src="../../dist/assets/images/card5.jpg" alt="Card 5">
+                </div>
+                <h2 class="circular-card__title">Card 5</h2>
+              </a>
+            </div>
+            <div class="circular-card">
+              <a href="/link6" class="circular-card__link">
+                <div class="circular-card__image">
+                  <img src="../../dist/assets/images/card6.jpg" alt="Card 6">
+                </div>
+                <h2 class="circular-card__title">Card 6</h2>
+              </a>
+            </div>
+          `,
         },
-        category: "Basic",
+        category: "Recettes",
       },
+
+
+
+
     ],
   },
 });
